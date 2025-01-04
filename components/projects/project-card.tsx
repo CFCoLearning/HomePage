@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { IconBrandGithub } from "@tabler/icons-react";
 import AvatarCircles from "@/components/ui/avatar-circles";
 import { Meteors } from "@/components/ui/meteors";
 import ShinyButton from "@/components/ui/shiny-button";
@@ -54,7 +55,10 @@ export function ProjectCard({
         <div className="w-full mt-4">
           <Link href={link} passHref>
             <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
-              Explore
+              <div className="flex items-center justify-center gap-2">
+                <IconBrandGithub className="h-5 w-5" />
+                <span className="text-base">GITHUB</span>
+              </div>
             </ShinyButton>
           </Link>
         </div>
