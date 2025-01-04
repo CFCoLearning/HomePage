@@ -1,6 +1,6 @@
 import axios from "axios";
 
-interface Contributor {
+export interface Contributor {
   id: number;
   login: string;
   avatar_url: string;
@@ -8,7 +8,7 @@ interface Contributor {
   contributions: number;
 }
 
-interface Repository {
+export interface Repository {
   id: number;
   name: string;
   full_name: string;
