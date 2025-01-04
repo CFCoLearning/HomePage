@@ -12,7 +12,10 @@ export interface ProjectCardProps {
   description: string | React.ReactNode;
   contributors: Contributor[];
   status: ProjectStatus;
-  link: string;
+  link: {
+    repoLink: string;
+    pageLink?: string;
+  };
 }
 
 export function ProjectCard({
@@ -29,6 +32,16 @@ export function ProjectCard({
 
       {/* Card Content */}
       <div className="relative shadow-md bg-gray-900 border border-gray-800 px-4 py-4 h-full rounded-2xl flex flex-col justify-start items-start space-y-4 group-hover:shadow-lg group-hover:translate-y-[-4px] transition-all duration-300  overflow-hidden">
+        {/* Page Link */}
+        {link.pageLink ? (
+          <Link href={link.pageLink} passHref>
+            <div
+              className="absolute inset-0 z-10"
+              aria-label={`Navigate to ${title}`}
+            />
+          </Link>
+        ) : null}
+
         {/* Status */}
         <div className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-2 py-1 rounded-full shadow-md z-10">
           <span className="text-sm font-bold text-white">{status}</span>
@@ -53,7 +66,7 @@ export function ProjectCard({
 
         {/* Call-to-Action Button */}
         <div className="w-full mt-4">
-          <Link href={link} passHref>
+          <Link href={link.repoLink} passHref>
             <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
               <div className="flex items-center justify-center gap-2">
                 <IconBrandGithub className="h-5 w-5" />

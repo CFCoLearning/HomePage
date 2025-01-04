@@ -6,6 +6,7 @@ import { ProjectCard } from "./project-card";
 
 import { GitHubService, Repository, Contributor } from "@/lib/github";
 import { ProjectStatus } from "@/lib/project";
+import { PageRoutes } from "@/lib/pageroutes";
 
 export function Projects({ orgName }: { orgName: string }) {
   const [repos, setRepos] = useState<Repository[]>([]); // 仓库列表
@@ -83,10 +84,18 @@ export function Projects({ orgName }: { orgName: string }) {
             description={repo.description}
             contributors={contributors[repo.id] || []}
             status={getStatusFromDescription(repo.description)}
-            link={repo.html_url}
+            link={{
+              repoLink: repo.html_url,
+              pageLink: getPageLink(repo.name),
+            }}
           />
         ))}
       </BentoGrid>
     </div>
   );
+}
+
+function getPageLink(title: string): string | undefined {
+  const match = PageRoutes.find((route) => route.title === title);
+  return match?.href;
 }
