@@ -33,8 +33,8 @@ export default function RootLayout({
         {children}
         <Dock />
         <Particles
-          quantityDesktop={1000}
-          quantityMobile={500}
+          quantityDesktop={500}
+          quantityMobile={300}
           ease={80}
           color={"dark"}
           refresh
