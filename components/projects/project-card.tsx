@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import AvatarCircles from "@/components/ui/avatar-circles";
 import { Meteors } from "@/components/ui/meteors";
 import ShinyButton from "@/components/ui/shiny-button";
@@ -10,6 +11,7 @@ export interface ProjectCardProps {
   description: string | React.ReactNode;
   contributors: Contributor[];
   status: ProjectStatus;
+  link: string;
 }
 
 export function ProjectCard({
@@ -17,6 +19,7 @@ export function ProjectCard({
   description,
   contributors,
   status,
+  link,
 }: ProjectCardProps) {
   return (
     <div className="relative w-full max-w-md mx-auto group">
@@ -26,7 +29,7 @@ export function ProjectCard({
       {/* Card Content */}
       <div className="relative shadow-md bg-gray-900 border border-gray-800 px-4 py-4 h-full rounded-2xl flex flex-col justify-start items-start space-y-4 group-hover:shadow-lg group-hover:translate-y-[-4px] transition-all duration-300  overflow-hidden">
         {/* Status */}
-        <div className="absolute top-3 right-3 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-3 py-2 rounded-full shadow-md z-10">
+        <div className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-2 py-1 rounded-full shadow-md z-10">
           <span className="text-sm font-bold text-white">{status}</span>
         </div>
 
@@ -49,9 +52,11 @@ export function ProjectCard({
 
         {/* Call-to-Action Button */}
         <div className="w-full mt-4">
-          <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
-            Explore
-          </ShinyButton>
+          <Link href={link} passHref>
+            <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
+              Explore
+            </ShinyButton>
+          </Link>
         </div>
 
         <Meteors number={30} />

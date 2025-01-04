@@ -83,6 +83,7 @@ export function Projects({ orgName }: { orgName: string }) {
             description={repo.description}
             contributors={contributors[repo.id] || []}
             status={getStatusFromDescription(repo.description)}
+            link={repo.html_url}
           />
         ))}
       </BentoGrid>
