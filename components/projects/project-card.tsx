@@ -36,7 +36,7 @@ export function ProjectCard({
         {link.pageLink ? (
           <Link href={link.pageLink} passHref>
             <div
-              className="absolute inset-0 z-10"
+              className="absolute inset-0 z-0"
               aria-label={`Navigate to ${title}`}
             />
           </Link>
