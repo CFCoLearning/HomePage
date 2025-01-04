@@ -42,7 +42,7 @@ export function Dock() {
   ];
 
   return (
-    <div className="dock-container flex items-center justify-center w-full fixed bottom-5 left-0 p-4">
+    <div className="dock-container flex items-center justify-center w-full fixed bottom-5 left-0 p-4 z-20">
       <FloatingDock
         items={links}
         mobileClassName="flex fixed right-4 bottom-4"
