@@ -1,5 +1,6 @@
 "use client";
 
+import "@/styles/dock.css";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
   IconBrandGithub,
@@ -41,7 +42,7 @@ export function Dock() {
   ];
 
   return (
-    <div className="flex items-center justify-center w-full fixed bottom-5 left-0 p-4">
+    <div className="dock-container flex items-center justify-center w-full fixed bottom-5 left-0 p-4">
       <FloatingDock
         items={links}
         mobileClassName="flex fixed right-4 bottom-4"
