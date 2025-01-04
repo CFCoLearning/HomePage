@@ -42,7 +42,7 @@ export function ProjectCard({
         {/* Contributors */}
         <div className="flex-grow">
           <AvatarCircles
-            avatarUrls={contributors.map((contributor) => ({
+            avatarUrls={contributors.slice(0, 5).map((contributor) => ({
               imageUrl: contributor.avatar_url,
               profileUrl: contributor.html_url,
             }))}
