@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BentoGrid } from "./project-grid";
 import { ProjectCard } from "./project-card";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { GitHubService, Repository, Contributor } from "@/lib/github";
 import { ProjectStatus } from "@/lib/project";
 import { PageRoutes } from "@/lib/pageroutes";
@@ -67,7 +68,21 @@ export function Projects({ orgName }: { orgName: string }) {
   }, []);
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="py-8">
+        <BentoGrid className="max-w-4xl mx-auto">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="flex flex-col space-y-3">
+              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            </div>
+          ))}
+        </BentoGrid>
+      </div>
+    );
   }
 
   if (error) {
