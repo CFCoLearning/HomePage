@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import Particles from "@/components/ui/particles";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,6 +30,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        <Particles
+          quantityDesktop={1000}
+          quantityMobile={500}
+          ease={80}
+          color={"dark"}
+          refresh
+        />
       </body>
     </html>
   );
