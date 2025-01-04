@@ -50,7 +50,7 @@ export function ProjectCard({
         {/* Call-to-Action Button */}
         <div className="w-full mt-4">
           <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
-            Explore Explore
+            Explore
           </ShinyButton>
         </div>
 
