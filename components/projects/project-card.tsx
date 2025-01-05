@@ -1,3 +1,4 @@
+// FIXME: motion 导致 card 大小限制失效
 import React from "react";
 import Link from "next/link";
 import * as motion from "motion/react-client";
@@ -52,14 +53,14 @@ export function ProjectCard({
   };
 
   const renderButton = () => {
-    const link = repoProps?.repoLink || "/";
+    const link = repoProps?.repoLink || pageLink;
     const buttonText = repoProps ? "GITHUB" : "Explore";
 
     return (
       <Link href={link} passHref>
         <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
           <div className="flex items-center justify-center gap-2">
-            <IconBrandGithub className="h-5 w-5" />
+            {repoProps && <IconBrandGithub className="h-5 w-5" />}
             <span className="text-base">{buttonText}</span>
           </div>
         </ShinyButton>
