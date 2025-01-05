@@ -11,21 +11,62 @@ import { Contributor } from "@/lib/github";
 export interface ProjectCardProps {
   title: string | React.ReactNode;
   description: string | React.ReactNode;
-  contributors: Contributor[];
-  status: ProjectStatus;
-  link: {
+  pageLink: string;
+  repoProps?: {
     repoLink: string;
-    pageLink?: string;
+    status: ProjectStatus;
+    contributors?: Contributor[];
   };
 }
 
 export function ProjectCard({
   title,
   description,
-  contributors,
-  status,
-  link,
+  pageLink,
+  repoProps,
 }: ProjectCardProps) {
+  const renderStatus = (status?: ProjectStatus) => {
+    if (!status) return null;
+
+    return (
+      <div className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-2 py-1 rounded-full shadow-md z-10">
+        <span className="text-sm font-bold text-white">{status}</span>
+      </div>
+    );
+  };
+
+  const renderContributors = (contributors?: Contributor[]) => {
+    if (!contributors || contributors.length === 0) return null;
+
+    return (
+      <div className="flex-grow">
+        <AvatarCircles
+          avatarUrls={contributors.slice(0, 5).map((contributor) => ({
+            imageUrl: contributor.avatar_url,
+            profileUrl: contributor.html_url,
+          }))}
+          numPeople={contributors.length > 5 ? contributors.length - 5 : 0}
+        />
+      </div>
+    );
+  };
+
+  const renderButton = () => {
+    const link = repoProps?.repoLink || "/";
+    const buttonText = repoProps ? "GITHUB" : "Explore";
+
+    return (
+      <Link href={link} passHref>
+        <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
+          <div className="flex items-center justify-center gap-2">
+            <IconBrandGithub className="h-5 w-5" />
+            <span className="text-base">{buttonText}</span>
+          </div>
+        </ShinyButton>
+      </Link>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
@@ -41,49 +82,29 @@ export function ProjectCard({
         {/* Card Content */}
         <div className="relative shadow-md bg-gray-900 border border-gray-800 px-4 py-4 h-full rounded-2xl flex flex-col justify-start items-start space-y-4 group-hover:shadow-lg group-hover:translate-y-[-4px] transition-all duration-300  overflow-hidden">
           {/* Page Link */}
-          {link.pageLink ? (
-            <Link href={link.pageLink} passHref>
-              <div
-                className="absolute inset-0 z-0"
-                aria-label={`Navigate to ${title}`}
-              />
-            </Link>
-          ) : null}
+          <Link href={pageLink} passHref>
+            <div
+              className="absolute inset-0 z-0"
+              aria-label={`Navigate to ${title}`}
+            />
+          </Link>
 
           {/* Status */}
-          <div className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-2 py-1 rounded-full shadow-md z-10">
-            <span className="text-sm font-bold text-white">{status}</span>
-          </div>
+          {renderStatus(repoProps?.status)}
 
-          {/* Title, and Description */}
+          {/* Title and Description */}
           <div className="flex-grow">
             <h1 className="font-bold text-xl text-white mb-2">{title}</h1>
             <p className="text-base text-slate-400">{description}</p>
           </div>
 
           {/* Contributors */}
-          <div className="flex-grow">
-            <AvatarCircles
-              avatarUrls={contributors.slice(0, 5).map((contributor) => ({
-                imageUrl: contributor.avatar_url,
-                profileUrl: contributor.html_url,
-              }))}
-              numPeople={contributors.length > 5 ? contributors.length - 5 : 0}
-            />
-          </div>
+          {renderContributors(repoProps?.contributors)}
 
           {/* Call-to-Action Button */}
-          <div className="w-full mt-4">
-            <Link href={link.repoLink} passHref>
-              <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
-                <div className="flex items-center justify-center gap-2">
-                  <IconBrandGithub className="h-5 w-5" />
-                  <span className="text-base">GITHUB</span>
-                </div>
-              </ShinyButton>
-            </Link>
-          </div>
+          <div className="w-full mt-4">{renderButton()}</div>
 
+          {/* Meteor Effect */}
           <Meteors number={30} />
         </div>
       </div>
