@@ -1,116 +1,122 @@
-"use client";
+"use server";
 
-import React, { useEffect, useState } from "react";
 import { BentoGrid } from "./project-grid";
 import { ProjectCard } from "./project-card";
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { GitHubService, Repository, Contributor } from "@/lib/github";
+import { OrgRepository } from "@/settings/base";
+import {
+  GitHubService,
+  Contributor,
+  Repository,
+  getRepoNameFromUrl,
+} from "@/lib/github";
 import { ProjectStatus } from "@/lib/project";
-import { PageRoutes } from "@/lib/pageroutes";
+import { getAllProjectDocuments } from "@/lib/mdx/projects";
 
-export function Projects({ orgName }: { orgName: string }) {
-  const [repos, setRepos] = useState<Repository[]>([]); // 仓库列表
-  const [contributors, setContributors] = useState<
-    Record<number, Contributor[]>
-  >({}); // 协作者数据
-  const [loading, setLoading] = useState(true); // 加载状态
-  const [error, setError] = useState<string | null>(null); // 错误状态
+export async function Projects() {
+  try {
+    const documents = await getAllProjectDocuments();
 
-  const getStatusFromDescription = (
-    description: string | null
-  ): ProjectStatus => {
-    if (!description) return ProjectStatus.UNKNOWN;
-
-    if (description.includes("📢")) {
-      return ProjectStatus.SIGN_UP; // 报名中
-    }
-    if (description.includes("🚀")) {
-      return ProjectStatus.IN_PROGRESS; // 进行中
-    }
-    if (description.includes("✅")) {
-      return ProjectStatus.FINISHED; // 已结束
+    if (!documents || documents.length === 0) {
+      return (
+        <div className="text-center text-gray-500">
+          <p>No projects found.</p>
+        </div>
+      );
     }
 
-    return ProjectStatus.UNKNOWN; // 未知状态
-  };
+    const contributorsMap: Record<string, Contributor[]> = {};
+    const repoMap: Record<string, Repository> = {};
 
-  useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        const data = await GitHubService.getOrgRepositorys(orgName);
-        setRepos(data);
+    // 获取仓库信息和贡献者信息
+    const fetchRepoInfoPromises = documents.map(async (doc) => {
+      const githubUrl = doc.frontmatter.githubUrl;
 
-        const contributorsPromises = data.map(async (repo) => {
-          const contributors = await GitHubService.getContributors(
-            orgName,
-            repo.name
-          );
-          return { repoId: repo.id, contributors };
-        });
+      if (githubUrl) {
+        const repoName = getRepoNameFromUrl(githubUrl);
+        if (repoName) {
+          try {
+            // 获取仓库信息
+            const repo = await GitHubService.getRepository(
+              OrgRepository,
+              repoName
+            );
+            if (repo) {
+              repoMap[githubUrl] = repo;
 
-        const contributorsData = await Promise.all(contributorsPromises);
-
-        const contributorsMap: Record<number, Contributor[]> = {};
-        contributorsData.forEach(({ repoId, contributors }) => {
-          contributorsMap[repoId] = contributors;
-        });
-
-        setContributors(contributorsMap);
-      } catch (err) {
-        setError("Failed to fetch repositories or contributors.");
-      } finally {
-        setLoading(false);
+              // 获取贡献者信息
+              const contributors = await GitHubService.getContributors(
+                OrgRepository,
+                repoName
+              );
+              contributorsMap[githubUrl] = contributors || [];
+            }
+          } catch (error) {
+            console.error(`Failed to fetch data for ${repoName}:`, error);
+          }
+        } else {
+          console.warn(`Invalid GitHub URL: ${githubUrl}`);
+        }
       }
+    });
+
+    await Promise.all(fetchRepoInfoPromises);
+
+    const getStatusFromDescription = (
+      description: string | null
+    ): ProjectStatus => {
+      if (!description) return ProjectStatus.UNKNOWN;
+      if (description.includes("📢")) return ProjectStatus.SIGN_UP;
+      if (description.includes("🚀")) return ProjectStatus.IN_PROGRESS;
+      if (description.includes("✅")) return ProjectStatus.FINISHED;
+      return ProjectStatus.UNKNOWN;
     };
 
-    fetchRepos();
-  }, []);
-
-  if (loading) {
     return (
       <div className="py-8">
         <BentoGrid className="max-w-4xl mx-auto">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="flex flex-col space-y-3">
-              <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-              </div>
-            </div>
-          ))}
+          {documents.map((doc, i) => {
+            const githubUrl = doc.frontmatter.githubUrl;
+            const repo = githubUrl ? repoMap[githubUrl] : null;
+
+            // 如果仓库存在，优先使用仓库数据
+            const title =
+              repo?.name || doc.frontmatter.title || "Unknown Project";
+            const description =
+              repo?.description ||
+              doc.frontmatter.description ||
+              "No description available";
+            const status = repo
+              ? getStatusFromDescription(repo?.description || "")
+              : getStatusFromDescription(doc.frontmatter.keywords || "");
+
+            return (
+              <ProjectCard
+                key={i}
+                title={title}
+                description={description}
+                pageLink={doc.frontmatter.slug}
+                repoProps={
+                  githubUrl && repo
+                    ? {
+                        repoLink: githubUrl,
+                        status: status,
+                        contributors: contributorsMap[githubUrl] || [],
+                      }
+                    : undefined
+                }
+              />
+            );
+          })}
         </BentoGrid>
       </div>
     );
+  } catch (error) {
+    console.error("Failed to fetch projects or contributors:", error);
+    return (
+      <div className="text-center text-red-500">
+        <p>Failed to load projects. Please try again later.</p>
+      </div>
+    );
   }
-
-  if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
-  }
-
-  return (
-    <div className="py-8">
-      <BentoGrid className="max-w-4xl mx-auto">
-        {repos.map((repo) => (
-          <ProjectCard
-            key={repo.id}
-            title={repo.name}
-            description={repo.description}
-            contributors={contributors[repo.id] || []}
-            status={getStatusFromDescription(repo.description)}
-            link={{
-              repoLink: repo.html_url,
-              pageLink: getPageLink(repo.name),
-            }}
-          />
-        ))}
-      </BentoGrid>
-    </div>
-  );
-}
-
-function getPageLink(title: string): string | undefined {
-  const match = PageRoutes.find((route) => route.title === title);
-  return match?.href;
 }

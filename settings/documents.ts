@@ -1,5 +1,7 @@
 import { Paths } from "@/lib/pageroutes";
 
+export const DocumentBasePath = "contents";
+
 export const Documents: Paths[] = [
   {
     title: "The-Missing-Semester",

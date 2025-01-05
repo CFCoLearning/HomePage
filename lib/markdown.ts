@@ -33,30 +33,6 @@ async function parseMdx<Frontmatter>(rawMdx: string) {
   });
 }
 
-export async function getAllDocuments(category: string) {
-  try {
-    const contentDir = path.join(process.cwd(), "/contents/", category);
-    const files = await fs.readdir(contentDir);
-    const documents = await Promise.all(
-      files.map(async (file) => {
-        const contentPath = path.join(contentDir, file);
-        const rawMdx = await fs.readFile(contentPath, "utf-8");
-        const parsedMdx = await parseMdx<BaseMdxFrontmatter>(rawMdx);
-
-        return {
-          slug: file,
-          frontmatter: parsedMdx.frontmatter,
-        };
-      })
-    );
-
-    return documents;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-}
-
 export async function getDocument(category: string, instance: string) {
   try {
     const contentPath = getDocumentPath(category, instance);
