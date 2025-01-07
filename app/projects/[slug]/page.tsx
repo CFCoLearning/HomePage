@@ -18,8 +18,8 @@ export default async function Pages({ params }: PageProps) {
   const { frontmatter, content } = res;
 
   return (
-    <div className="flex items-start gap-14">
-      <div className="flex-[3] pt-10">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-blue-500/10 backdrop-blur-md border shadow-lg rounded-lg max-w-4xl w-full p-10">
         <div className="typography">
           <Header
             title={frontmatter.title}

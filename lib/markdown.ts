@@ -1,9 +1,9 @@
 import { createReadStream, promises as fs } from "fs";
 import path from "path";
 
-import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { components } from "@/lib/components";
+import { compileMDX } from "next-mdx-remote/rsc";
+import { components } from "@/lib/mdx/components";
 
 type BaseMdxFrontmatter = {
   title: string;

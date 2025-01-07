@@ -1,7 +1,8 @@
-import { DocumentBasePath } from "@/settings/documents";
-import { compileMDX } from "next-mdx-remote/rsc";
 import { promises as fs } from "fs";
 import path from "path";
+import { DocumentBasePath } from "@/settings/documents";
+import { compileMDX } from "next-mdx-remote/rsc";
+import { components } from "@/lib/mdx/components";
 
 type ProjectMdxFrontmatter = {
   title: string;
@@ -22,7 +23,7 @@ export async function parseProjectMdx(rawMdx: string) {
         remarkPlugins: [],
       },
     },
-    // components,
+    components,
   });
 }
 
