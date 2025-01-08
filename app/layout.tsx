@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import Particles from "@/components/ui/particles";
-import { Dock } from "@/components/dock/dock";
+import { MagicDock } from "@/components/dock/magic-dock";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Dock />
+        <MagicDock />
         <Particles
           quantityDesktop={500}
           quantityMobile={300}

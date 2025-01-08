@@ -1,7 +1,0 @@
-.dock-container {
-  pointer-events: none; /* 禁止浮动导航栏拦截点击事件 */
-}
-
-.dock-container > * {
-  pointer-events: auto; /* 保留子元素（导航图标）的点击事件 */
-}
