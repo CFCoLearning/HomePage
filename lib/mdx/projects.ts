@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import rehypeSlug from "rehype-slug";
 import { DocumentBasePath } from "@/settings/documents";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { components } from "@/lib/mdx/components";
@@ -19,7 +20,7 @@ export async function parseProjectMdx(rawMdx: string) {
     options: {
       parseFrontmatter: true,
       mdxOptions: {
-        rehypePlugins: [],
+        rehypePlugins: [rehypeSlug],
         remarkPlugins: [],
       },
     },
