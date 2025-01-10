@@ -16,16 +16,16 @@ export interface Repository {
   html_url: string;
 }
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-if (!GITHUB_TOKEN) {
-  throw new Error("GITHUB_TOKEN is not defined in environment variables.");
+const API_GITHUB_TOKEN = process.env.API_GITHUB_TOKEN;
+if (!API_GITHUB_TOKEN) {
+  throw new Error("API_GITHUB_TOKEN is not defined in environment variables.");
 }
 
 export class GitHubService {
   private static axiosInstance: AxiosInstance = axios.create({
     baseURL: "https://api.github.com",
     headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Authorization: `Bearer ${API_GITHUB_TOKEN}`,
       "Content-Type": "application/json",
     },
   });
