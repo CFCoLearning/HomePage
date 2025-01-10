@@ -1,0 +1,20 @@
+name: Deploy to k3s
+
+on:
+  workflow_run:
+    workflows: ["Docker Image Build & Push"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > ~/.kube/config
+
+      - name: Deploy to k3s
+        run: |
+          echo "${{ secrets.KUBECTL_COMMAND }}" | bash
