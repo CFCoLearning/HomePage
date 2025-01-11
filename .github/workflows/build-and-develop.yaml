@@ -32,6 +32,7 @@ jobs:
             --push \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
+            --build-arg API_GITHUB_TOKEN=${{ secrets.API_GITHUB_TOKEN }} \
             .
 
   develop:
