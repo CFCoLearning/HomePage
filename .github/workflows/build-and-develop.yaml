@@ -1,4 +1,4 @@
-name: Docker Image Build & Push
+name: Build and Develop to k3s
 
 on:
   push:
@@ -33,3 +33,16 @@ jobs:
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             --build-arg API_GITHUB_TOKEN=${{ secrets.API_GITHUB_TOKEN }} \
             .
+
+  develop:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > ~/.kube/config
+
+      - name: Deploy to k3s
+        run: |
+          echo "${{ secrets.KUBECTL_COMMAND }}" | bash
