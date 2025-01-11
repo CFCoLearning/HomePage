@@ -31,7 +31,6 @@ jobs:
             --push \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
-            --secret id=API_GITHUB_TOKEN,src=<(echo ${{ secrets.API_GITHUB_TOKEN }}) \
             .
 
   develop:
