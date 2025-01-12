@@ -1,3 +1,5 @@
+import { Sidebar } from "@/components/docs/sidebar";
+
 export default function Layout({
   children,
 }: Readonly<{
@@ -5,6 +7,7 @@ export default function Layout({
 }>) {
   return (
     <div className="flex items-start gap-14">
+      <Sidebar />
       <div className="flex-1 md:flex-[6]">{children}</div>
     </div>
   );

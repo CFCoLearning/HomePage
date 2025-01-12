@@ -4,22 +4,14 @@ export const DocumentBasePath = "contents";
 
 export const Documents: Paths[] = [
   {
-    title: "The-Missing-Semester",
-    href: "projects/epoch1",
-    // heading: "Getting started",
-    // items: [
-    //   {
-    //     title: "Installation",
-    //     href: "/installation",
-    //   },
-    //   {
-    //     title: "Setup",
-    //     href: "/setup",
-    //   },
-    //   {
-    //     title: "Changelog",
-    //     href: "/changelog",
-    //   },
-    // ],
+    title: "Introduction",
+    href: "/introduction",
+    heading: "Getting started",
+    items: [
+      {
+        title: "Tutorial",
+        href: "/tutorial",
+      },
+    ],
   },
 ];

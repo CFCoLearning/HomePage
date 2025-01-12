@@ -16,29 +16,31 @@ export const Routes: Paths[] = [...Documents];
 
 type Page = { title: string; href: string };
 
-function isRoute(
-  node: Paths
-): node is Extract<Paths, { title: string; href: string }> {
+function isRoute(node: Paths): node is { title: string; href: string } {
   return "title" in node && "href" in node;
 }
 
 function getAllLinks(node: Paths): Page[] {
-  const pages: Page[] = [];
-
   if (isRoute(node) && !node.noLink) {
-    pages.push({ title: node.title, href: node.href });
+    const pages: Page[] = [{ title: node.title, href: node.href }];
+
+    if (node.items) {
+      const childPages = node.items.flatMap((subNode) => {
+        if (isRoute(subNode)) {
+          return getAllLinks({
+            ...subNode,
+            href: `${node.href}${subNode.href}`,
+          });
+        }
+        return [];
+      });
+      return [...pages, ...childPages];
+    }
+
+    return pages;
   }
 
-  if (isRoute(node) && node.items) {
-    node.items.forEach((subNode) => {
-      if (isRoute(subNode)) {
-        const temp = { ...subNode, href: `${node.href}${subNode.href}` };
-        pages.push(...getAllLinks(temp));
-      }
-    });
-  }
-
-  return pages;
+  return [];
 }
 
-export const PageRoutes = Routes.map((it) => getAllLinks(it)).flat();
+export const PageRoutes = Routes.flatMap(getAllLinks);

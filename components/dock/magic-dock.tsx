@@ -22,7 +22,7 @@ const icons = [
     alt: "Home",
   },
   {
-    href: "/docs/tutorial",
+    href: "/docs/introduction",
     icon: IconFile,
     alt: "Docs",
   },
