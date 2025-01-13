@@ -1,3 +1,5 @@
+"use server";
+
 import axios, { AxiosInstance } from "axios";
 
 export interface Contributor {
@@ -21,92 +23,78 @@ if (!API_GITHUB_TOKEN) {
   throw new Error("API_GITHUB_TOKEN is not defined in environment variables.");
 }
 
-export class GitHubService {
-  private static axiosInstance: AxiosInstance = axios.create({
-    baseURL: "https://api.github.com",
-    headers: {
-      Authorization: `Bearer ${API_GITHUB_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-  });
+// 创建 axios 实例，用于发送 GitHub API 请求
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: "https://api.github.com",
+  headers: {
+    Authorization: `Bearer ${API_GITHUB_TOKEN}`,
+    "Content-Type": "application/json",
+  },
+});
 
-  /**
-   * 通用的 API 请求处理函数
-   * @param url 请求的相对路径
-   * @param errorMessage 错误提示信息
-   * @returns 请求结果或 null
-   */
-  private static async fetchData<T>(
-    url: string,
-    errorMessage: string
-  ): Promise<T | null> {
-    try {
-      const response = await this.axiosInstance.get<T>(url);
-      return response.data;
-    } catch (error) {
-      console.error(errorMessage, error);
-      return null;
-    }
-  }
-
-  /**
-   * 获取指定仓库的信息
-   * @param owner 仓库拥有者（组织或个人）
-   * @param repo 仓库名称
-   * @returns 仓库信息或 null
-   */
-  static async getRepository(
-    owner: string,
-    repo: string
-  ): Promise<Repository | null> {
-    const url = `/repos/${owner}/${repo}`;
-    return this.fetchData<Repository>(
-      url,
-      `Error fetching repository ${owner}/${repo}:`
-    );
-  }
-
-  /**
-   * 获取指定仓库的贡献者
-   * @param owner 仓库拥有者（组织或个人）
-   * @param repo 仓库名称
-   * @returns 贡献者列表（空数组表示没有贡献者或请求失败）
-   */
-  static async getContributors(
-    owner: string,
-    repo: string
-  ): Promise<Contributor[]> {
-    const url = `/repos/${owner}/${repo}/contributors`;
-    const data = await this.fetchData<Contributor[]>(
-      url,
-      `Error fetching contributors for ${owner}/${repo}:`
-    );
-    return data || [];
-  }
-
-  /**
-   * 获取指定组织的所有仓库
-   * @param orgName 组织名称
-   * @returns 仓库列表（空数组表示没有仓库或请求失败）
-   */
-  static async getOrgRepositorys(orgName: string): Promise<Repository[]> {
-    const url = `/orgs/${orgName}/repos`;
-    const data = await this.fetchData<Repository[]>(
-      url,
-      `Error fetching repositories for organization ${orgName}:`
-    );
-    return data || [];
+/**
+ * 通用的 API 数据获取函数
+ * @param url 请求的相对路径
+ * @param errorMessage 错误日志信息
+ * @returns 返回请求数据或 null
+ */
+async function fetchData<T>(
+  url: string,
+  errorMessage: string
+): Promise<T | null> {
+  try {
+    const response = await axiosInstance.get<T>(url);
+    return response.data;
+  } catch (error) {
+    console.error(errorMessage, error);
+    return null;
   }
 }
 
 /**
- * 从 GitHub 仓库 URL 提取仓库名称
- * @param url GitHub 仓库的 URL
- * @returns 仓库名称或 null（无效的 URL）
+ * 获取指定仓库的信息
+ * @param owner 仓库拥有者（组织或个人）
+ * @param repo 仓库名称
+ * @returns 返回仓库信息或 null
  */
-export function getRepoNameFromUrl(url: string): string | null {
-  const regex = /https:\/\/github\.com\/(?:[^/]+)\/([^/]+)/;
-  const match = url.match(regex);
+export async function getRepository(
+  owner: string,
+  repo: string
+): Promise<Repository | null> {
+  const url = `/repos/${owner}/${repo}`;
+  return fetchData<Repository>(url, `获取仓库 ${owner}/${repo} 信息时出错:`);
+}
 
-  return match?.[1] || null;
+/**
+ * 获取指定仓库的贡献者列表
+ * @param owner 仓库拥有者（组织或个人）
+ * @param repo 仓库名称
+ * @returns 返回贡献者列表（如果失败，则返回空数组）
+ */
+export async function getContributors(
+  owner: string,
+  repo: string
+): Promise<Contributor[]> {
+  const url = `/repos/${owner}/${repo}/contributors`;
+  const data = await fetchData<Contributor[]>(
+    url,
+    `获取仓库 ${owner}/${repo} 的贡献者时出错:`
+  );
+  return data || [];
+}
+
+/**
+ * 获取指定组织的所有仓库
+ * @param orgName 组织名称
+ * @returns 返回仓库列表（如果失败，则返回空数组）
+ */
+export async function getOrgRepositories(
+  orgName: string
+): Promise<Repository[]> {
+  const url = `/orgs/${orgName}/repos`;
+  const data = await fetchData<Repository[]>(
+    url,
+    `获取组织 ${orgName} 的仓库时出错:`
+  );
+  return data || [];
 }
