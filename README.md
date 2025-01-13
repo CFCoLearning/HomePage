@@ -14,8 +14,8 @@ bun dev
 
 ## TODO List
 
-- [ ] fix：SSR 组件 `Projects` 无法及时获取数据
-- [ ] feature：首页载入动画
+- [x] fix：SSR 组件 `Projects` 无法及时获取数据
+- [x] feature：首页载入动画
 - [ ] feature：Docs 页面支持移动端
 - [ ] feature：Header 组件实现
 - [ ] perf：优化 `dock` 组件
@@ -24,3 +24,4 @@ bun dev
   - [ ] Status
   - [ ] Desc
   - [ ] Detail
+- [ ] perf：优化首页动画
