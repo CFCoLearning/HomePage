@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import "@/styles/typography.css";
 import { getDocument } from "@/lib/markdown";
-import Header from "../(components)/header";
+import { Header } from "../(components)/header";
 import Content from "../(components)/content";
 
 type PageProps = {
@@ -23,7 +23,12 @@ export default async function Pages({ params }: PageProps) {
         <div className="typography">
           <Header
             title={frontmatter.title}
-            description={frontmatter.description}
+            status="In Progress"
+            tags={frontmatter.keywords}
+            initiator={{
+              name: "echozyr2001",
+              url: "https://github.com/echozyr2001",
+            }}
           />
           <Content content={content} />
         </div>

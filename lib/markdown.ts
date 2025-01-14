@@ -9,7 +9,7 @@ import { components } from "@/lib/mdx/components";
 type BaseMdxFrontmatter = {
   title: string;
   description: string;
-  keywords: string;
+  keywords: [string];
 };
 
 const headingsRegex = /^(#{2,4})\s(.+)$/gm;
