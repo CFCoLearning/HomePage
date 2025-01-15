@@ -18,6 +18,18 @@ export interface Repository {
   html_url: string;
 }
 
+export interface GitHubUser {
+  id: number;
+  login: string;
+  name: string | null;
+  avatar_url: string;
+  bio: string | null;
+  public_repos: number;
+  followers: number;
+  following: number;
+  html_url: string;
+}
+
 const API_GITHUB_TOKEN = process.env.API_GITHUB_TOKEN;
 if (!API_GITHUB_TOKEN) {
   throw new Error("API_GITHUB_TOKEN is not defined in environment variables.");
@@ -97,4 +109,16 @@ export async function getOrgRepositories(
     `获取组织 ${orgName} 的仓库时出错:`
   );
   return data || [];
+}
+
+/**
+ * 获取指定用户的 GitHub 信息
+ * @param username GitHub 用户名
+ * @returns 返回用户信息或 null
+ */
+export async function getGitHubUser(
+  username: string
+): Promise<GitHubUser | null> {
+  const url = `/users/${username}`;
+  return fetchData<GitHubUser>(url, `获取用户 ${username} 信息时出错:`);
 }

@@ -20,16 +20,13 @@ export default async function Pages({ params }: PageProps) {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-blue-500/10 backdrop-blur-md border shadow-lg rounded-lg max-w-4xl w-full p-10">
+        <Header
+          title={frontmatter.title}
+          status="In Progress"
+          tags={frontmatter.keywords}
+          initiator="echozyr2001"
+        />
         <div className="typography">
-          <Header
-            title={frontmatter.title}
-            status="In Progress"
-            tags={frontmatter.keywords}
-            initiator={{
-              name: "echozyr2001",
-              url: "https://github.com/echozyr2001",
-            }}
-          />
           <Content content={content} />
         </div>
       </div>

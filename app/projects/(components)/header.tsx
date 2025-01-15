@@ -5,20 +5,22 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import { getGitHubUser } from "@/lib/github";
 
 interface HeaderProps {
   title: string;
   tags?: string[];
   status?: string;
-  initiator: {
-    name: string;
-    url: string;
-  };
+  initiator: string;
 }
 
-export function Header({ title, tags, status, initiator }: HeaderProps) {
+export async function Header({ title, tags, status, initiator }: HeaderProps) {
+  const userInfo = await getGitHubUser(initiator);
+
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">{title}</h1>
@@ -44,24 +46,62 @@ export function Header({ title, tags, status, initiator }: HeaderProps) {
         <HoverCard>
           <HoverCardTrigger asChild>
             <div>
-              <Link href={`${initiator.url}`}>
-                <Button variant="link">@{initiator.name}</Button>
-              </Link>
+              {userInfo ? (
+                <Link
+                  href={userInfo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800"
+                >
+                  <Button variant="link" className="p-0 h-auto font-normal">
+                    @{initiator}
+                  </Button>
+                </Link>
+              ) : (
+                <Button variant="link" className="p-0 h-auto font-normal">
+                  @{initiator}
+                </Button>
+              )}
             </div>
           </HoverCardTrigger>
-          <HoverCardContent className="w-80">
-            <div className="flex justify-between space-x-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/vercel.png" />
-                <AvatarFallback>VC</AvatarFallback>
-              </Avatar>
-              <div className="space-y-1">
-                <h4 className="text-sm font-semibold">@nextjs</h4>
-                <p className="text-sm">
-                  The React Framework – created and maintained by @vercel.
-                </p>
+          <HoverCardContent align="start" className="w-80">
+            {userInfo ? (
+              <div className="flex gap-4">
+                <Avatar className="h-12 w-12">
+                  <AvatarImage
+                    src={userInfo.avatar_url}
+                    alt={`${userInfo.name || userInfo.login}'s avatar`}
+                  />
+                  <AvatarFallback>
+                    {initiator.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-1">
+                  <h4 className="text-sm font-semibold">
+                    {userInfo.name || userInfo.login}
+                  </h4>
+                  {userInfo.bio && (
+                    <p className="text-sm text-gray-600 line-clamp-2">
+                      {userInfo.bio}
+                    </p>
+                  )}
+                  <div className="flex gap-4 text-sm text-gray-500">
+                    <span title="Public repositories">
+                      📦 {userInfo.public_repos}
+                    </span>
+                    <span title="Followers">👥 {userInfo.followers}</span>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex gap-4">
+                <Skeleton className="h-12 w-12 rounded-full" />
+                <div className="space-y-2 flex-1">
+                  <Skeleton className="h-4 w-[120px]" />
+                  <Skeleton className="h-4 w-full" />
+                </div>
+              </div>
+            )}
           </HoverCardContent>
         </HoverCard>
       </div>
