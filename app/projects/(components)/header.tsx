@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 import {
   HoverCard,
@@ -20,8 +21,22 @@ interface HeaderProps {
   initiator: string;
 }
 
-export async function Header({ title, tags, status, initiator }: HeaderProps) {
-  const userInfo = await getGitHubUser(initiator);
+export function Header({ title, tags, status, initiator }: HeaderProps) {
+  const [userInfo, setUserInfo] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const data = await getGitHubUser(initiator);
+        setUserInfo(data);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setUserInfo(null);
+      }
+    };
+
+    fetchUser();
+  }, [initiator]);
 
   return (
     <div className="p-6">
