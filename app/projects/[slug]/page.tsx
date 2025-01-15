@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import "@/styles/typography.css";
 import { getDocument } from "@/lib/markdown";
 import { Header } from "../(components)/header";
-import Content from "../(components)/content";
+import { Typography } from "../(components)/typography";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -26,9 +26,7 @@ export default async function Pages({ params }: PageProps) {
           tags={frontmatter.keywords}
           initiator="echozyr2001"
         />
-        <div className="typography">
-          <Content content={content} />
-        </div>
+        <Typography>{content}</Typography>
       </div>
     </div>
   );
