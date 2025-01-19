@@ -30,15 +30,48 @@
 }
 
 .prose table {
-  @apply border-collapse border border-border;
+  @apply w-full border-collapse my-6 max-w-full overflow-x-auto block;
+}
+
+.prose table > table {
+  @apply w-max min-w-full border border-gray-300;
+  @apply dark:border-neutral-600;
 }
 
 .prose th {
-  @apply dark:bg-neutral-900;
+  @apply bg-gray-100 text-left px-4 py-3 font-medium text-gray-800 whitespace-nowrap border-b border-r border-gray-300;
+  @apply dark:bg-neutral-800 dark:text-gray-100 dark:border-neutral-600;
 }
 
-.prose th,
+.prose th:last-child {
+  @apply border-r-0;
+}
+
 .prose td {
-  @apply border border-border;
-  padding: 8px 10px;
+  @apply px-4 py-3 border-b border-r border-gray-300 whitespace-nowrap;
+  @apply dark:border-neutral-600;
+}
+
+.prose td:last-child {
+  @apply border-r-0;
+}
+
+.prose tr:last-child td {
+  @apply border-b-0;
+}
+
+.prose thead {
+  @apply bg-gray-100 border-b border-gray-300 sticky top-0;
+  @apply dark:bg-neutral-800 dark:border-neutral-600;
+}
+
+.prose tbody {
+  @apply divide-y divide-gray-100;
+  @apply dark:divide-neutral-800;
+}
+
+/* 添加水平滚动容器 */
+.prose .table-container {
+  @apply w-full overflow-x-auto rounded-lg border border-gray-200;
+  @apply dark:border-neutral-700;
 }

@@ -25,3 +25,4 @@ bun dev
   - [ ] Desc
   - [ ] Detail
 - [ ] perf：优化首页动画
+- [ ] fxi：mdx 文件中使用组件样式冲突

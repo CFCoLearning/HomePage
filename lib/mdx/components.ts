@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { ProgressTable } from "@/components/mdx/projects/progress-table";
+import { InfoCard } from "@/components/mdx/projects/info-card";
 
 export const components = {
-  ProgressTable,
+  InfoCard,
   Image,
 };
