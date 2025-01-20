@@ -28,6 +28,10 @@ export default async function Pages({ params }: PageProps) {
             <CardTitle>项目名称</CardTitle>
           </CardHeader>
           <CardContent>
+            <blockquote className="my-6 border-l-4 border-[#5DC5CD] pl-4">
+              <p className="text-gray-600">"test quote"</p>
+            </blockquote>
+
             <div className="mt-6">
               <h2 className="mb-3 text-lg font-semibold">Tag</h2>
               <div className="flex gap-2">
@@ -74,6 +78,122 @@ export default async function Pages({ params }: PageProps) {
             <CardHeader>
               <CardTitle>学习内容</CardTitle>
             </CardHeader>
+            <CardContent>
+              <div className="prose prose-slate max-w-none">
+                <a
+                  href="https://missing-semester-cn.github.io/"
+                  className="text-blue-600 hover:text-blue-800 no-underline"
+                >
+                  计算机教育中缺失的一课
+                </a>
+
+                <div className="mt-4 space-y-6">
+                  <div>
+                    <h3 className="font-medium text-gray-900 mb-2">
+                      第一周（2025-01-06 ~ 2025-01-12）：
+                    </h3>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/course-shell/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          课程概览与shell
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/shell-tools/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          Shell工具和脚本
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/editors/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          编辑器
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/data-wrangling/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          数据整理
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-medium text-gray-900 mb-2">
+                      第二周（2025-01-13 ~ 2025-01-19）：
+                    </h3>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/command-line/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          命令行环境
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/version-control/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          版本控制
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/debugging-profiling/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          调试及性能分析
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="font-medium text-gray-900 mb-2">
+                      第三周（2025-01-20 ~ 2025-01-26）：
+                    </h3>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/metaprogramming/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          元编程
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/security/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          安全和密码学
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://missing-semester-cn.github.io/2020/potpourri/"
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          大杂烩
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
           </Card>
           <Card className="p-6">
             <CardHeader>
