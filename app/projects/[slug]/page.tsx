@@ -20,190 +20,186 @@ export default async function Pages({ params }: PageProps) {
   const { frontmatter, content } = res;
 
   return (
-    <div className="min-h-screen bg-[#5dc6cd89] p-4 md:p-8">
-      <div className="grid gap-4 md:grid-cols-[1fr,3fr] lg:gap-6">
-        {/* Left Column */}
-        <Card>
+    <div className="min-h-screen bg-gradient-to-br p-6 md:p-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Project Info Card */}
+        <Card className="backdrop-blur-md bg-primary-blue shadow-lg hover:shadow-xl transition-shadow">
           <CardHeader>
             <CardTitle>项目名称</CardTitle>
           </CardHeader>
           <CardContent>
-            <blockquote className="my-6 border-l-4 border-[#5DC5CD] pl-4">
-              <p className="text-gray-600">"test quote"</p>
+            <blockquote className="my-6 border-l-4 border-blue-500 pl-4">
+              <p className="text-gray-600">
+                {frontmatter.description || "项目描述"}
+              </p>
             </blockquote>
-
             <div className="mt-6">
-              <h2 className="mb-3 text-lg font-semibold">Tag</h2>
-              <div className="flex gap-2">
-                <span className="rounded-full bg-gray-100 px-4 py-1">
-                  Artistic
-                </span>
-                <span className="rounded-full bg-gray-100 px-4 py-1">
-                  Meticulous
-                </span>
+              <h2 className="mb-3 text-lg font-semibold">标签</h2>
+              <div className="flex flex-wrap gap-2">
+                {frontmatter.keywords?.map((tag: string) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-blue-100 px-4 py-1"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Right Column */}
-        <div className="space-y-4">
-          <Card className="p-6">
-            <CardHeader>
-              <CardTitle>基本信息</CardTitle>
-            </CardHeader>
-          </Card>
-          <Card className="p-6">
-            <CardHeader>
-              <CardTitle>时间安排</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4 text-gray-600">
-                <div className="rounded-lg border border-gray-200 p-4 space-y-1">
-                  <h3 className="font-medium">报名时间 (UTC+8)</h3>
-                  <p>2024-12-30 ~ 2025-01-05</p>
+        {/* Timeline Card */}
+        <Card className="backdrop-blur-md bg-primary-orange shadow-lg hover:shadow-xl transition-shadow">
+          <CardHeader>
+            <CardTitle>时间安排</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="rounded-lg border border-blue-200 p-4 hover:border-blue-300 transition-colors">
+                <h3 className="font-medium">报名时间</h3>
+                <p className="text-gray-600">2024-12-30 ~ 2025-01-05</p>
+              </div>
+              <div className="rounded-lg border border-blue-200 p-4 hover:border-blue-300 transition-colors">
+                <h3 className="font-medium">共学时间</h3>
+                <p className="text-gray-600">2025-01-06 ~ 2025-01-26</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Content Card */}
+        <Card className="backdrop-blur-md bg-primary-purple shadow-lg hover:shadow-xl transition-shadow md:col-span-2 lg:col-span-1">
+          <CardHeader>
+            <CardTitle>学习内容</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-slate max-w-none">
+              <a
+                href="https://missing-semester-cn.github.io/"
+                className="text-blue-600 hover:text-blue-800 no-underline"
+              >
+                计算机教育中缺失的一课
+              </a>
+
+              <div className="mt-4 space-y-6">
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-2">
+                    第一周（2025-01-06 ~ 2025-01-12）：
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/course-shell/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        课程概览与shell
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/shell-tools/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        Shell工具和脚本
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/editors/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        编辑器
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/data-wrangling/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        数据整理
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <div className="rounded-lg border border-gray-200 p-4 space-y-1">
-                  <h3 className="font-medium">共学时间 (UTC+8)</h3>
-                  <p>2025-01-06 ~ 2025-01-26</p>
+
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-2">
+                    第二周（2025-01-13 ~ 2025-01-19）：
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/command-line/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        命令行环境
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/version-control/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        版本控制
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/debugging-profiling/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        调试及性能分析
+                      </a>
+                    </li>
+                  </ul>
                 </div>
-                <div className="rounded-lg border border-gray-200 p-4 space-y-1">
-                  <h3 className="font-medium">请假规则</h3>
-                  <p>每周请假 5 次</p>
+
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-2">
+                    第三周（2025-01-20 ~ 2025-01-26）：
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/metaprogramming/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        元编程
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/security/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        安全和密码学
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://missing-semester-cn.github.io/2020/potpourri/"
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        大杂烩
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="p-6">
-            <CardHeader>
-              <CardTitle>学习内容</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-slate max-w-none">
-                <a
-                  href="https://missing-semester-cn.github.io/"
-                  className="text-blue-600 hover:text-blue-800 no-underline"
-                >
-                  计算机教育中缺失的一课
-                </a>
+            </div>
+          </CardContent>
+        </Card>
 
-                <div className="mt-4 space-y-6">
-                  <div>
-                    <h3 className="font-medium text-gray-900 mb-2">
-                      第一周（2025-01-06 ~ 2025-01-12）：
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/course-shell/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          课程概览与shell
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/shell-tools/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          Shell工具和脚本
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/editors/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          编辑器
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/data-wrangling/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          数据整理
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-medium text-gray-900 mb-2">
-                      第二周（2025-01-13 ~ 2025-01-19）：
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/command-line/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          命令行环境
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/version-control/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          版本控制
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/debugging-profiling/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          调试及性能分析
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="font-medium text-gray-900 mb-2">
-                      第三周（2025-01-20 ~ 2025-01-26）：
-                    </h3>
-                    <ul className="list-disc pl-5 space-y-1">
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/metaprogramming/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          元编程
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/security/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          安全和密码学
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="https://missing-semester-cn.github.io/2020/potpourri/"
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          大杂烩
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="p-6">
-            <CardHeader>
-              <CardTitle>打卡记录</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RecordTable />
-            </CardContent>
-          </Card>
-        </div>
+        {/* Records Card */}
+        <Card className="backdrop-blur-md bg-primary-blue shadow-lg hover:shadow-xl transition-shadow md:col-span-2 lg:col-span-3">
+          <CardHeader>
+            <CardTitle>打卡记录</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RecordTable />
+          </CardContent>
+        </Card>
       </div>
     </div>
     // <div className="min-h-screen flex items-center justify-center">
