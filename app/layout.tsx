@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import Particles from "@/components/ui/particles";
 import { MagicDock } from "@/components/dock/magic-dock";
 
 const geistSans = Geist({
@@ -32,13 +31,6 @@ export default function RootLayout({
       >
         {children}
         <MagicDock />
-        <Particles
-          quantityDesktop={500}
-          quantityMobile={300}
-          ease={80}
-          color={"dark"}
-          refresh
-        />
       </body>
     </html>
   );

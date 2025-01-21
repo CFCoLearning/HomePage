@@ -10,6 +10,11 @@ body {
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
+
+    --primary-blue: 195 35% 85%;     /* 蓝色 #D5E5ED */
+    --primary-orange: 31 70% 65%;    /* 橙色 #E0A46D */
+    --primary-purple: 285 35% 82%;   /* 紫色 #DCC3E0 */
+
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
@@ -34,6 +39,7 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
@@ -54,11 +60,6 @@ body {
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
   }
 }
 
@@ -68,5 +69,18 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* 新增自定义工具类 */
+@layer utilities {
+  .bg-primary-blue {
+    background-color: hsl(var(--primary-blue));
+  }
+  .bg-primary-orange {
+    background-color: hsl(var(--primary-orange));
+  }
+  .bg-primary-purple {
+    background-color: hsl(var(--primary-purple));
   }
 }
