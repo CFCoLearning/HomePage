@@ -51,6 +51,15 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        retro: {
+          mint: "#8BA89B",
+          sand: "#E2D5C3",
+          pink: "#FFB5B5",
+          teal: "#9DCDC3",
+          sage: "#A8B5A5",
+          orange: "#E8A87C", // Added warm orange
+          peach: "#FFD4B8", // Added soft peach
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -59,6 +68,9 @@ export default {
       },
       animation: {
         "meteor-effect": "meteor 5s linear infinite",
+        float: "float 6s ease-in-out infinite",
+        "float-slow": "float 8s ease-in-out infinite",
+        "float-slower": "float 10s ease-in-out infinite",
       },
       keyframes: {
         meteor: {
@@ -69,6 +81,14 @@ export default {
             opacity: "0",
           },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+      },
+      fontFamily: {
+        mono: ["'Space Mono'", "monospace"],
+        retro: ["'VT323'", "monospace"],
       },
     },
   },
