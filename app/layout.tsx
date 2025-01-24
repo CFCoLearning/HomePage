@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 
 import { MagicDock } from "@/components/dock/magic-dock";
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-full m-8">
+    <html lang="en" className="min-h-full dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
