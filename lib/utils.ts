@@ -6,12 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * 从 GitHub 仓库 URL 中提取仓库名称
- * @param url GitHub 仓库的 URL
- * @returns 返回仓库名称或 null（如果 URL 无效）
+ * 通过链接获取仓库的所有者和名称
+ * @param url 仓库链接
+ * @returns 返回仓库所有者和名称
  */
-export function getRepoNameFromUrl(url: string): string | null {
-  const regex = /https:\/\/github\.com\/(?:[^/]+)\/([^/]+)/;
-  const match = url.match(regex);
-  return match?.[1] || null;
+export function getRepoNameFromUrl(url: string): [string, string] | null {
+  const match = url.match(/github\.com\/([^/]+)\/([^/]+)(?:\/|$)/);
+  if (!match) {
+    console.warn(`Invalid GitHub URL: ${url}`);
+    return null;
+  }
+  return [match[1], match[2]];
 }

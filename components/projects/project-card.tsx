@@ -1,114 +1,195 @@
-// FIXME: motion 导致 card 大小限制失效
-import React from "react";
-import Link from "next/link";
-import * as motion from "motion/react-client";
-import { IconBrandGithub } from "@tabler/icons-react";
-import AvatarCircles from "@/components/ui/avatar-circles";
-import { Meteors } from "@/components/ui/meteors";
-import ShinyButton from "@/components/ui/shiny-button";
-import { ProjectStatus } from "@/lib/project";
-import { Contributor } from "@/lib/github";
+"use client";
 
-export interface ProjectCardProps {
-  title: string | React.ReactNode;
-  description: string | React.ReactNode;
-  pageLink: string;
-  repoProps?: {
-    repoLink: string;
-    status: ProjectStatus;
-    contributors?: Contributor[];
-  };
+import { useEffect, useState } from "react";
+import {
+  LuBookOpen,
+  LuExternalLink,
+  LuCalendar,
+  LuGraduationCap,
+  LuGithub,
+} from "react-icons/lu";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import ShinyButton from "@/components/ui/shiny-button";
+import AvatarCircles from "@/components/ui/avatar-circles";
+
+import { getRepoNameFromUrl } from "@/lib/utils";
+import { ProjectInfo, ProjectStatus } from "@/lib/project";
+import { Contributor, getContributors, getRepository } from "@/lib/github";
+
+function parseStatus(description: string): ProjectStatus {
+  if (description.startsWith("📢")) return ProjectStatus.SIGN_UP;
+  if (description.startsWith("🚀")) return ProjectStatus.IN_PROGRESS;
+  if (description.startsWith("✅")) return ProjectStatus.FINISHED;
+  return ProjectStatus.UNKNOWN;
 }
 
-export function ProjectCard({
-  title,
-  description,
-  pageLink,
-  repoProps,
-}: ProjectCardProps) {
-  const renderStatus = (status?: ProjectStatus) => {
-    if (!status) return null;
+export default function ProjectCard({
+  projectInfo,
+}: {
+  projectInfo: ProjectInfo;
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetchedData, setFetchedData] = useState<{
+    contributors: Contributor[];
+    description: string;
+    status: ProjectStatus;
+  } | null>(null);
 
-    return (
-      <div className="absolute top-2 right-2 flex items-center space-x-2 bg-gray-800 bg-opacity-80 px-2 py-1 rounded-full shadow-md z-10">
-        <span className="text-sm font-bold text-white">{status}</span>
-      </div>
-    );
+  useEffect(() => {
+    const fetchData = async () => {
+      if (projectInfo.githubUrl) {
+        const repoInfo = getRepoNameFromUrl(projectInfo.githubUrl);
+
+        if (repoInfo) {
+          const [owner, name] = repoInfo;
+
+          try {
+            const repository = await getRepository(owner, name);
+            const contributors = await getContributors(owner, name);
+
+            if (repository) {
+              setFetchedData({
+                contributors: contributors || [],
+                description:
+                  projectInfo.description ||
+                  repository.description ||
+                  "CoLearning Project",
+                status: parseStatus(repository.description),
+              });
+            }
+          } catch (error) {
+            console.error("Error fetching project data:", error);
+          }
+        } else {
+          console.warn("Invalid GitHub URL:", projectInfo.githubUrl);
+        }
+      }
+    };
+    fetchData();
+  }, [projectInfo.githubUrl, projectInfo.description]);
+
+  const getStatusColor = (status: ProjectStatus) => {
+    switch (status) {
+      case ProjectStatus.SIGN_UP:
+        return "bg-blue-950/50 text-blue-400 border-blue-400/30";
+      case ProjectStatus.IN_PROGRESS:
+        return "bg-emerald-950/50 text-emerald-400 border-emerald-400/30";
+      case ProjectStatus.FINISHED:
+        return "bg-gray-800/50 text-gray-400 border-gray-400/30";
+      default:
+        return "bg-yellow-950/50 text-yellow-400 border-yellow-400/30";
+    }
   };
 
-  const renderContributors = (contributors?: Contributor[]) => {
-    if (!contributors || contributors.length === 0) return null;
-
-    return (
-      <div className="flex-grow">
-        <AvatarCircles
-          avatarUrls={contributors.slice(0, 5).map((contributor) => ({
-            imageUrl: contributor.avatar_url,
-            profileUrl: contributor.html_url,
-          }))}
-          numPeople={contributors.length > 5 ? contributors.length - 5 : 0}
-        />
-      </div>
-    );
+  const handleCardClick = () => {
+    setIsLoading(true);
+    window.location.href = projectInfo.pageUrl;
   };
 
-  const renderButton = () => {
-    const link = repoProps?.repoLink || pageLink;
-    const buttonText = repoProps ? "GITHUB" : "Explore";
-
-    return (
-      <Link href={link} passHref>
-        <ShinyButton className="w-full border px-4 py-2 rounded-lg border-gray-700 hover:bg-gray-700 hover:text-white">
-          <div className="flex items-center justify-center gap-2">
-            {repoProps && <IconBrandGithub className="h-5 w-5" />}
-            <span className="text-base">{buttonText}</span>
-          </div>
-        </ShinyButton>
-      </Link>
-    );
-  };
+  const buttonLink = projectInfo.githubUrl || projectInfo.pageUrl;
+  const ButtonIcon = projectInfo.githubUrl ? LuGithub : LuExternalLink;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        scale: { type: "spring", visualDuration: 0.9, bounce: 0.1 },
-      }}
+    <Card
+      className="w-full max-w-md bg-card text-card-foreground shadow-lg cursor-pointer transition-all duration-300 hover:bg-muted/50"
+      onClick={handleCardClick}
     >
-      <div className="relative w-full max-w-md mx-auto group">
-        {/* Background Glow */}
-        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.95] rounded-full blur-2xl z-0" />
-
-        {/* Card Content */}
-        <div className="relative shadow-md bg-gray-900 border border-gray-800 px-4 py-4 h-full rounded-2xl flex flex-col justify-start items-start space-y-4 group-hover:shadow-lg group-hover:translate-y-[-4px] transition-all duration-300  overflow-hidden">
-          {/* Page Link */}
-          <Link href={pageLink} passHref>
-            <div
-              className="absolute inset-0 z-0"
-              aria-label={`Navigate to ${title}`}
-            />
-          </Link>
-
-          {/* Status */}
-          {renderStatus(repoProps?.status)}
-
-          {/* Title and Description */}
-          <div className="flex-grow">
-            <h1 className="font-bold text-xl text-white mb-2">{title}</h1>
-            <p className="text-base text-slate-400">{description}</p>
+      <CardHeader className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <LuGraduationCap className="w-5 h-5 text-primary" />
+            <h2 className="text-xl font-semibold">{projectInfo.title}</h2>
           </div>
-
-          {/* Contributors */}
-          {renderContributors(repoProps?.contributors)}
-
-          {/* Call-to-Action Button */}
-          <div className="w-full mt-4">{renderButton()}</div>
-
-          {/* Meteor Effect */}
-          <Meteors number={30} />
+          <Badge
+            variant="outline"
+            className={`${getStatusColor(
+              fetchedData?.status || ProjectStatus.UNKNOWN
+            )}`}
+          >
+            {fetchedData?.status || ProjectStatus.UNKNOWN}
+          </Badge>
         </div>
-      </div>
-    </motion.div>
+        {fetchedData?.description ? (
+          <p className="text-muted-foreground">{fetchedData.description}</p>
+        ) : (
+          <Skeleton className="w-full h-6 rounded-md bg-muted-foreground/20" />
+        )}
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <LuCalendar className="w-4 h-4 text-primary" />
+            <span>开始: {projectInfo.startDate}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <LuCalendar className="w-4 h-4 text-primary" />
+            <span>结束: {projectInfo.endDate}</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-start bg-muted p-3 rounded-md">
+          <div className="flex -space-x-2">
+            {fetchedData?.contributors ? (
+              <AvatarCircles
+                avatarUrls={fetchedData.contributors
+                  .slice(0, 5)
+                  .map((contributor) => ({
+                    imageUrl: contributor.avatar_url,
+                    profileUrl: contributor.html_url,
+                  }))}
+                numPeople={Math.max(0, fetchedData.contributors.length - 5)}
+              />
+            ) : (
+              <Skeleton className="w-8 h-8 rounded-full bg-muted-foreground/20" />
+            )}
+          </div>
+        </div>
+        {projectInfo.tags && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <LuBookOpen className="w-4 h-4 text-primary" />
+              <span className="font-medium">学习主题</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {projectInfo.tags.map((tag, i) => (
+                <Badge
+                  key={i}
+                  variant="secondary"
+                  className="bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+      </CardContent>
+      <CardFooter>
+        <ShinyButton
+          className="w-full bg-muted hover:bg-muted/80 text-muted-foreground transition-colors duration-300"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsLoading(true);
+            window.open(buttonLink, "_blank");
+          }}
+          disabled={isLoading}
+        >
+          <div className="flex justify-center gap-2">
+            <ButtonIcon className="w-4 h-4" />
+            {isLoading
+              ? "Loading..."
+              : projectInfo.githubUrl
+              ? "View on GitHub"
+              : "View Project"}
+          </div>
+        </ShinyButton>
+      </CardFooter>
+    </Card>
   );
 }
