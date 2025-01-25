@@ -146,7 +146,16 @@ export default function ProjectCard({
                 numPeople={Math.max(0, fetchedData.contributors.length - 5)}
               />
             ) : (
-              <Skeleton className="w-8 h-8 rounded-full bg-muted-foreground/20" />
+              <div className="flex -space-x-4">
+                {Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      className="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-muted-foreground/20"
+                    />
+                  ))}
+              </div>
             )}
           </div>
         </div>
