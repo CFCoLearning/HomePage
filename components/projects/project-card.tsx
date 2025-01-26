@@ -78,13 +78,13 @@ export default function ProjectCard({
   const getStatusColor = (status: ProjectStatus) => {
     switch (status) {
       case ProjectStatus.SIGN_UP:
-        return "bg-blue-950/50 text-blue-400 border-blue-400/30";
+        return "bg-RoyalBlue-950/50 text-RoyalBlue-400 border-RoyalBlue-400/30";
       case ProjectStatus.IN_PROGRESS:
-        return "bg-emerald-950/50 text-emerald-400 border-emerald-400/30";
+        return "bg-MutedSage-950/50 text-MutedSage-400 border-MutedSage-400/30";
       case ProjectStatus.FINISHED:
-        return "bg-gray-800/50 text-gray-400 border-gray-400/30";
+        return "bg-DeepCharcoal-950/50 text-DeepCharcoal-400 border-DeepCharcoal-400/30";
       default:
-        return "bg-yellow-950/50 text-yellow-400 border-yellow-400/30";
+        return "bg-OliveGray-950/50 text-OliveGray-400 border-OliveGray-400/30";
     }
   };
 
@@ -98,7 +98,9 @@ export default function ProjectCard({
 
   return (
     <Card
-      className="w-full max-w-md bg-card text-card-foreground shadow-lg cursor-pointer transition-all duration-300 hover:bg-muted/50"
+      className={
+        "rounded-lg bg-background/70 backdrop-blur-[6px] overflow-hidden w-full max-w-md shadow-lg cursor-pointer transition-all duration-300 border border-gray-600"
+      }
       onClick={handleCardClick}
     >
       <CardHeader className="space-y-4">
@@ -111,7 +113,7 @@ export default function ProjectCard({
             variant="outline"
             className={`${getStatusColor(
               fetchedData?.status || ProjectStatus.UNKNOWN
-            )}`}
+            )} rounded-full`}
           >
             {fetchedData?.status || ProjectStatus.UNKNOWN}
           </Badge>

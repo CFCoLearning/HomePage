@@ -12,6 +12,10 @@ bun dev
 
 `dev` 部署页面：https://dev.bibibai.top
 
+## ColorTheme
+
+![color](./color-theme.svg)
+
 ## TODO List
 
 - [x] fix：SSR 组件 `Projects` 无法及时获取数据
