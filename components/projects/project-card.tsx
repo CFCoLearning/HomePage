@@ -100,12 +100,12 @@ export default function ProjectCard({
 
   return (
     <motion.div
-      className="overflow-hidden w-full max-w-md"
+      className="overflow-hidden w-full max-w-md h-full"
       whileHover={{ y: -5, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
       transition={{ duration: 0.1 }}
     >
       <Card
-        className="rounded-lg bg-background/70 backdrop-blur-[6px] overflow-hidden w-full max-w-md shadow-lg cursor-pointer transition-all duration-300"
+        className="flex flex-col rounded-lg bg-background/70 backdrop-blur-[6px] overflow-hidden w-full max-w-md shadow-lg cursor-pointer transition-all duration-300 h-full"
         onClick={handleCardClick}
       >
         <CardHeader className="space-y-4">
@@ -114,14 +114,16 @@ export default function ProjectCard({
               <LuGraduationCap className="w-5 h-5 text-primary" />
               <h2 className="text-xl font-semibold">{projectInfo.title}</h2>
             </div>
-            <Badge
-              variant="outline"
-              className={`${getStatusColor(
-                fetchedData?.status || ProjectStatus.UNKNOWN
-              )} rounded-full`}
-            >
-              {fetchedData?.status || ProjectStatus.UNKNOWN}
-            </Badge>
+            <div className="flex items-center justify-center">
+              <Badge
+                variant="outline"
+                className={`${
+                  getStatusColor(fetchedData?.status || ProjectStatus.UNKNOWN)
+                } rounded-full whitespace-nowrap overflow-hidden`}
+              >
+                {fetchedData?.status || ProjectStatus.UNKNOWN}
+              </Badge>
+            </div>
           </div>
           {fetchedData?.description ? (
             <p className="text-muted-foreground">{fetchedData.description}</p>
@@ -129,7 +131,7 @@ export default function ProjectCard({
             <Skeleton className="w-full h-6 rounded-md bg-muted-foreground/20" />
           )}
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="flex-grow space-y-6">
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <LuCalendar className="w-4 h-4 text-primary" />
