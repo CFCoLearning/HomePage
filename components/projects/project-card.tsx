@@ -117,9 +117,9 @@ export default function ProjectCard({
             <div className="flex items-center justify-center">
               <Badge
                 variant="outline"
-                className={`${
-                  getStatusColor(fetchedData?.status || ProjectStatus.UNKNOWN)
-                } rounded-full whitespace-nowrap overflow-hidden`}
+                className={`${getStatusColor(
+                  fetchedData?.status || ProjectStatus.UNKNOWN
+                )} rounded-full whitespace-nowrap overflow-hidden`}
               >
                 {fetchedData?.status || ProjectStatus.UNKNOWN}
               </Badge>
