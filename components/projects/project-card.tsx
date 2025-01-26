@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import {
   LuBookOpen,
   LuExternalLink,
@@ -97,110 +98,114 @@ export default function ProjectCard({
   const ButtonIcon = projectInfo.githubUrl ? LuGithub : LuExternalLink;
 
   return (
-    <Card
-      className={
-        "rounded-lg bg-background/70 backdrop-blur-[6px] overflow-hidden w-full max-w-md shadow-lg cursor-pointer transition-all duration-300 border border-gray-600"
-      }
-      onClick={handleCardClick}
+    <motion.div
+      className="overflow-hidden w-full max-w-md"
+      whileHover={{ y: -5, boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)" }}
+      transition={{ duration: 0.1 }}
     >
-      <CardHeader className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <LuGraduationCap className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-semibold">{projectInfo.title}</h2>
+      <Card
+        className="rounded-lg bg-background/70 backdrop-blur-[6px] overflow-hidden w-full max-w-md shadow-lg cursor-pointer transition-all duration-300"
+        onClick={handleCardClick}
+      >
+        <CardHeader className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <LuGraduationCap className="w-5 h-5 text-primary" />
+              <h2 className="text-xl font-semibold">{projectInfo.title}</h2>
+            </div>
+            <Badge
+              variant="outline"
+              className={`${getStatusColor(
+                fetchedData?.status || ProjectStatus.UNKNOWN
+              )} rounded-full`}
+            >
+              {fetchedData?.status || ProjectStatus.UNKNOWN}
+            </Badge>
           </div>
-          <Badge
-            variant="outline"
-            className={`${getStatusColor(
-              fetchedData?.status || ProjectStatus.UNKNOWN
-            )} rounded-full`}
-          >
-            {fetchedData?.status || ProjectStatus.UNKNOWN}
-          </Badge>
-        </div>
-        {fetchedData?.description ? (
-          <p className="text-muted-foreground">{fetchedData.description}</p>
-        ) : (
-          <Skeleton className="w-full h-6 rounded-md bg-muted-foreground/20" />
-        )}
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="flex items-center gap-6 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <LuCalendar className="w-4 h-4 text-primary" />
-            <span>开始: {projectInfo.startDate}</span>
+          {fetchedData?.description ? (
+            <p className="text-muted-foreground">{fetchedData.description}</p>
+          ) : (
+            <Skeleton className="w-full h-6 rounded-md bg-muted-foreground/20" />
+          )}
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <LuCalendar className="w-4 h-4 text-primary" />
+              <span>开始: {projectInfo.startDate}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <LuCalendar className="w-4 h-4 text-primary" />
+              <span>结束: {projectInfo.endDate}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <LuCalendar className="w-4 h-4 text-primary" />
-            <span>结束: {projectInfo.endDate}</span>
+          <div className="flex items-center justify-start bg-PaleTeal-950/80 p-3 rounded-md">
+            <div className="flex -space-x-2">
+              {fetchedData?.contributors ? (
+                <AvatarCircles
+                  avatarUrls={fetchedData.contributors
+                    .slice(0, 5)
+                    .map((contributor) => ({
+                      imageUrl: contributor.avatar_url,
+                      profileUrl: contributor.html_url,
+                    }))}
+                  numPeople={Math.max(0, fetchedData.contributors.length - 5)}
+                />
+              ) : (
+                <div className="flex -space-x-4">
+                  {Array(5)
+                    .fill(null)
+                    .map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        className="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-muted-foreground/20"
+                      />
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center justify-start bg-muted p-3 rounded-md">
-          <div className="flex -space-x-2">
-            {fetchedData?.contributors ? (
-              <AvatarCircles
-                avatarUrls={fetchedData.contributors
-                  .slice(0, 5)
-                  .map((contributor) => ({
-                    imageUrl: contributor.avatar_url,
-                    profileUrl: contributor.html_url,
-                  }))}
-                numPeople={Math.max(0, fetchedData.contributors.length - 5)}
-              />
-            ) : (
-              <div className="flex -space-x-4">
-                {Array(5)
-                  .fill(null)
-                  .map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="h-10 w-10 rounded-full border-2 border-white dark:border-gray-800 bg-muted-foreground/20"
-                    />
-                  ))}
+          {projectInfo.tags && (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <LuBookOpen className="w-4 h-4 text-primary" />
+                <span className="font-medium">学习主题</span>
               </div>
-            )}
-          </div>
-        </div>
-        {projectInfo.tags && (
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <LuBookOpen className="w-4 h-4 text-primary" />
-              <span className="font-medium">学习主题</span>
+              <div className="flex flex-wrap gap-2">
+                {projectInfo.tags.map((tag, i) => (
+                  <Badge
+                    key={i}
+                    variant="secondary"
+                    className="bg-SlateBlue-900 hover:bg-SlateBlue-400/80"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {projectInfo.tags.map((tag, i) => (
-                <Badge
-                  key={i}
-                  variant="secondary"
-                  className="bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                >
-                  {tag}
-                </Badge>
-              ))}
+          )}
+        </CardContent>
+        <CardFooter>
+          <ShinyButton
+            className="w-full bg-background hover:bg-background/80 text-muted-foreground transition-colors duration-300"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsLoading(true);
+              window.open(buttonLink, "_blank");
+            }}
+            disabled={isLoading}
+          >
+            <div className="flex justify-center gap-2">
+              <ButtonIcon className="w-4 h-4" />
+              {isLoading
+                ? "Loading..."
+                : projectInfo.githubUrl
+                ? "View on GitHub"
+                : "View Project"}
             </div>
-          </div>
-        )}
-      </CardContent>
-      <CardFooter>
-        <ShinyButton
-          className="w-full bg-muted hover:bg-muted/80 text-muted-foreground transition-colors duration-300"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsLoading(true);
-            window.open(buttonLink, "_blank");
-          }}
-          disabled={isLoading}
-        >
-          <div className="flex justify-center gap-2">
-            <ButtonIcon className="w-4 h-4" />
-            {isLoading
-              ? "Loading..."
-              : projectInfo.githubUrl
-              ? "View on GitHub"
-              : "View Project"}
-          </div>
-        </ShinyButton>
-      </CardFooter>
-    </Card>
+          </ShinyButton>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 }

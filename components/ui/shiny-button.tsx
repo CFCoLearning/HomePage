@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const animationProps = {
-  initial: { "--x": "100%", scale: 0.8 },
+  initial: { "--x": "100%", scale: 1 },
   animate: { "--x": "-100%", scale: 1 },
   whileTap: { scale: 0.95 },
   transition: {

@@ -19,11 +19,9 @@ export function Projects() {
   return (
     <section className="relative py-24">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div layout>
-          {ProjectInfos.map((projectInfo, i) => (
-            <ProjectCard key={i} projectInfo={projectInfo} />
-          ))}
-        </motion.div>
+        {ProjectInfos.map((projectInfo, i) => (
+          <ProjectCard key={i} projectInfo={projectInfo} />
+        ))}
       </div>
     </section>
   );
