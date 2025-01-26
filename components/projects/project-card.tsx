@@ -56,13 +56,14 @@ export default function ProjectCard({
             const contributors = await getContributors(owner, name);
 
             if (repository) {
+              const repoDescription = repository.description || "";
               setFetchedData({
                 contributors: contributors || [],
                 description:
                   projectInfo.description ||
-                  repository.description ||
+                  repoDescription ||
                   "CoLearning Project",
-                status: parseStatus(repository.description),
+                status: parseStatus(repoDescription),
               });
             }
           } catch (error) {
