@@ -153,7 +153,7 @@ export default function ProjectCard({
                 />
               ) : (
                 <div className="flex -space-x-4">
-                  {Array(5)
+                  {Array(6)
                     .fill(null)
                     .map((_, index) => (
                       <Skeleton
