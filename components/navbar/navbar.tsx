@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Home, Smile, Grid, Send } from "lucide-react";
+import { Moon, Sun, Home, Grid, LucideListFilterPlus } from "lucide-react";
 
 export function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -30,10 +30,10 @@ export function Navbar() {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "/", icon: <Home size={24} /> },
-    { name: "About", href: "/about", icon: <Smile size={24} /> },
-    { name: "Projects", href: "/projects", icon: <Grid size={24} /> },
-    { name: "Contact", href: "/contact", icon: <Send size={24} /> },
+    { name: "Home", href: "/", icon: <Home size={20} /> },
+    { name: "Projects", href: "/404", icon: <Grid size={20} /> },
+    { name: "Docs", href: "/404", icon: <LucideListFilterPlus size={20} /> },
+    // { name: "Contact", href: "/contact", icon: <Send size={24} /> },
   ];
 
   const navWidth = `${Math.max(50, 90 - scrollProgress * 40)}%`;
@@ -84,7 +84,7 @@ export function Navbar() {
 
           <div className="flex-1 flex justify-end">
             <button
-              onClick={toggleTheme}
+              // onClick={toggleTheme}
               className="p-2 rounded-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
             >
               {theme === "dark" ? (

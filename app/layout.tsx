@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
 
-import { MagicDock } from "@/components/dock/magic-dock";
+// import { MagicDock } from "@/components/dock/magic-dock";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <MagicDock />
+        {/* <MagicDock /> */}
       </body>
     </html>
   );
