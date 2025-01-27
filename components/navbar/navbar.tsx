@@ -54,7 +54,7 @@ export function Navbar() {
         >
           <div className="flex-1">
             <Link href="/" className="text-xl font-semibold tracking-tight">
-              CO
+              CFCO
             </Link>
           </div>
 
