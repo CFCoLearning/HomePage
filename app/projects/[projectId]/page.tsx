@@ -16,7 +16,7 @@ import { Header } from "../(components)/header";
 export default async function ProjectPage({
   params,
 }: {
-  params: { projectId: string };
+  params: Promise<{ projectId: string }>;
 }) {
   const { projectId } = await Promise.resolve(params);
 
