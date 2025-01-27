@@ -48,7 +48,7 @@ export function Navbar() {
             ${
               scrollProgress > 0
                 ? "bg-background/80 backdrop-blur-lg rounded-full shadow-lg"
-                : "bg-background/80 backdrop-blur-sm"
+                : "bg-background/80 backdrop-blur-sm rounded-full"
             }
           `}
         >
