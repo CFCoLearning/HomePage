@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, CheckCircle2, XCircle } from "lucide-react";
-import { ParticipantProgress } from "@/lib/project";
+import { ParticipantProgress, ParticipantStatus } from "@/lib/project";
 
 interface CheckInTableProps {
   participants: ParticipantProgress[];
@@ -78,10 +78,12 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
                             damping: 10,
                           }}
                         >
-                          {status ? (
-                            <CheckCircle2 className="w-5 h-5 text-secondary mx-auto" />
+                          {status === ParticipantStatus.COMPLETED ? (
+                            <CheckCircle2 className="w-5 h-5 text-MutedSage-500 mx-auto" />
+                          ) : status === ParticipantStatus.IMCOMPLETE ? (
+                            <XCircle className="w-5 h-5 text-SoftRosewood-500 mx-auto" />
                           ) : (
-                            <XCircle className="w-5 h-5 text-accent/20 mx-auto" />
+                            <XCircle className="w-5 h-5 text-yellow-500 mx-auto" />
                           )}
                         </motion.div>
                       </TableCell>
