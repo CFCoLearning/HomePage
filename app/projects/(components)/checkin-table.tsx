@@ -25,13 +25,11 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
       transition={{ duration: 0.5 }}
       className="relative"
     >
-      <div className="flex items-center gap-3 mb-12">
+      <div className="flex items-center gap-3 mb-4">
         <div className="p-3 rounded-lg bg-secondary/10">
-          <Users className="h-6 w-6 text-secondary" />
+          <Users className="h-6 w-6" />
         </div>
-        <h2 className="font-display text-3xl font-bold text-accent">
-          打卡记录
-        </h2>
+        <h2 className="font-display text-3xl font-bold">打卡记录</h2>
       </div>
 
       <Card className="bg-surface-dark/50 backdrop-blur-xl border-secondary/10">
@@ -40,16 +38,11 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
             <Table>
               <TableHeader>
                 <TableRow className="hover:bg-transparent border-b border-secondary/10">
-                  <TableHead className="font-display text-lg text-accent">
-                    用户名
-                  </TableHead>
+                  <TableHead className="font-display text-lg">用户名</TableHead>
                   {Array.from(
                     { length: participants[0]?.status.length ?? 0 },
                     (_, i) => (
-                      <TableHead
-                        key={i}
-                        className="text-center font-display text-accent/60"
-                      >
+                      <TableHead key={i} className="text-center font-display">
                         1.{String(i + 6).padStart(2, "0")}
                       </TableHead>
                     )
@@ -65,9 +58,7 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
                     transition={{ delay: 0.2 + index * 0.1 }}
                     className="border-b border-secondary/10 hover:bg-secondary/5"
                   >
-                    <TableCell className="font-mono text-accent">
-                      {user.name}
-                    </TableCell>
+                    <TableCell className="font-mono">{user.name}</TableCell>
                     {user.status.map((status, i) => (
                       <TableCell key={i} className="text-center p-4">
                         <motion.div
