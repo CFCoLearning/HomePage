@@ -38,12 +38,15 @@ export default async function ProjectPage({
       </motion.div>
       {/* 学习内容 */}
       {/* 时间安排 */}
+      <div className="p-8 pb-24">
+        <Timeline timeline={project.timeline} />
+      </div>
       {/* 学习形式 */}
       {/* 学习资料 */}
       {/* 适合人群 */}
       {/* 收获 */}
-      {/* 打卡 */}
 
+      {/* 打卡 */}
       <div className="p-8 pb-24">
         {project.participants && (
           <CheckInTable participants={project.participants} />
