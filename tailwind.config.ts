@@ -248,6 +248,127 @@ export default {
         mono: ["'Space Mono'", "monospace"],
         retro: ["'VT323'", "monospace"],
       },
+      typography: ({ theme }: { theme: any }) => ({
+        DEFAULT: {
+          css: {
+            "--tw-prose-body": theme("colors.zinc.700"),
+            "--tw-prose-headings": theme("colors.zinc.900"),
+            "--tw-prose-links": theme("colors.secondary.DEFAULT"),
+            "--tw-prose-bold": theme("colors.zinc.900"),
+            "--tw-prose-counters": theme("colors.zinc.500"),
+            "--tw-prose-bullets": theme("colors.zinc.300"),
+            "--tw-prose-hr": theme("colors.zinc.200"),
+            "--tw-prose-quotes": theme("colors.zinc.900"),
+            "--tw-prose-quote-borders": theme("colors.zinc.200"),
+            "--tw-prose-captions": theme("colors.zinc.500"),
+            "--tw-prose-code": theme("colors.zinc.900"),
+            "--tw-prose-pre-code": theme("colors.zinc.200"),
+            "--tw-prose-pre-bg": theme("colors.zinc.800"),
+            "--tw-prose-th-borders": theme("colors.zinc.300"),
+            "--tw-prose-td-borders": theme("colors.zinc.200"),
+
+            // Base
+            maxWidth: "none",
+            margin: "0",
+
+            // Headings
+            "h1, h2, h3, h4, h5, h6": {
+              scrollMarginTop: theme("spacing.20"),
+            },
+
+            // Code
+            code: {
+              borderRadius: theme("borderRadius.md"),
+              padding: theme("spacing.1"),
+              fontSize: theme("fontSize.sm")[0],
+              fontWeight: "400",
+              "&::before": {
+                content: "none",
+              },
+              "&::after": {
+                content: "none",
+              },
+            },
+            pre: {
+              borderRadius: theme("borderRadius.md"),
+              border: "1px solid",
+              borderColor: "var(--tw-prose-td-borders)",
+              backgroundColor: "var(--tw-prose-pre-bg)",
+              padding: theme("spacing.4"),
+              overflow: "auto",
+            },
+
+            // Lists
+            "ul > li": {
+              paddingLeft: "0",
+              "&::marker": {
+                color: "var(--tw-prose-bullets)",
+              },
+            },
+
+            // Tables
+            table: {
+              width: "100%",
+              marginTop: theme("spacing.6"),
+              marginBottom: theme("spacing.6"),
+              borderCollapse: "collapse",
+              overflow: "auto",
+              display: "block",
+            },
+            thead: {
+              borderBottomWidth: "1px",
+              borderBottomColor: "var(--tw-prose-th-borders)",
+              backgroundColor: theme("colors.zinc.50"),
+              position: "sticky",
+              top: "0",
+            },
+            th: {
+              color: "var(--tw-prose-headings)",
+              fontWeight: theme("fontWeight.medium"),
+              textAlign: "left",
+              padding: theme("spacing.3"),
+              backgroundColor: theme("colors.zinc.50"),
+              whiteSpace: "nowrap",
+              borderRight: "1px solid var(--tw-prose-td-borders)",
+              "&:last-child": {
+                borderRight: "none",
+              },
+            },
+            td: {
+              padding: theme("spacing.3"),
+              borderBottom: "1px solid var(--tw-prose-td-borders)",
+              borderRight: "1px solid var(--tw-prose-td-borders)",
+              whiteSpace: "nowrap",
+              "&:last-child": {
+                borderRight: "none",
+              },
+            },
+            "tr:last-child td": {
+              borderBottom: "none",
+            },
+          },
+        },
+        // Dark mode overrides
+        invert: {
+          css: {
+            "--tw-prose-body": theme("colors.zinc.300"),
+            "--tw-prose-headings": theme("colors.zinc.200"),
+            "--tw-prose-links": theme("colors.secondary.light"),
+            "--tw-prose-bold": theme("colors.zinc.200"),
+            "--tw-prose-counters": theme("colors.zinc.400"),
+            "--tw-prose-bullets": theme("colors.zinc.600"),
+            "--tw-prose-hr": theme("colors.zinc.700"),
+            "--tw-prose-quotes": theme("colors.zinc.200"),
+            "--tw-prose-quote-borders": theme("colors.zinc.700"),
+            "--tw-prose-captions": theme("colors.zinc.400"),
+            "--tw-prose-code": theme("colors.zinc.200"),
+            "--tw-prose-pre-code": theme("colors.zinc.200"),
+            "--tw-prose-pre-bg": theme("colors.zinc.900"),
+            "--tw-prose-th-borders": theme("colors.zinc.700"),
+            "--tw-prose-td-borders": theme("colors.zinc.800"),
+          },
+        },
+      }),
     },
   },
   plugins: [

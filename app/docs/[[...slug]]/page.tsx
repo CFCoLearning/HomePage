@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 
-import "@/styles/typography.css";
 import { getDocument } from "@/lib/markdown";
 import { PageBreadcrumb } from "@/components/docs/pagebreadcrumb";
 import { Toc } from "@/components/docs/toc";
