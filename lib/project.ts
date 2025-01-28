@@ -37,12 +37,12 @@ export interface ProjectDetail {
   initiator: string; // 发起者 GitHub 用户名
   status?: ProjectStatus;
   tags: string[];
-  content: string[]; // 学习内容
+  content: string; // 学习内容
   timeline: ProjectTimeline; // 时间安排
-  learningFormat?: string[]; // 学习形式
-  materials?: string[]; // 学习资料
-  suitable?: string[]; // 适合人群
-  gains?: string[]; // 收获
+  learningFormat?: string; // 学习形式
+  materials?: string; // 学习资料
+  suitable?: string; // 适合人群
+  gains?: string; // 收获
   participants?: ParticipantProgress[]; // 参与者打卡
 }
 

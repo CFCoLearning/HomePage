@@ -21,6 +21,28 @@ function innerslug(text: string) {
     .replace(/[^\p{L}\p{N}\-]/gu, "");
 }
 
+export async function ParseRawMdx<Frontmatter>(rawMdx: string) {
+  return await compileMDX<Frontmatter>({
+    source: rawMdx,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [
+          // preCopy,
+          // rehypeCodeTitles,
+          // rehypeKatex,
+          // rehypePrism,
+          rehypeSlug,
+          // rehypeAutolinkHeadings,
+          // postCopy,
+        ],
+        remarkPlugins: [remarkGfm],
+      },
+    },
+    components,
+  });
+}
+
 async function parseMdx<Frontmatter>(rawMdx: string) {
   return await compileMDX<Frontmatter>({
     source: rawMdx,

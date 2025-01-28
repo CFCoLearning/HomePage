@@ -1,17 +1,12 @@
 import { notFound } from "next/navigation";
-import {
-  SpotlightPattern,
-  GridPattern,
-  GlowPattern,
-} from "../(components)/patterns";
 import Timeline from "../(components)/time-line";
-import CourseContent from "../(components)/curse-content";
+import Content from "../(components)/content";
 import CheckInTable from "../(components)/checkin-table";
-import { Button } from "@/components/ui/button";
 import { ProjectDetails } from "@/data/projects";
 import * as motion from "motion/react-client";
 import { Header } from "../(components)/header";
-// import { projects } from "@/data/projects";
+import { CheckoutGradients } from "../(components)/project-gradients";
+import "@/styles/checkout.css";
 
 export default async function ProjectPage({
   params,
@@ -27,55 +22,54 @@ export default async function ProjectPage({
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen relative">
+      <CheckoutGradients />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="mb-12"
+        className="pb-10"
       >
         <Header project={project} />
       </motion.div>
       {/* 学习内容 */}
+      <div className="px-8 pb-10">
+        <Content title="学习内容" content={project.content} />
+      </div>
       {/* 时间安排 */}
-      <div className="p-8 pb-24">
+      <div className="px-8 pb-10">
         <Timeline timeline={project.timeline} />
       </div>
       {/* 学习形式 */}
+      {project.learningFormat && (
+        <div className="px-8 pb-10">
+          <Content title="学习形式" content={project.learningFormat} />
+        </div>
+      )}
       {/* 学习资料 */}
+      {project.materials && (
+        <div className="px-8 pb-10">
+          <Content title="学习资料" content={project.materials} />
+        </div>
+      )}
       {/* 适合人群 */}
+      {project.suitable && (
+        <div className="px-8 pb-10">
+          <Content title="适合人群" content={project.suitable} />
+        </div>
+      )}
       {/* 收获 */}
-
+      {project.gains && (
+        <div className="px-8 pb-10">
+          <Content title="收获" content={project.gains} />
+        </div>
+      )}
       {/* 打卡 */}
-      <div className="p-8 pb-24">
+      <div className="px-8 pb-10">
         {project.participants && (
           <CheckInTable participants={project.participants} />
         )}
       </div>
-
-      {/* <div className="relative">
-        <div className="absolute inset-0 bg-surface skew-y-3 -z-10" />
-        <div className="relative bg-surface py-32 -skew-y-3">
-          <div className="max-w-7xl mx-auto px-6 skew-y-3">
-            <section className="mb-32">
-              <div className="grid lg:grid-cols-2 gap-16">
-                <div id="timeline">
-                  <Timeline timeline={project.timeline} />
-                </div>
-                <div id="content" className="lg:mt-32">
-                  <CourseContent content={project.content} />
-                </div>
-              </div>
-            </section>
-
-            <section id="checkin">
-              {project.participants && (
-                <CheckInTable participants={project.participants} />
-              )}
-            </section>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }
