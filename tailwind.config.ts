@@ -353,7 +353,7 @@ export default {
           css: {
             "--tw-prose-body": theme("colors.zinc.300"),
             "--tw-prose-headings": theme("colors.zinc.200"),
-            "--tw-prose-links": theme("colors.secondary.light"),
+            // "--tw-prose-links": theme("colors.secondary.light"),
             "--tw-prose-bold": theme("colors.zinc.200"),
             "--tw-prose-counters": theme("colors.zinc.400"),
             "--tw-prose-bullets": theme("colors.zinc.600"),
