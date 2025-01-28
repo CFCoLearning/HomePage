@@ -42,7 +42,7 @@ export function Header({ project }: { project: ProjectDetail }) {
       transition={{ duration: 0.5 }}
       className="pt-20 px-4"
     >
-      <div className="bg-background/90 backdrop-blur-xl p-8 rounded-xl">
+      <div className="bg-background/80 backdrop-blur-xl p-8 rounded-xl">
         <div className="flex justify-between items-start mb-8">
           <h1 className="text-4xl font-bold tracking-tight">{project.title}</h1>
           {project.github_url && (
@@ -68,7 +68,7 @@ export function Header({ project }: { project: ProjectDetail }) {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + index * 0.1 }}
                 >
-                  <Badge className="bg-secondary/10 text-secondary px-4 py-2 text-base rounded-full">
+                  <Badge className="bg-DeepCharcoal-900 hover:bg-DeepCharcoal-800 text-secondary px-4 py-2 text-base rounded-full">
                     {tag}
                   </Badge>
                 </motion.div>

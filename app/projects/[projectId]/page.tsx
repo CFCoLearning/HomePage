@@ -24,7 +24,7 @@ export default async function ProjectPage({
   return (
     <div className="min-h-screen relative overflow-hidden">
       <CheckoutGradients />
-      <div className="w-full md:w-2/3 mx-auto">
+      <div className="w-full md:w-2/3 mx-auto pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
