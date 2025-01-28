@@ -31,8 +31,12 @@ export function Navbar() {
 
   const navItems = [
     { name: "Home", href: "/", icon: <Home size={20} /> },
-    { name: "Projects", href: "/404", icon: <Grid size={20} /> },
-    { name: "Docs", href: "/404", icon: <LucideListFilterPlus size={20} /> },
+    // { name: "Projects", href: "/404", icon: <Grid size={20} /> },
+    {
+      name: "Docs",
+      href: "/docs/introduction",
+      icon: <LucideListFilterPlus size={20} />,
+    },
     // { name: "Contact", href: "/contact", icon: <Send size={24} /> },
   ];
 
