@@ -22,7 +22,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <div className="min-h-screen relative flex justify-center">
+    <div className="min-h-screen relative overflow-hidden">
       <CheckoutGradients />
       <div className="w-full md:w-2/3 mx-auto">
         <motion.div
