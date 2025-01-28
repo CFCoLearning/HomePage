@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, CheckCircle2, XCircle } from "lucide-react";
+import { Users, CheckCircle2, XCircle, Circle } from "lucide-react";
 import { ParticipantProgress, ParticipantStatus } from "@/lib/project";
 
 interface CheckInTableProps {
@@ -69,11 +69,12 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
                         >
                           {status === ParticipantStatus.COMPLETED ? (
                             <CheckCircle2 className="w-5 h-5 text-MutedSage-500 mx-auto" />
-                          ) : status === ParticipantStatus.IMCOMPLETE ? (
+                          ) : status === ParticipantStatus.INCOMPLETE ? (
+                            <Circle className="w-5 h-5 text-yellow-500 mx-auto" />
+                          ) : status === ParticipantStatus.FAILED ? (
                             <XCircle className="w-5 h-5 text-SoftRosewood-500 mx-auto" />
-                          ) : (
-                            <XCircle className="w-5 h-5 text-yellow-500 mx-auto" />
-                          )}
+                          ) : null}{" "}
+                          {/* 如果是 NULL，就不渲染任何内容 */}
                         </motion.div>
                       </TableCell>
                     ))}

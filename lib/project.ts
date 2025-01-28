@@ -64,6 +64,7 @@ export interface ParticipantProgress {
 
 export enum ParticipantStatus {
   COMPLETED = "已完成",
-  IMCOMPLETE = "未完成",
+  INCOMPLETE = "未完成",
   FAILED = "失败",
+  NULL = "",
 }
