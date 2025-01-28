@@ -346,6 +346,57 @@ export const ProjectDetails: ProjectDetail[] = [
 * 乐于分享和探索新技术的学习者。`,
     gains: `* 掌握 TypeScript + React + Next.js 现代前端技术栈，具备从前端到后端的开发能力。
 * 通过共学经历，丰富简历内容，增强技术面试的自信心。`,
+    materials: `**Next.js 与 TailwindCSS 文档**
+
+* [NextjsDoc](https://nextjs.org/docs): Next.js 官方文档，了解服务器端渲染、静态生成等现代前端框架功能。
+* [TailwindcssDoc](https://tailwindcss.com/docs/installation/using-vite): TailwindCSS 的快速入门指南，轻松掌握实用的原子化 CSS。
+
+**实用 UI 库**
+* [shadcn](https://ui.shadcn.com/docs): 基于 TailwindCSS 的现代化 UI 组件库。
+* [aceternity](https://ui.aceternity.com/components): 提供多种交互式组件，注重响应式设计。
+* [magicui](https://magicui.design/docs/components/marquee): 创意十足的 UI 组件库，提供独特的效果。
+* [reactbits](https://www.reactbits.dev/components/stack): 专注于小型 React 组件集合，适合简单项目。
+* [devui](https://www.devui.in/components/hero): 美观实用的组件库，支持多种应用场景。
+* [hyperui](https://www.hyperui.dev/): 免费的 TailwindCSS 组件库，支持快速开发。
+* [cuicui](https://cuicui.day/): 现代化、优雅的 React 组件库。
+* [tailusUI](https://ui.tailus.io/react/components/context-menu/): 提供丰富的 React UI 组件，助力快速开发。
+* [flowbite](https://flowbite.com/docs/typography/links/): 结合 TailwindCSS 的高质量组件库。
+* [heroui](https://www.heroui.com/docs/components/range-calendar): 设计精美、功能强大的 React 组件库。
+
+**设计参考**
+* [mobbin](https://mobbin.com/explore/web): 汇总优质设计案例，适合灵感来源和设计借鉴。
+
+**设计工具**
+* [figma](https://www.figma.com/): 流行的协作式界面设计工具。
+* [framer](https://www.framer.com/): 支持交互式原型制作与高效设计。
+* [framer 简短视频教程](https://www.youtube.com/watch?v=X7uO7g93rtg): Framer 快速入门视频教程，适合新手快速学习。
+
+**格式化工具**
+* [biomejs](https://biomejs.dev/zh-cn/): 代码格式化和检查工具，提升代码规范性。
+
+**动画效果**
+* [motion](https://motion.dev): 强大的 React 动画库，轻松实现流畅的交互效果。
+* [react-spring](https://www.react-spring.dev/): 功能强大的动画库，支持基于物理的交互和流畅效果。
+
+**低饱和配色生成**
+* [grayscale.design](https://grayscale.design/): 自动生成柔和低饱和的配色方案，适合高级设计需求。
+
+**一站式后端服务**
+* [convex](https://docs.convex.dev/home): 提供实时数据库和后端逻辑处理服务。
+* [sanity](https://www.sanity.io/): 灵活的内容管理平台，支持内容结构化。
+* [supabase](https://supabase.com/docs): 开源 Firebase 替代方案，集成认证、数据库和文件存储功能。
+
+**认证服务**
+* [clerk](https://clerk.com/docs): 简单易用的用户认证和管理解决方案。
+
+**ORM**
+* [prisma](https://www.prisma.io/docs/getting-started/quickstart-sqlite): 功能强大的 ORM 工具，支持多种数据库操作。
+
+**实战项目**
+* [全栈社交 SaaS 应用](https://www.youtube.com/watch?v=o080tU3sd0k): 手把手教你构建一个全栈社交平台的完整教程，适合进阶学习者。
+
+**内容处理**
+* [MDX](https://mdxjs.com/docs/): 将 Markdown 与 JSX 结合的工具，可在 Markdown 中直接使用 React 组件。`,
     timeline: {
       registration: {
         start: "2025-01-27",
