@@ -26,13 +26,11 @@ export default function CheckInTable({ participants }: CheckInTableProps) {
       className="relative"
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-3 rounded-lg bg-secondary/10">
-          <Users className="h-6 w-6" />
-        </div>
+        <Users className="h-6 w-6" />
         <h2 className="font-display text-3xl font-bold">打卡记录</h2>
       </div>
 
-      <Card className="bg-surface-dark/50 backdrop-blur-xl border-secondary/10">
+      <Card className="bg-background/50 backdrop-blur-xl border-DeepCharcoal-600/60">
         <CardContent className="p-4">
           <div className="overflow-x-auto">
             <Table>
