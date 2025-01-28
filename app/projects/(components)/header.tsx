@@ -40,16 +40,15 @@ export function Header({ project }: { project: ProjectDetail }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="pt-20"
+      className="pt-20 px-4"
     >
-      {/* <div className="container mx-auto p-4 z-10"> */}
-      <div className="bg-background p-8">
+      <div className="bg-background/90 backdrop-blur-xl p-8 rounded-xl">
         <div className="flex justify-between items-start mb-8">
           <h1 className="text-4xl font-bold tracking-tight">{project.title}</h1>
           {project.github_url && (
             <Link
               href={project.github_url}
-              className="inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-medium text-primary bg-RoyalBlue-700 rounded-full shadow-lg hover:bg-RoyalBlue-600 transition-all duration-300 ease-in-out whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-medium text-primary bg-RoyalBlue-800 rounded-full shadow-lg hover:bg-RoyalBlue-700 transition-all duration-300 ease-in-out whitespace-nowrap"
             >
               <span>Check it out</span>
               <ArrowUpRightFromSquare className="h-5 w-5" />
@@ -96,7 +95,7 @@ export function Header({ project }: { project: ProjectDetail }) {
                             variant="link"
                             className="p-0 h-auto font-normal"
                           >
-                            @{project.initiator}
+                            <div className="text-lg">@{project.initiator}</div>
                           </Button>
                         </Link>
                       ) : (
@@ -104,12 +103,19 @@ export function Header({ project }: { project: ProjectDetail }) {
                           variant="link"
                           className="p-0 h-auto font-normal"
                         >
-                          @{project.initiator}
+                          <div className="text-lg">@{project.initiator}</div>
                         </Button>
                       )}
                     </div>
                   </HoverCardTrigger>
-                  <HoverCardContent align="start" className="w-80">
+                  <HoverCardContent
+                    side="bottom"
+                    align="end"
+                    sideOffset={10}
+                    alignOffset={-20}
+                    avoidCollisions={true}
+                    className="w-80 max-w-[calc(100vw-16px)] text-wrap bg-background/80 backdrop-blur-xl"
+                  >
                     {userInfo ? (
                       <div className="flex gap-4">
                         <Avatar className="h-12 w-12">
@@ -168,7 +174,6 @@ export function Header({ project }: { project: ProjectDetail }) {
           </div>
         </div>
       </div>
-      {/* </div> */}
     </motion.div>
   );
 }
