@@ -11,7 +11,7 @@ interface TimelineProps {
   timeline: ProjectTimeline;
 }
 
-export default function Timeline({ timeline }: TimelineProps) {
+export function Timeline({ timeline }: TimelineProps) {
   const timelineData = [
     {
       title: "报名时间",

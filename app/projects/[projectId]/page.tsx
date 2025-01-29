@@ -1,12 +1,15 @@
-import { notFound } from "next/navigation";
-import Timeline from "../(components)/time-line";
-import Content from "../(components)/content";
-import CheckInTable from "../(components)/checkin-table";
-import { ProjectDetails } from "@/data/projects";
 import * as motion from "motion/react-client";
+import { notFound } from "next/navigation";
+
 import { Header } from "../(components)/header";
-import { CheckoutGradients } from "../(components)/project-gradients";
-import "@/styles/checkout.css";
+import { Content } from "../(components)/content";
+import { Timeline } from "../(components)/time-line";
+import { CheckInTable } from "../(components)/checkin-table";
+import { ProjectGradients } from "../(components)/project-gradients";
+
+import "@/styles/project.css";
+
+import { ProjectDetails } from "@/data/projects";
 
 export default async function ProjectPage({
   params,
@@ -23,7 +26,7 @@ export default async function ProjectPage({
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <CheckoutGradients />
+      <ProjectGradients />
       <div className="w-full md:w-2/3 mx-auto pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

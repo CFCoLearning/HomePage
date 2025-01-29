@@ -17,7 +17,7 @@ interface CheckInTableProps {
   participants: ParticipantProgress[];
 }
 
-export default function CheckInTable({ participants }: CheckInTableProps) {
+export function CheckInTable({ participants }: CheckInTableProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

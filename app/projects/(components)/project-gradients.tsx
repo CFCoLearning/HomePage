@@ -1,4 +1,4 @@
-export function CheckoutGradients() {
+export function ProjectGradients() {
   const desktopClasses = "absolute inset-0 checkout-background-base";
   const mobileClasses = "checkout-background-base checkout-mobile-grainy-blur";
 

@@ -9,7 +9,7 @@ interface ContentProps {
   content: string;
 }
 
-export default async function Content({ title, content }: ContentProps) {
+export async function Content({ title, content }: ContentProps) {
   const result = await ParseRawMdx<{ title: string }>(content);
 
   return (
