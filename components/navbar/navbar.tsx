@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Home, Grid, LucideListFilterPlus } from "lucide-react";
+import { Moon, Sun, Home, LucideListFilterPlus, Activity } from "lucide-react";
 
 export function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -36,6 +36,11 @@ export function Navbar() {
       name: "Docs",
       href: "/docs/introduction",
       icon: <LucideListFilterPlus size={20} />,
+    },
+    {
+      name: "Hackathon",
+      href: "/hackathon",
+      icon: <Activity size={20} />,
     },
     // { name: "Contact", href: "/contact", icon: <Send size={24} /> },
   ];
