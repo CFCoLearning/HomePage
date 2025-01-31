@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Moon, Sun, Home, LucideListFilterPlus, Activity } from "lucide-react";
+import { Example } from "../auth-button";
 
 export function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -92,7 +93,7 @@ export function Navbar() {
           </div>
 
           <div className="flex-1 flex justify-end">
-            <button
+            {/* <button
               // onClick={toggleTheme}
               className="p-2 rounded-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
             >
@@ -102,7 +103,8 @@ export function Navbar() {
                 <Moon className="h-5 w-5" />
               )}
               <span className="sr-only">Toggle theme</span>
-            </button>
+            </button> */}
+            <Example />
           </div>
         </nav>
       </header>
