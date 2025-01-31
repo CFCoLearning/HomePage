@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Moon, Sun, Home, LucideListFilterPlus, Activity } from "lucide-react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -96,12 +97,13 @@ export function Navbar() {
               // onClick={toggleTheme}
               className="p-2 rounded-md transition-all duration-300 hover:bg-accent hover:text-accent-foreground"
             >
-              {theme === "dark" ? (
+              {/* {theme === "dark" ? (
                 <Sun className="h-5 w-5" />
               ) : (
                 <Moon className="h-5 w-5" />
               )}
-              <span className="sr-only">Toggle theme</span>
+              <span className="sr-only">Toggle theme</span> */}
+              <ConnectButton />
             </button>
           </div>
         </nav>
