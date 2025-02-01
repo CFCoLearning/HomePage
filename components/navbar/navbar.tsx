@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Moon, Sun, Home, LucideListFilterPlus, Activity } from "lucide-react";
-import { Example } from "../auth-button";
+import { WalletButton } from "../web3/wallet-button";
 
 export function Navbar() {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
@@ -104,7 +104,7 @@ export function Navbar() {
               )}
               <span className="sr-only">Toggle theme</span>
             </button> */}
-            <Example />
+            <WalletButton />
           </div>
         </nav>
       </header>
