@@ -9,9 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_THIRDWEB_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }}
-
+    environment: thirdweb
+    
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
