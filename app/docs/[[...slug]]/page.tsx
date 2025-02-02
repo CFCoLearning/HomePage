@@ -1,5 +1,3 @@
-import { notFound } from "next/navigation";
-
 import { Toc } from "@/components/docs/toc";
 import { Typography } from "@/components/typography";
 import { PageBreadcrumb } from "@/components/docs/pagebreadcrumb";
@@ -15,7 +13,11 @@ export default async function Pages({ params }: PageProps) {
   const pathName = slug.join("/");
   const res = await getDocument("docs", pathName);
 
-  if (!res) notFound();
+  if (!res) {
+    return {
+      notFound: true,
+    };
+  }
 
   const { frontmatter, content, tocs } = res;
 

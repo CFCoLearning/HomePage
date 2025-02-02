@@ -1,5 +1,4 @@
 import * as motion from "motion/react-client";
-import { notFound } from "next/navigation";
 
 import { Header } from "../(components)/header";
 import { Content } from "../(components)/content";
@@ -21,7 +20,9 @@ export default async function ProjectPage({
   const project = ProjectDetails.find((p) => p.id === projectId);
 
   if (!project) {
-    notFound();
+    return {
+      notFound: true,
+    };
   }
 
   return (
