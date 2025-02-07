@@ -1,6 +1,15 @@
 import { Sparkles } from "lucide-react";
 import EventCard from "./(components)/event-card";
 import Background from "./(components)/background";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { RegisterForm } from "./(components)/register-form";
 
 export default function HackathonPage() {
   return (
@@ -29,7 +38,22 @@ export default function HackathonPage() {
               className="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-black transition duration-300"
             >
               <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-green-300 to-emerald-400 rounded-lg"></span>
-              <span className="relative">Register Now</span>
+              <span className="relative">
+                <Dialog>
+                  <DialogTrigger>Register Now</DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Are you absolutely sure?</DialogTitle>
+                      <DialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <RegisterForm />
+                  </DialogContent>
+                </Dialog>
+              </span>
             </a>
 
             <a
