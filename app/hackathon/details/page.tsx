@@ -10,6 +10,7 @@ import {
   Users,
   ChevronDown,
   ChevronUp,
+  Percent,
 } from "lucide-react";
 import Background from "../(components)/background";
 
@@ -20,21 +21,15 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "Who can participate in the hackathon?",
-    answer:
-      "The CFC Mini Hackathon is open to all developers, designers, and innovators, regardless of experience level. We welcome students, professionals, and enthusiasts alike!",
+    question: "谁可以参加这次 Hackathon？",
+    answer: "本次 CFC Mini Hackathon 仅限 CQUT 大一同学参加。",
   },
-  {
-    question: "Do I need to have a team before registering?",
-    answer:
-      "No, you don't need to have a team before registering. We'll have a team formation session at the beginning of the event where you can meet other participants and form teams.",
-  },
-  {
-    question: "What should I bring to the hackathon?",
-    answer:
-      "Bring your laptop, charger, and any other devices you might need for development. We'll provide food, drinks, and a comfortable hacking space.",
-  },
-  // Add more FAQs as needed
+  // {
+  //   question: "我应该带什么参加 Hackathon？",
+  //   answer:
+  //     "请带上您的笔记本电脑、充电器以及开发可能需要的任何其他设备。我们将提供食物、饮料和舒适的编程空间。",
+  // },
+  // 可以根据需要添加更多常见问题
 ];
 
 export default function DetailsPage() {
@@ -52,89 +47,147 @@ export default function DetailsPage() {
         </Link>
 
         <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white">
-          CFC Mini Hackathon 2024: Event Details
+          CFC Mini Hackathon 2025：活动详情
         </h1>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-8 text-white">
-            <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center">
-                <Calendar className="mr-2 text-green-400" />
-                About the Event
-              </h2>
-              <p className="text-lg">
-                The CFC Mini Hackathon 2024 is an exciting 24-hour coding event
-                where developers, designers, and innovators come together to
-                create groundbreaking solutions. Organized by CFC Studio, this
-                hackathon aims to foster creativity, collaboration, and
-                technological innovation.
-              </p>
-            </section>
+        <div className="space-y-8">
+          <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
+            <h2 className="text-2xl font-semibold mb-4 flex items-center">
+              <Calendar className="mr-2 text-green-400" />
+              关于活动
+            </h2>
+            <p className="text-lg">
+              CFC Mini Hackathon 2025是一个激动人心的 120 小时编程活动。 由 CFC
+              Studio 组织的这次 Hackathon
+              旨在培养创造力、促进协作并推动技术创新。
+            </p>
+          </section>
 
-            <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center">
-                <Trophy className="mr-2 text-yellow-400" />
-                Prizes
-              </h2>
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  <span className="text-yellow-400 mr-2">1st Place:</span>
-                  $3,000 + Mentorship Program
-                </li>
-                <li className="flex items-center">
-                  <span className="text-gray-400 mr-2">2nd Place:</span>
-                  $2,000 + Cloud Credits
-                </li>
-                <li className="flex items-center">
-                  <span className="text-orange-400 mr-2">3rd Place:</span>
-                  $1,000 + Digital Rewards
-                </li>
-                <li className="flex items-center">
-                  <span className="text-green-400 mr-2">Best Innovation:</span>
-                  Special Recognition and Prizes
-                </li>
-              </ul>
-            </section>
-          </div>
+          <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
+            <h2 className="text-2xl font-semibold mb-4 flex items-center">
+              <Percent className="mr-2 text-indigo-400" />
+              评分标准
+            </h2>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <span className="text-indigo-400 mr-2 font-bold">40%</span>
+                <div>
+                  <p className="font-semibold">功能实现</p>
+                  <p className="text-sm text-white/70">
+                    任务是否完成，功能是否正常运行。
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-indigo-400 mr-2 font-bold">30%</span>
+                <div>
+                  <p className="font-semibold">代码质量</p>
+                  <p className="text-sm text-white/70">
+                    代码是否清晰、可读，是否遵循 Rust 的最佳实践。
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-indigo-400 mr-2 font-bold">20%</span>
+                <div>
+                  <p className="font-semibold">创新性</p>
+                  <p className="text-sm text-white/70">
+                    是否有新的功能或思路，是否展示了对 Lisp 的深刻理解。
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-indigo-400 mr-2 font-bold">10%</span>
+                <div>
+                  <p className="font-semibold">演示效果</p>
+                  <p className="text-sm text-white/70">
+                    演示是否清晰，解释器运行是否流畅。
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </section>
 
-          <div className="space-y-8 text-white">
-            <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center">
-                <Book className="mr-2 text-blue-400" />
-                Event Schedule
-              </h2>
-              <ul className="space-y-2">
-                <li>Day 1, 9:00 AM: Opening Ceremony and Team Formation</li>
-                <li>Day 1, 10:00 AM: Hacking Begins</li>
-                <li>Day 1, 2:00 PM: Mentorship Sessions</li>
-                <li>Day 2, 9:00 AM: Project Submissions</li>
-                <li>Day 2, 2:00 PM: Project Presentations</li>
-                <li>Day 2, 4:00 PM: Awards Ceremony</li>
-              </ul>
-            </section>
+          <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
+            <h2 className="text-2xl font-semibold mb-4 flex items-center">
+              <Trophy className="mr-2 text-yellow-400" />
+              丰厚奖励
+            </h2>
+            <ul className="space-y-4">
+              <li className="flex items-start">
+                <span className="text-yellow-400 mr-2 font-bold text-xl">
+                  🥇 一等奖
+                </span>
+                <div>
+                  <p className="font-semibold">
+                    500元人民币 或 70 美元等值数字货币
+                  </p>
+                  <p className="text-sm text-white/70">
+                    为您的创意插上翱翔的翅膀！
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-gray-400 mr-2 font-bold text-xl">
+                  🥈 二等奖
+                </span>
+                <div>
+                  <p className="font-semibold">
+                    300元人民币 或 42 美元等值数字货币
+                  </p>
+                  <p className="text-sm text-white/70">
+                    您的创新精神值得这份奖励！
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-orange-400 mr-2 font-bold text-xl">
+                  🥉 三等奖
+                </span>
+                <div>
+                  <p className="font-semibold">
+                    100元人民币 或 14 美元等值数字货币
+                  </p>
+                  <p className="text-sm text-white/70">
+                    继续前进，您的潜力无限！
+                  </p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="text-green-400 mr-2 font-bold text-xl">
+                  🌟 参与奖
+                </span>
+                <div>
+                  <p className="font-semibold">共享 100 元人民币奖金池</p>
+                  <p className="text-sm text-white/70">
+                    （一、二、三等奖获得者以外）每一位参与者都是赢家！
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <p className="mt-4 text-sm text-white/80 italic">
+              注：数字货币奖励将以当日汇率计算，包括 ETH
+              或其他主流数字货币（任选其一）。
+            </p>
+          </section>
 
-            <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
-              <h2 className="text-2xl font-semibold mb-4 flex items-center">
-                <Users className="mr-2 text-purple-400" />
-                Rules and Guidelines
-              </h2>
-              <ul className="space-y-2">
-                <li>Teams must consist of 2-4 members</li>
-                <li>All code must be written during the hackathon</li>
-                <li>Use of open-source libraries and APIs is allowed</li>
-                <li>
-                  Projects must be original and solve a real-world problem
-                </li>
-                <li>Respect intellectual property rights</li>
-              </ul>
-            </section>
-          </div>
+          <section className="bg-white/10 backdrop-blur-md rounded-xl p-6">
+            <h2 className="text-2xl font-semibold mb-4 flex items-center">
+              <Users className="mr-2 text-purple-400" />
+              规则和指南
+            </h2>
+            <ul className="space-y-2">
+              <li>报名者须由 1-4 名成员组成</li>
+              <li>所有代码必须在 Hackathon 期间编写</li>
+              <li>允许使用开源库和API</li>
+              <li>项目必须原创并解决实际问题</li>
+              <li>尊重知识产权</li>
+            </ul>
+          </section>
         </div>
 
         <section className="mt-12 bg-white/10 backdrop-blur-md rounded-xl p-6">
-          <h2 className="text-2xl font-semibold mb-4 text-white">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4 text-white">常见问题</h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/20 pb-4">
