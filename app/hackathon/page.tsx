@@ -41,14 +41,9 @@ export default function HackathonPage() {
               <span className="relative">
                 <Dialog>
                   <DialogTrigger>Register Now</DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
                     <DialogHeader>
-                      <DialogTitle>Are you absolutely sure?</DialogTitle>
-                      <DialogDescription>
-                        This action cannot be undone. This will permanently
-                        delete your account and remove your data from our
-                        servers.
-                      </DialogDescription>
+                      <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
                     </DialogHeader>
                     <RegisterForm />
                   </DialogContent>

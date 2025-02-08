@@ -83,7 +83,7 @@ export default function DetailsPage() {
                 <div>
                   <p className="font-semibold">代码质量</p>
                   <p className="text-sm text-white/70">
-                    代码是否清晰、可读，是否遵循 Rust 的最佳实践。
+                    代码是否清晰、可读，是否遵循最佳代码实践。
                   </p>
                 </div>
               </li>
@@ -92,7 +92,7 @@ export default function DetailsPage() {
                 <div>
                   <p className="font-semibold">创新性</p>
                   <p className="text-sm text-white/70">
-                    是否有新的功能或思路，是否展示了对 Lisp 的深刻理解。
+                    是否有新的创意，是否解决了实际问题。
                   </p>
                 </div>
               </li>
