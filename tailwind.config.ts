@@ -229,6 +229,7 @@ export default {
         float: "float 6s ease-in-out infinite",
         "float-slow": "float 8s ease-in-out infinite",
         "float-slower": "float 10s ease-in-out infinite",
+        "neon-sparkle": "neon-sparkle 0.6s cubic-bezier(0.4, 0, 0.6, 1)",
       },
       keyframes: {
         meteor: {
@@ -242,6 +243,10 @@ export default {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
+        },
+        "neon-sparkle": {
+          "0%, 100%": { transform: "translateY(0) scale(1)" },
+          "50%": { transform: "translateY(200%) scale(1.5)" },
         },
       },
       fontFamily: {

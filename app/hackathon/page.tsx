@@ -4,7 +4,6 @@ import Background from "./(components)/background";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -14,54 +13,53 @@ import { RegisterForm } from "./(components)/register-form";
 export default function HackathonPage() {
   return (
     <Background>
-      <div className="min-h-[90vh] grid lg:grid-cols-2 gap-8 items-center py-12">
-        {/* Left Column */}
-        <div className="space-y-8">
-          <h1 className="text-6xl md:text-7xl font-bold text-white tracking-tight leading-tight">
+      <div className="min-h-[90vh] grid lg:grid-cols-2 items-center gap-8 px-6 lg:px-20 py-12">
+        {/* 左侧文本内容 */}
+        <div className="space-y-6 text-center lg:text-left">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-white tracking-tight leading-tight">
             MINI HACKATHON
             <br />
             THAT ARE OUT OF
             <br />
             THIS WORLD
-            <Sparkles className="inline-block ml-2 w-12 h-12 text-yellow-300" />
+            <Sparkles className="inline-block ml-2 w-10 sm:w-12 h-10 sm:h-12 text-yellow-300" />
           </h1>
 
-          <p className="text-lg md:text-xl text-white/80 max-w-xl">
+          <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-xl mx-auto lg:mx-0">
             Join CFC Studio's innovative hackathon where creativity meets code.
             Transform your ideas into reality and compete with fellow developers
-            in this exciting 120-hour（TODO） coding adventure.
+            in this exciting <strong>120-hour</strong> coding adventure.
           </p>
 
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="#register"
-              className="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-black transition duration-300"
-            >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-green-300 to-emerald-400 rounded-lg"></span>
-              <span className="relative">
-                <Dialog>
-                  <DialogTrigger>Register Now</DialogTrigger>
-                  <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
-                    <DialogHeader>
-                      <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
-                    </DialogHeader>
-                    <RegisterForm />
-                  </DialogContent>
-                </Dialog>
+          {/* 按钮组 */}
+          <div className="flex justify-center lg:justify-start mt-4">
+            {/* <Dialog>
+              <DialogTrigger className="relative px-8 py-3 font-bold text-black transition duration-300 bg-gradient-to-br from-green-300 to-emerald-400 rounded-lg shadow-lg hover:scale-105">
+                Register Now
+              </DialogTrigger>
+              <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
+                <DialogHeader>
+                  <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
+                </DialogHeader>
+                <RegisterForm />
+              </DialogContent>
+            </Dialog> */}
+            <button className="relative inline-flex items-center justify-center w-40 sm:w-48 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold transition-all duration-500 hover:-translate-y-1 group min-w-[400px]">
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-400/30 to-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity blur-[2px]" />
+              <div className="absolute inset-0 bg-white/5 backdrop-blur-xl rounded-lg border border-white/20 transition-all group-hover:border-cyan-300/50" />
+              <span className="relative bg-gradient-to-r from-cyan-400 via-blue-300 to-purple-400 bg-clip-text text-transparent tracking-wide">
+                Learn more
               </span>
-            </a>
-
-            <a
-              href="/hackathon/details"
-              className="inline-flex items-center justify-center px-8 py-3 font-bold text-white border-2 border-white/20 rounded-lg backdrop-blur-sm hover:bg-white/10 transition duration-300"
-            >
-              Learn more
-            </a>
+              <div className="absolute inset-0 overflow-hidden rounded-lg">
+                <div className="absolute -top-[100%] left-1/4 w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-neon-sparkle" />
+                <div className="absolute -bottom-[100%] right-1/4 w-1 h-1 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-neon-sparkle" />
+              </div>
+            </button>
           </div>
         </div>
 
-        {/* Right Column - Event Card */}
-        <div className="relative">
+        {/* 右侧图片或事件卡片 */}
+        <div className="flex justify-center lg:justify-end relative w-full mt-6 lg:mt-0">
           <EventCard
             eventName="CFC Mini Hackathon 2024"
             endDate="2024-02-15T00:00:00"
@@ -69,9 +67,6 @@ export default function HackathonPage() {
             maxTeamSize={4}
             registrationUrl="#register"
           />
-          {/* Decorative Elements */}
-          <div className="absolute -top-4 -right-4 w-24 h-24 bg-green-400/20 rounded-full blur-2xl"></div>
-          <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-violet-400/20 rounded-full blur-2xl"></div>
         </div>
       </div>
     </Background>
