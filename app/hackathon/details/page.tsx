@@ -64,12 +64,10 @@ export default function DetailsPage() {
             </p>
           </section>
 
-          <section className="bg-white/15 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
+          <section className="bg-white/20 backdrop-blur-lg rounded-2xl p-8 border border-white/15 shadow-lg">
             <h2 className="text-3xl font-bold mb-8 flex items-center">
-              <Percent className="mr-3 text-indigo-400 w-8 h-8" />
-              <span className="bg-gradient-to-r from-indigo-400 to-purple-300 bg-clip-text text-transparent">
-                评分标准
-              </span>
+              <Percent className="mr-3 text-blue-300 w-8 h-8" />
+              <span className="text-blue-300">评分标准</span>
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {[
@@ -96,16 +94,16 @@ export default function DetailsPage() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-start p-4 bg-white/5 rounded-xl"
+                  className="flex items-start p-4 bg-gray-900/10 rounded-xl border border-white/10"
                 >
-                  <span className="text-2xl font-bold text-indigo-400 mr-4">
+                  <span className="text-2xl font-bold text-blue-300 mr-4">
                     {item.percent}
                   </span>
                   <div>
-                    <h3 className="text-xl font-semibold text-white/95">
+                    <h3 className="text-xl font-semibold text-white">
                       {item.title}
                     </h3>
-                    <p className="mt-1 text-white/80 leading-relaxed">
+                    <p className="mt-1 text-gray-300 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
@@ -154,7 +152,7 @@ export default function DetailsPage() {
               ].map((award, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-gradient-to-br from-white/10 to-transparent rounded-xl border border-white/10"
+                  className="p-6 bg-gray-900/10 rounded-xl border border-white/10"
                 >
                   <div className="flex items-center mb-4">
                     <span className={`text-4xl mr-3 ${award.color}`}>
