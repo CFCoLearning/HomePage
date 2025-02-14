@@ -6,7 +6,7 @@ export default function HackathonLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <WavyBackground className="min-h-screen relative">
+    <WavyBackground className="min-h-screen relative pt-20">
       {children}
     </WavyBackground>
   );

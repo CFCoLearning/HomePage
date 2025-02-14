@@ -6,7 +6,7 @@ import "@/styles/home-page.css";
 
 export default function Home() {
   return (
-    <main>
+    <main className="pt-20">
       <HomePageBackground />
       <HeroSection />
       <Projects />

@@ -40,7 +40,7 @@ export function Header({ project }: { project: ProjectDetail }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="pt-20 px-4"
+      className="px-4"
     >
       <div className="bg-background/80 backdrop-blur-xl p-8 rounded-xl">
         <div className="flex justify-between items-start mb-8">

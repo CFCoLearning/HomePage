@@ -26,7 +26,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden pt-32">
       <ProjectGradients />
       <div className="w-full md:w-2/3 mx-auto pb-20">
         <motion.div
