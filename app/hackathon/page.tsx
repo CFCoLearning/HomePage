@@ -9,11 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { RegisterForm } from "./(components)/register-form";
 import Link from "next/link";
-import { WavyBackground } from "@/components/ui/wavy-background";
 
 export default function HackathonPage() {
   return (
-    <WavyBackground className="min-h-screen relative">
+    <div className="min-h-screen">
       {/* <div className="min-h-screen relative overflow-hidden"> */}
       <div className="min-h-[90vh] grid lg:grid-cols-2 items-center gap-8 px-6 lg:px-20 py-12">
         {/* 左侧文本内容 */}
@@ -75,6 +74,6 @@ export default function HackathonPage() {
         </div>
       </div>
       {/* </div> */}
-    </WavyBackground>
+    </div>
   );
 }
