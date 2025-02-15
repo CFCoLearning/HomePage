@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  NEXT_PUBLIC_THIRDWEB_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }}
-  THIRDWEB_SECRET_KEY: ${{ secrets.THIRDWEB_SECRET_KEY }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,6 +31,7 @@ jobs:
             --push \
             --build-arg NEXT_PUBLIC_THIRDWEB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }} \
             --build-arg THIRDWEB_SECRET_KEY=${{ secrets.THIRDWEB_SECRET_KEY }} \
+            --build-arg NEXT_PUBLIC_CONVEX_URL=${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             .
