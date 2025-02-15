@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 // 表单校验规则
 const FormSchema = z.object({
@@ -40,12 +42,19 @@ const formFields = [
 ] as const;
 
 export function RegisterForm() {
+  const register = useMutation(api.register.createRegister);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { id: "", nickname: "", github_url: "" },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    await register({
+      studentId: data.id,
+      nickname: data.nickname,
+      githubLink: data.github_url,
+    });
     toast({
       title: "You submitted the following values:",
       description: (

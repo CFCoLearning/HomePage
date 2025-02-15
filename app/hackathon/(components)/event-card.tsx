@@ -3,6 +3,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Calendar, Users, Timer } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { RegisterForm } from "./register-form";
 
 interface EventCardProps {
   eventImage?: string;
@@ -97,12 +105,23 @@ export default function EventCard({
         </div>
 
         {/* Register Button */}
-        <a
+        <Dialog>
+          <DialogTrigger className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300">
+            Register Now
+          </DialogTrigger>
+          <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
+            <DialogHeader>
+              <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
+            </DialogHeader>
+            <RegisterForm />
+          </DialogContent>
+        </Dialog>
+        {/* <a
           href={registrationUrl}
           className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300"
         >
           Register Now
-        </a>
+        </a> */}
       </div>
     </div>
   );
