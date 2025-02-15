@@ -94,8 +94,8 @@ export default function DetailsPage() {
                     item.color === "emerald"
                       ? "bg-emerald-500/10 text-emerald-400"
                       : item.color === "blue"
-                      ? "bg-blue-500/10 text-blue-400"
-                      : "bg-purple-500/10 text-purple-400"
+                        ? "bg-blue-500/10 text-blue-400"
+                        : "bg-purple-500/10 text-purple-400"
                   }`}
                 >
                   {item.date} {item.label}
