@@ -7,25 +7,8 @@ import {
   Calendar,
   Trophy,
   ChevronDown,
-  ChevronUp,
   Percent,
 } from "lucide-react";
-
-interface FAQItem {
-  question: string;
-  answer: string;
-}
-interface Criteria {
-  percent: string;
-  title: string;
-  desc: string;
-}
-interface Award {
-  emoji: string;
-  title: string;
-  prize: string;
-  desc: string;
-}
 
 const PAGE_DATA = {
   faqs: [
@@ -72,166 +55,157 @@ export default function DetailsPage() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen">
-      <div className="py-12 px-4 md:px-8 max-w-4xl mx-auto space-y-8 z-10 relative overflow-y-auto">
-        {/* 返回按钮 */}
-        <Link
-          href="/hackathon"
-          className="inline-flex items-center text-gray-300 hover:text-emerald-400 transition-colors group"
-        >
-          <ArrowLeft className="mr-2 w-5 h-5 transition-transform group-hover:-translate-x-1" />
-          Go Back
-        </Link>
+    <div className="py-8 px-4 md:px-8 max-w-4xl mx-auto space-y-8 z-10 relative overflow-y-auto">
+      <Link
+        href="/hackathon"
+        className="inline-flex items-center text-gray-300 hover:text-emerald-400 transition-colors group"
+      >
+        <ArrowLeft className="mr-2 w-5 h-5 transition-transform group-hover:-translate-x-1" />
+        Go Back
+      </Link>
 
-        {/* 主标题 */}
-        <header className="space-y-2">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-100">
-            CFC 2025 Mini Hackathon
-          </h1>
-        </header>
+      <header className="space-y-2">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-100">
+          CFC 2025 Mini Hackathon
+        </h1>
+      </header>
 
-        {/* 时间线模块 */}
-        <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
-          <div className="flex items-center mb-4">
-            <Calendar className="mr-3 text-emerald-400 w-6 h-6" />
-            <h2 className="text-xl font-semibold text-gray-100">活动流程</h2>
+      <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
+        <div className="flex items-center mb-4">
+          <Calendar className="mr-3 text-emerald-400 w-6 h-6" />
+          <h2 className="text-xl font-semibold text-gray-100">活动流程</h2>
+        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-lg font-medium text-emerald-400">核心阶段</h3>
+            <div className="flex flex-wrap gap-2">
+              {[
+                {
+                  date: "2.24-28",
+                  label: "线上开发阶段",
+                  color: "emerald",
+                },
+                { date: "3.1", label: "线上答辩评审", color: "blue" },
+                { date: "3.2", label: "线下交流（可选）", color: "purple" },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className={`px-3 py-1.5 rounded-full text-sm ${
+                    item.color === "emerald"
+                      ? "bg-emerald-500/10 text-emerald-400"
+                      : item.color === "blue"
+                      ? "bg-blue-500/10 text-blue-400"
+                      : "bg-purple-500/10 text-purple-400"
+                  }`}
+                >
+                  {item.date} {item.label}
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium text-emerald-400">核心阶段</h3>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  {
-                    date: "2.24-28",
-                    label: "线上开发阶段",
-                    color: "emerald",
-                  },
-                  { date: "3.1", label: "线上答辩评审", color: "blue" },
-                  { date: "3.2", label: "线下交流（可选）", color: "purple" },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className={`px-3 py-1.5 rounded-full text-sm ${
-                      item.color === "emerald"
-                        ? "bg-emerald-500/10 text-emerald-400"
-                        : item.color === "blue"
-                        ? "bg-blue-500/10 text-blue-400"
-                        : "bg-purple-500/10 text-purple-400"
-                    }`}
-                  >
-                    {item.date} {item.label}
-                  </div>
-                ))}
+          <p className="text-sm text-gray-400 leading-relaxed">
+            全程线上参与，最终成果展示将于
+            <span className="text-emerald-300 mx-1.5">花溪校区4教203</span>
+            举办，参赛者可自由选择是否参加线下交流环节
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
+        <div className="flex items-center mb-4">
+          <Percent className="mr-3 text-blue-400 w-6 h-6" />
+          <h2 className="text-xl font-semibold text-gray-100">评审标准</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {PAGE_DATA.criteria.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-start p-4 bg-gray-700/10 rounded-lg gap-4 border border-gray-700/30"
+            >
+              <div className="text-2xl font-bold text-blue-400">
+                {item.percent}
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-100">
+                  {item.title}
+                </h3>
+                <p className="mt-1 text-gray-400 text-sm">{item.desc}</p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              全程线上参与，最终成果展示将于
-              <span className="text-emerald-300 mx-1.5">花溪校区4教203</span>
-              举办，参赛者可自由选择是否参加线下交流环节
-            </p>
-          </div>
-        </section>
-
-        {/* 评分标准 */}
-        <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
-          <div className="flex items-center mb-4">
-            <Percent className="mr-3 text-blue-400 w-6 h-6" />
-            <h2 className="text-xl font-semibold text-gray-100">评审标准</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {PAGE_DATA.criteria.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-start p-4 bg-gray-700/10 rounded-lg gap-4 border border-gray-700/30"
-              >
-                <div className="text-2xl font-bold text-blue-400">
-                  {item.percent}
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-100">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-gray-400 text-sm">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 奖项设置 */}
-        <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
-          <div className="flex items-center mb-4">
-            <Trophy className="mr-3 text-yellow-400 w-6 h-6" />
-            <h2 className="text-xl font-semibold text-gray-100">奖项设置</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            {PAGE_DATA.awards.map((award, index) => (
-              <div
-                key={index}
-                className="flex items-start p-4 bg-gray-700/10 rounded-lg gap-4 border border-gray-700/30"
-              >
-                <div className="text-3xl">{award.emoji}</div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-100">
-                    {award.title}
-                  </h3>
-                  <p className="text-emerald-400 font-medium mt-1">
-                    {award.prize}
-                  </p>
-                  <p className="mt-2 text-sm text-gray-400 italic">
-                    {award.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 px-4 py-3 bg-yellow-400/10 rounded-lg text-yellow-300 text-sm border border-yellow-400/20">
-            注：数字货币奖励以发放当日汇率计算，包括 ETH
-            或其他主流数字货币（任选其一）
-          </div>
-        </section>
-
-        {/* 常见问题 */}
-        <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
-          <h2 className="text-xl font-semibold text-gray-100 mb-4">常见问题</h2>
-          <div className="space-y-3">
-            {PAGE_DATA.faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="border-b border-gray-700/50 pb-3 last:border-0"
-              >
-                <button
-                  className="flex justify-between items-center w-full p-3 hover:bg-gray-700/20 rounded-lg transition-all"
-                  onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                >
-                  <span className="text-gray-100 pr-4">{faq.question}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                      openFAQ === index ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                {openFAQ === index && (
-                  <div className="pl-4 pr-8 mt-2">
-                    <p className="text-gray-400 text-sm leading-relaxed border-l-4 border-emerald-400 pl-4">
-                      {faq.answer}
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 注册CTA */}
-        <div className="text-center pt-6">
-          <Link
-            href="/#register"
-            className="inline-block px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-lg font-medium rounded-xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-emerald-500/20"
-          >
-            Register Now
-          </Link>
+          ))}
         </div>
+      </section>
+
+      <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
+        <div className="flex items-center mb-4">
+          <Trophy className="mr-3 text-yellow-400 w-6 h-6" />
+          <h2 className="text-xl font-semibold text-gray-100">奖项设置</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {PAGE_DATA.awards.map((award, index) => (
+            <div
+              key={index}
+              className="flex items-start p-4 bg-gray-700/10 rounded-lg gap-4 border border-gray-700/30"
+            >
+              <div className="text-3xl">{award.emoji}</div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-100">
+                  {award.title}
+                </h3>
+                <p className="text-emerald-400 font-medium mt-1">
+                  {award.prize}
+                </p>
+                <p className="mt-2 text-sm text-gray-400 italic">
+                  {award.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 px-4 py-3 bg-yellow-400/10 rounded-lg text-yellow-300 text-sm border border-yellow-400/20">
+          注：数字货币奖励以发放当日汇率计算，包括 ETH
+          或其他主流数字货币（任选其一）
+        </div>
+      </section>
+
+      <section className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 transition-colors hover:border-emerald-400/30">
+        <h2 className="text-xl font-semibold text-gray-100 mb-4">常见问题</h2>
+        <div className="space-y-3">
+          {PAGE_DATA.faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="border-b border-gray-700/50 pb-3 last:border-0"
+            >
+              <button
+                className="flex justify-between items-center w-full p-3 hover:bg-gray-700/20 rounded-lg transition-all"
+                onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
+              >
+                <span className="text-gray-100 pr-4">{faq.question}</span>
+                <ChevronDown
+                  className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
+                    openFAQ === index ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {openFAQ === index && (
+                <div className="pl-4 pr-8 mt-2">
+                  <p className="text-gray-400 text-sm leading-relaxed border-l-4 border-emerald-400 pl-4">
+                    {faq.answer}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="text-center pt-6">
+        <Link
+          href="/#register"
+          className="inline-block px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-lg font-medium rounded-xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-emerald-500/20"
+        >
+          Register Now
+        </Link>
       </div>
     </div>
   );
