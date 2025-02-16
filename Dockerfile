@@ -4,6 +4,9 @@ FROM node:20-alpine
 # 设置工作目录
 WORKDIR /app
 
+# 安装 Python 和构建工具（node-gyp 需要）
+RUN apk add --no-cache python3 py3-pip make g++ 
+
 # 复制 package.json 和 package-lock.json 以加速构建缓存
 COPY package.json package-lock.json ./
 
