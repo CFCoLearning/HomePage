@@ -18,6 +18,7 @@ bun dev
 
 ## TODO List
 
+- [ ] feature：jwt 认证
 - [x] fix：SSR 组件 `Projects` 无法及时获取数据
 - [x] feature：首页载入动画
 - [ ] feature：Docs 页面支持移动端
