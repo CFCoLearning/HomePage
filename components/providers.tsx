@@ -1,4 +1,3 @@
-import { ThirdwebProvider } from "thirdweb/react";
 import { ConvexClientProvider } from "./convex-client-provider";
 
 export function Providers({
@@ -6,9 +5,5 @@ export function Providers({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <ThirdwebProvider>
-      <ConvexClientProvider>{children}</ConvexClientProvider>
-    </ThirdwebProvider>
-  );
+  return <ConvexClientProvider>{children}</ConvexClientProvider>;
 }
