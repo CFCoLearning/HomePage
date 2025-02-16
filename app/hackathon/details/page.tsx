@@ -201,10 +201,10 @@ export default function DetailsPage() {
 
       <div className="text-center pt-6">
         <Link
-          href="/#register"
+          href="/hackathon"
           className="inline-block px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-lg font-medium rounded-xl transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-emerald-500/20"
         >
-          Register Now
+          Go to register
         </Link>
       </div>
     </div>

@@ -3,14 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Calendar, Users, Timer } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { RegisterForm } from "./register-form";
+import { RegisterButton } from "./register-button";
 
 interface EventCardProps {
   eventImage?: string;
@@ -115,22 +108,10 @@ export default function EventCard({
         </div>
 
         {/* Register Button */}
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger
-            className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={isRegistrationEnded}
-          >
-            {isRegistrationEnded ? "Registration Deadline" : "Register Now"}
-          </DialogTrigger>
-          <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 border-white/10">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-bold text-white">
-                开启你的 Hackathon 之旅
-              </DialogTitle>
-            </DialogHeader>
-            <RegisterForm onCloseAction={handleClose} />
-          </DialogContent>
-        </Dialog>
+        <RegisterButton
+          isRegistrationEnded={isRegistrationEnded}
+          eventName={eventName}
+        />
       </div>
     </div>
   );
