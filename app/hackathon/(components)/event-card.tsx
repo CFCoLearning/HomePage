@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { Calendar, Users, Timer } from "lucide-react";
 import {
   Dialog,
@@ -18,7 +18,6 @@ interface EventCardProps {
   endDate: string;
   minTeamSize: number;
   maxTeamSize: number;
-  registrationUrl: string;
 }
 
 export default function EventCard({
@@ -27,7 +26,6 @@ export default function EventCard({
   endDate,
   minTeamSize,
   maxTeamSize,
-  registrationUrl,
 }: EventCardProps) {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -35,6 +33,7 @@ export default function EventCard({
     minutes: 0,
     seconds: 0,
   });
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -56,8 +55,14 @@ export default function EventCard({
     return () => clearInterval(timer);
   }, [endDate]);
 
+  const isRegistrationEnded = +new Date(endDate) - +new Date() <= 0;
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <div className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-white/10">
+    <div className="relative w-full max-w-md mx-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-white/10 shadow-xl">
       {/* Event Image */}
       <div className="relative h-64 w-full">
         <Image
@@ -66,7 +71,7 @@ export default function EventCard({
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
         <div className="absolute bottom-4 left-4 right-4">
           <h3 className="text-xl font-bold text-white mb-2">{eventName}</h3>
         </div>
@@ -77,8 +82,13 @@ export default function EventCard({
         {/* Countdown Timer */}
         <div className="grid grid-cols-4 gap-2 text-center">
           {Object.entries(timeLeft).map(([key, value]) => (
-            <div key={key} className="bg-white/5 rounded-lg p-2">
-              <div className="text-2xl font-mono text-green-400">{value}</div>
+            <div
+              key={key}
+              className="bg-white/5 rounded-lg p-2 backdrop-blur-sm border border-white/5"
+            >
+              <div className="text-2xl font-mono text-green-400">
+                {String(value).padStart(2, "0")}
+              </div>
               <div className="text-xs text-white/60 uppercase">{key}</div>
             </div>
           ))}
@@ -105,23 +115,22 @@ export default function EventCard({
         </div>
 
         {/* Register Button */}
-        <Dialog>
-          <DialogTrigger className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300">
-            Register Now
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger
+            className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isRegistrationEnded}
+          >
+            {isRegistrationEnded ? "Registration Deadline" : "Register Now"}
           </DialogTrigger>
-          <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
+          <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 border-white/10">
             <DialogHeader>
-              <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
+              <DialogTitle className="text-xl font-bold text-white">
+                开启你的 Hackathon 之旅
+              </DialogTitle>
             </DialogHeader>
-            <RegisterForm />
+            <RegisterForm onCloseAction={handleClose} />
           </DialogContent>
         </Dialog>
-        {/* <a
-          href={registrationUrl}
-          className="block w-full py-3 px-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg text-center transition-colors duration-300"
-        >
-          Register Now
-        </a> */}
       </div>
     </div>
   );

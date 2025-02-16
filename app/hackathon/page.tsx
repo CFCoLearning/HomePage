@@ -1,13 +1,5 @@
 import { Sparkles } from "lucide-react";
 import EventCard from "./(components)/event-card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { RegisterForm } from "./(components)/register-form";
 import Link from "next/link";
 
 export default function HackathonPage() {
@@ -32,17 +24,6 @@ export default function HackathonPage() {
 
         {/* 按钮组 */}
         <div className="flex justify-center lg:justify-start mt-4">
-          {/* <Dialog>
-              <DialogTrigger className="relative px-8 py-3 font-bold text-black transition duration-300 bg-gradient-to-br from-green-300 to-emerald-400 rounded-lg shadow-lg hover:scale-105">
-                Register Now
-              </DialogTrigger>
-              <DialogContent className="max-w-md bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl border-0">
-                <DialogHeader>
-                  <DialogTitle>开启你的 Hackathon 之旅</DialogTitle>
-                </DialogHeader>
-                <RegisterForm />
-              </DialogContent>
-            </Dialog> */}
           <Link
             href="/hackathon/details"
             className="relative inline-flex items-center justify-center w-40 sm:w-48 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold transition-all duration-500 hover:-translate-y-1 group min-w-[400px]"
@@ -64,10 +45,9 @@ export default function HackathonPage() {
       <div className="flex justify-center lg:justify-end relative w-full mt-6 lg:mt-0">
         <EventCard
           eventName="CFC Mini Hackathon 2024"
-          endDate="2024-02-15T00:00:00"
+          endDate="2024-03-5T00:00:00"
           minTeamSize={2}
           maxTeamSize={4}
-          registrationUrl="#register"
         />
       </div>
     </div>
