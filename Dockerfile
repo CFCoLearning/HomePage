@@ -13,12 +13,9 @@ RUN npm install
 # 复制所有项目文件
 COPY . .
 
-# 使用 Secret 机制加载密钥，并确保环境变量全局可用
-RUN --mount=type=secret,id=thirdweb_key \
-    --mount=type=secret,id=convex_key \
-    sh -c "export THIRDWEB_SECRET_KEY=$(cat /run/secrets/thirdweb_key) && \
-           export CONVEX_DEPLOY_KEY=$(cat /run/secrets/convex_key) && \
-           echo 'Secrets loaded successfully'"
+# 设置环境变量
+ARG CONVEX_DEPLOY_KEY
+ENV CONVEX_DEPLOY_KEY=${CONVEX_DEPLOY_KEY}
 
 # 运行构建命令
 RUN npx convex deploy --cmd 'npm run build'

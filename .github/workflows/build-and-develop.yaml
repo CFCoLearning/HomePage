@@ -34,8 +34,7 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --secret id=thirdweb_key,src=thirdweb_key \
-            --secret id=convex_key,src=convex_key \
+            --build-arg "CONVEX_DEPLOY_KEY=${{ secrets.CONVEX_DEPLOY_KEY }}" \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             .
