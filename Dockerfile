@@ -1,12 +1,5 @@
 FROM node:20-alpine
 
-ARG NEXT_PUBLIC_THIRDWEB_CLIENT_ID
-ARG THIRDWEB_SECRET_KEY
-
-ENV NEXT_PUBLIC_THIRDWEB_CLIENT_ID=$NEXT_PUBLIC_THIRDWEB_CLIENT_ID
-ENV THIRDWEB_SECRET_KEY=$THIRDWEB_SECRET_KEY
-ENV CONVEX_DEPLOY_KEY=$CONVEX_DEPLOY_KEY
-
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -14,6 +7,12 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
+
+RUN --mount=type=secret,id=thirdweb_key \
+    --mount=type=secret,id=convex_key \
+    sh -c "export THIRDWEB_SECRET_KEY=$(cat /run/secrets/thirdweb_key) && \
+           export CONVEX_DEPLOY_KEY=$(cat /run/secrets/convex_key) && \
+           echo 'Secrets loaded successfully'"
 
 RUN npx convex deploy --cmd 'npm run build'
 

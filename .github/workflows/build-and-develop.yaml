@@ -6,12 +6,6 @@ on:
   pull_request:
     branches: ["main"]
 
-env:
-  NEXT_PUBLIC_THIRDWEB_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }}
-  THIRDWEB_SECRET_KEY: ${{ secrets.THIRDWEB_SECRET_KEY }}
-  NEXT_PUBLIC_CONVEX_URL: ${{ secrets.NEXT_PUBLIC_CONVEX_URL }}
-  CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,14 +24,18 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
+      - name: Create secret files
+        run: |
+          echo -n "${{ secrets.THIRDWEB_SECRET_KEY }}" > thirdweb_key
+          echo -n "${{ secrets.CONVEX_DEPLOY_KEY }}" > convex_key
+
       - name: Build and push Docker image
         run: |
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --build-arg "NEXT_PUBLIC_THIRDWEB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }}" \
-            --build-arg "THIRDWEB_SECRET_KEY=${{ secrets.THIRDWEB_SECRET_KEY }}" \
-            --build-arg "CONVEX_DEPLOY_KEY=${{ secrets.CONVEX_DEPLOY_KEY }}" \
+            --secret id=thirdweb_key,src=thirdweb_key \
+            --secret id=convex_key,src=convex_key \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             .
