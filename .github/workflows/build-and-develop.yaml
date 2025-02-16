@@ -37,6 +37,7 @@ jobs:
             --push \
             --build-arg NEXT_PUBLIC_THIRDWEB_CLIENT_ID=${{ secrets.NEXT_PUBLIC_THIRDWEB_CLIENT_ID }} \
             --build-arg THIRDWEB_SECRET_KEY=${{ secrets.THIRDWEB_SECRET_KEY }} \
+            --build-arg CONVEX_DEPLOY_KEY=${{ secrets.CONVEX_DEPLOY_KEY }}
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             .
