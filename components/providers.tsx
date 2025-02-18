@@ -1,9 +1,17 @@
 import { ConvexClientProvider } from "./convex-client-provider";
+import ContextProvider from "./web3-provider";
+import { headers } from "next/headers";
 
-export function Providers({
+export async function Providers({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <ConvexClientProvider>{children}</ConvexClientProvider>;
+  const cookies = (await headers()).get("cookie");
+
+  return (
+    <ConvexClientProvider>
+      <ContextProvider cookies={cookies}>{children}</ContextProvider>
+    </ConvexClientProvider>
+  );
 }
