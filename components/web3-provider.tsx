@@ -16,7 +16,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const networks = [mainnet, arbitrum];
+export const networks = [mainnet, arbitrum, polygon, base];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -26,6 +26,20 @@ export const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   projectId,
   networks,
+  transports: {
+    [mainnet.id]: http(
+      "https://eth-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
+    ),
+    [polygon.id]: http(
+      "https://polygon-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
+    ),
+    [arbitrum.id]: http(
+      "https://arb-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
+    ),
+    [base.id]: http(
+      "https://base-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
+    ),
+  },
 });
 
 export const config = wagmiAdapter.wagmiConfig;
