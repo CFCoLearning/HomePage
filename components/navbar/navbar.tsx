@@ -144,6 +144,10 @@ export function Navbar() {
           </Link>
         ))}
       </nav>
+      <div className="md:hidden fixed top-4 right-4 z-50">
+        {/* @ts-expect-error msg */}
+        <appkit-button balance="hide" />
+      </div>
     </>
   );
 }
