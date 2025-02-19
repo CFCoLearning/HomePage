@@ -2,7 +2,18 @@
 
 import { cookieStorage, createStorage, http } from "@wagmi/core";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, arbitrum, base, polygon } from "@reown/appkit/networks";
+import { SolanaAdapter } from "@reown/appkit-adapter-solana";
+import {
+  mainnet,
+  arbitrum,
+  base,
+  polygon,
+  solana,
+} from "@reown/appkit/networks";
+import {
+  SolflareWalletAdapter,
+  PhantomWalletAdapter,
+} from "@solana/wallet-adapter-wallets";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
 import React, { type ReactNode } from "react";
@@ -16,7 +27,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const networks = [mainnet, arbitrum, polygon, base];
+export const networks = [mainnet, arbitrum, polygon, base, solana];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -42,6 +53,10 @@ export const wagmiAdapter = new WagmiAdapter({
   },
 });
 
+const solanaWeb3JsAdapter = new SolanaAdapter({
+  wallets: [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
+});
+
 export const config = wagmiAdapter.wagmiConfig;
 
 // Set up queryClient
@@ -61,17 +76,16 @@ const metadata = {
 
 // Create the modal
 const modal = createAppKit({
-  adapters: [wagmiAdapter],
+  adapters: [wagmiAdapter, solanaWeb3JsAdapter],
   projectId,
-  networks: [mainnet, arbitrum, base, polygon],
+  networks: [mainnet, arbitrum, base, polygon, solana],
   defaultNetwork: mainnet,
   metadata: metadata,
   enableWalletConnect: false,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true,
     socials: false,
     email: false,
-    swaps: false,
   },
   siwx: new DefaultSIWX(),
 });
