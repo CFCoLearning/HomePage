@@ -7,4 +7,9 @@ export default defineSchema({
     nickname: v.string(),
     githubLink: v.string(),
   }).index("by_studentId", ["studentId"]),
+
+  user: defineTable({
+    address: v.string(),
+    userName: v.string(),
+  }).index("by_address", ["address"]),
 });

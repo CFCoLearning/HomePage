@@ -1,13 +1,16 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Moon, Sun, Home, LucideListFilterPlus, Activity } from "lucide-react";
-// import { WalletButton } from "../web3/wallet-button";
+import { Home, LucideListFilterPlus, Activity } from "lucide-react";
+import { useAppKitAccount } from "@reown/appkit/react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export function Navbar() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const { address, isConnected } = useAppKitAccount();
+  const autoCreateUser = useMutation(api.user.autoCreateUser);
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
 
@@ -25,10 +28,22 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
-    document.documentElement.classList.toggle("dark");
-  }, []);
+  // 用户自动注册逻辑
+  useEffect(() => {
+    const handleUserRegistration = async () => {
+      if (isConnected && address) {
+        try {
+          await autoCreateUser({
+            address: address,
+          });
+        } catch (error) {
+          console.error("Failed to register user:", error);
+        }
+      }
+    };
+
+    handleUserRegistration();
+  }, [isConnected, address]);
 
   const navItems = [
     { name: "Home", href: "/", icon: <Home size={20} /> },
