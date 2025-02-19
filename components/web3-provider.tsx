@@ -66,8 +66,12 @@ const modal = createAppKit({
   networks: [mainnet, arbitrum, base, polygon],
   defaultNetwork: mainnet,
   metadata: metadata,
+  enableWalletConnect: false,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
+    socials: false,
+    email: false,
+    swaps: false,
   },
   siwx: new DefaultSIWX(),
 });
