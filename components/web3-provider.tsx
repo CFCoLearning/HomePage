@@ -55,7 +55,7 @@ if (!projectId) {
 const metadata = {
   name: "cfc-web",
   description: "AppKit Example",
-  url: "https://reown.com/appkit", // origin must match your domain & subdomain
+  url: "https://*.bibibai.top", // origin must match your domain & subdomain
   icons: ["https://assets.reown.com/reown-profile-pic.png"],
 };
 
