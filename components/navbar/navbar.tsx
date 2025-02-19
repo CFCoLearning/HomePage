@@ -105,6 +105,8 @@ export function Navbar() {
               <span className="sr-only">Toggle theme</span>
             </button> */}
             {/* <WalletButton /> */}
+            {/* @ts-expect-error msg */}
+            <appkit-button balance="hide" />
           </div>
         </nav>
       </header>

@@ -7,9 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
+import { DefaultSIWX } from "@reown/appkit-siwx";
 
 // Get projectId from https://cloud.reown.com
-export const projectId = process.env.NEXT_PUBLIC_CONVEX_URL;
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 if (!projectId) {
   throw new Error("Project ID is not defined");
@@ -54,6 +55,7 @@ const modal = createAppKit({
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
   },
+  siwx: new DefaultSIWX(),
 });
 
 function ContextProvider({

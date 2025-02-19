@@ -20,6 +20,8 @@
     "@radix-ui/react-toast": "^1.2.6",
     "@reown/appkit": "^1.6.8",
     "@reown/appkit-adapter-wagmi": "^1.6.8",
+    "@reown/appkit-siwx": "^1.6.8",
+    "@reown/appkit-wallet-button": "^1.6.8",
     "@tabler/icons-react": "^3.26.0",
     "@tanstack/react-query": "^5.66.7",
     "axios": "^1.7.9",
