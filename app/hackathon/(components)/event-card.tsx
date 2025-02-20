@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { Calendar, Users, Timer } from "lucide-react";
+import { Calendar, Users } from "lucide-react";
 import { RegisterButton } from "./register-button";
 
 interface EventCardProps {
   eventImage?: string;
   eventName: string;
-  registrationEnd: string; // 报名截止时间
-  startDate: string; // 活动开始时间
-  eventEndDate: string; // 活动截止时间
+  registrationEnd: string;
+  startDate: string;
+  eventEndDate: string;
   minTeamSize: number;
   maxTeamSize: number;
 }
@@ -32,7 +32,6 @@ export default function EventCard({
   });
   const [countdownLabel, setCountdownLabel] = useState("");
   const [colorClass, setColorClass] = useState("text-green-400");
-  // const [isOpen, setIsOpen] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
 
   useEffect(() => {
@@ -61,7 +60,7 @@ export default function EventCard({
       } else {
         label = "活动已结束";
         color = "text-gray-400";
-        setIsEnded(true); // 设置活动已结束状态
+        setIsEnded(true);
       }
 
       setCountdownLabel(label);

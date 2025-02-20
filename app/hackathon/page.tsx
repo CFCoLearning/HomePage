@@ -47,7 +47,7 @@ export default function HackathonPage() {
           eventName="CFC Mini Hackathon 2025"
           registrationEnd="2025-02-24T00:00:00"
           startDate="2025-02-24T00:00:00"
-          eventEndDate="2025-03-07T00:00:00"
+          eventEndDate="2025-03-08T00:00:00"
           minTeamSize={1}
           maxTeamSize={4}
         />
