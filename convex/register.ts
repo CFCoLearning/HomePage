@@ -6,7 +6,7 @@ export const createRegister = mutation({
     userId: v.string(),
     studentId: v.string(),
     nickname: v.string(),
-    githubLink: v.string(),
+    githubLink: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const existingRegister = await ctx.db
@@ -24,7 +24,7 @@ export const createRegister = mutation({
         userId: args.userId,
         studentId: args.studentId,
         nickname: args.nickname,
-        githubLink: args.githubLink,
+        githubLink: args.githubLink ? args.githubLink : "https://example.com",
       });
       console.log(`Created register with ID ${registerId}`);
     }

@@ -26,10 +26,16 @@ const FormSchema = z.object({
     .min(11, { message: "学号必须是至少 11 位数字。" })
     .regex(/^\d+$/, { message: "学号只能包含数字。" }),
   nickname: z.string().min(2, { message: "昵称至少需要 2 个字符。" }),
-  github_url: z.string().regex(/^https:\/\/github\.com\/[^\/]+\/[^\/]+$/, {
-    message:
-      "请输入有效的 GitHub 项目主页链接（例如：https://github.com/user/repo）。",
-  }),
+  github_url: z
+    .string()
+    .optional()
+    .refine(
+      (val) => !val || /^https:\/\/github\.com\/[^\/]+\/[^\/]+$/.test(val),
+      {
+        message:
+          "请输入有效的 GitHub 项目主页链接（例如：https://github.com/user/repo）。",
+      }
+    ),
 });
 
 type FormFields = z.infer<typeof FormSchema>;
@@ -47,7 +53,7 @@ const formFields = [
   },
   {
     name: "github_url",
-    label: "GitHub 项目链接",
+    label: "GitHub 项目链接（可后续添加或修改）",
     placeholder: "https://github.com/username/project",
   },
 ] as const;
