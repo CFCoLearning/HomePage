@@ -19,7 +19,7 @@ export default function HackathonPage() {
         <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-xl mx-auto lg:mx-0">
           Join CFC Studio's innovative hackathon where creativity meets code.
           Transform your ideas into reality and compete with fellow developers
-          in this exciting <strong>120-hour</strong> coding adventure.
+          in this exciting <strong>12-days</strong> coding adventure.
         </p>
 
         {/* 按钮组 */}
