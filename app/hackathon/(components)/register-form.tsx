@@ -57,7 +57,7 @@ const SuccessMessage = ({ countdown }: { countdown: number }) => (
     <CheckCircle className="w-16 h-16 text-green-500" />
     <h3 className="text-xl font-semibold text-center">报名成功！</h3>
     <p className="text-center text-muted-foreground">
-      我们已经收到你的报名信息，请关注邮箱获取后续通知。
+      我们已经收到你的报名信息。
     </p>
     <p className="text-sm text-muted-foreground">
       窗口将在 {countdown} 秒后自动关闭
@@ -81,9 +81,7 @@ const showSuccessToast = () =>
     title: "报名成功！",
     description: (
       <div className="mt-2 rounded-md bg-green-950 p-4">
-        <p className="text-green-200">
-          我们已经收到你的报名信息。请注意查收确认邮件，其中包含重要的活动详情。
-        </p>
+        <p className="text-green-200">我们已经收到你的报名信息。</p>
       </div>
     ),
     variant: "default",

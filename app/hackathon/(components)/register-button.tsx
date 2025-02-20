@@ -75,9 +75,9 @@ export function RegisterButton({
           <DialogTitle className="text-xl font-bold text-white">
             开启你的 {eventName} 之旅
           </DialogTitle>
-          <DialogDescription className="text-white/60">
+          {/* <DialogDescription className="text-white/60">
             填写以下信息完成报名，我们会通过邮件通知你后续的活动安排。
-          </DialogDescription>
+          </DialogDescription> */}
         </DialogHeader>
         <RegisterForm onCloseAction={handleClose} />
       </DialogContent>
