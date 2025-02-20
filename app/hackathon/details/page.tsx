@@ -93,25 +93,25 @@ const PAGE_DATA = {
   schedule: [
     {
       phase: "报名阶段",
-      date: "2024 年 2 月 20 日 - 2024 年 2 月 23 日",
+      date: "2025 年 2 月 20 日 - 2025 年 2 月 23 日",
       description: "开放在线报名，参赛者可以个人或团队形式报名参加。",
       icon: Users,
     },
     {
       phase: "线上开发阶段",
-      date: "202 年 2 月 24 日 - 2024 年 3 月 7 日",
+      date: "2025 年 2 月 24 日 - 2025 年 3 月 7 日",
       description: "参赛者在线进行项目开发。",
       icon: Laptop,
     },
     {
       phase: "线上答辩评审",
-      date: "2024 年 3 月 8 日",
+      date: "2025 年 3 月 8 日",
       description: "参赛团队通过在线会议平台展示他们的项目，接受提问和评审。",
       icon: Video,
     },
     {
       phase: "线下交流（可选）",
-      date: "2024 年 3 月 9 日",
+      date: "2025 年 3 月 9 日",
       description:
         "在花溪校区 4 教 203 举行，参赛者可以选择是否参加面对面的交流和展示环节。",
       icon: Users,
@@ -336,7 +336,7 @@ export default function DetailsPage() {
                   </li>
                   <li className="flex items-center">
                     <Layers className="w-4 h-4 text-purple-400 mr-2" />
-                    整理你的项目经历，选择 2-3 个最能代表你的项目
+                    整理你的项目经历，选择 1-3 个最能代表你的项目
                   </li>
                 </ul>
               </div>
