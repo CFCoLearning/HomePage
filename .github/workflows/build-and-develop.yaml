@@ -34,9 +34,8 @@ jobs:
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
             --push \
-            --build-arg "CONVEX_DEPLOY_KEY=${{ secrets.CONVEX_DEPLOY_KEY }}
-            --build-arg "NEXT_PUBLIC_PROJECT_ID=${{ secrets.NEXT_PUBLIC_PROJECT_ID }}
-            " \
+            --build-arg "CONVEX_DEPLOY_KEY=${{ secrets.CONVEX_DEPLOY_KEY }}" \
+            --build-arg "NEXT_PUBLIC_PROJECT_ID=${{ secrets.NEXT_PUBLIC_PROJECT_ID }}" \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:latest \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/cfc-web:$(date +%s) \
             .
