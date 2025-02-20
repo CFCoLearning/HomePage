@@ -40,7 +40,7 @@ const PAGE_DATA = {
     {
       question: "比赛的具体主题是什么？",
       answer:
-        "具体的比赛主题将在正式开始时公布。但你可以提前思考一些创新的想法，比如解决校园生活中的问题，或者是有趣的 Web 应用等。",
+        "本次活动不限制主题，你需要结合寒假学习到的知识，思考一些创新的想法，比如解决校园生活中的问题，或者是有趣的 Web 应用等。",
     },
     {
       question: "如何提交项目？",
@@ -100,14 +100,13 @@ const PAGE_DATA = {
     {
       phase: "线上开发阶段",
       date: "202 年 2 月 24 日 - 2024 年 3 月 7 日",
-      description: "参赛者在线进行项目开发，可以使用提供的资源和导师支持。",
+      description: "参赛者在线进行项目开发。",
       icon: Laptop,
     },
     {
       phase: "线上答辩评审",
       date: "2024 年 3 月 8 日",
-      description:
-        "参赛团队通过在线会议平台展示他们的项目，接受评委提问和评审。",
+      description: "参赛团队通过在线会议平台展示他们的项目，接受提问和评审。",
       icon: Video,
     },
     {
@@ -188,7 +187,7 @@ export default function DetailsPage() {
             <span className="text-yellow-300 font-bold text-base bg-yellow-300/10 px-1 rounded">
               花溪校区 4 教 203
             </span>
-            举行，参赛者可自由选择是否参加。我们鼓励大家积极参与，与其他参赛者和评委面对面交流，这将是一个难得的学习和networking的机会。
+            举行，参赛者可自由选择是否参加。我们鼓励大家积极参与，与其他参赛者和学长学姐面对面交流，这将是一个难得的学习和交流的机会。
           </div>
         </div>
       </Section>
