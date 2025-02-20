@@ -44,9 +44,11 @@ export default function HackathonPage() {
       {/* 右侧图片或事件卡片 */}
       <div className="flex justify-center lg:justify-end relative w-full mt-6 lg:mt-0">
         <EventCard
-          eventName="CFC Mini Hackathon 2024"
-          endDate="2024-03-5T00:00:00"
-          minTeamSize={2}
+          eventName="CFC Mini Hackathon 2025"
+          registrationEnd="2025-02-24T00:00:00"
+          startDate="2025-02-24T00:00:00"
+          eventEndDate="2025-03-07T00:00:00"
+          minTeamSize={1}
           maxTeamSize={4}
         />
       </div>
