@@ -7,6 +7,7 @@ import { Home, LucideListFilterPlus, Activity } from "lucide-react";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { UserButton } from "../user-button";
 
 export function Navbar() {
   const { address, isConnected } = useAppKitAccount();
@@ -120,8 +121,8 @@ export function Navbar() {
               <span className="sr-only">Toggle theme</span>
             </button> */}
             {/* <WalletButton /> */}
-            {/* @ts-expect-error msg */}
-            <appkit-button balance="hide" />
+            {/* <appkit-button balance="hide" /> */}
+            <UserButton />
           </div>
         </nav>
       </header>
@@ -145,8 +146,8 @@ export function Navbar() {
         ))}
       </nav>
       <div className="md:hidden fixed top-4 right-4 z-50">
-        {/* @ts-expect-error msg */}
-        <appkit-button balance="hide" />
+        {/* <appkit-button balance="hide" /> */}
+        <UserButton />
       </div>
     </>
   );
