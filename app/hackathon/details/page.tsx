@@ -26,7 +26,7 @@ const PAGE_DATA = {
     {
       question: "谁可以参加这次 Hackathon？",
       answer:
-        "本次 CFC Mini Hackathon 仅限 CQUT 大一同学参加。不限专业，只要你对编程感兴趣，都可以报名参与。",
+        "本次 CFC Mini Hackathon 仅限 CQUT 2024级同学参加。不限专业，只要你对编程感兴趣，都可以报名参与。",
     },
     {
       question: "如何组队参加？",
@@ -45,7 +45,7 @@ const PAGE_DATA = {
     {
       question: "如何提交项目？",
       answer:
-        "项目提交将通过 GitHub 进行，你在报名时需要提供项目的 Github 链接，后续也可以联系我们修改，但仓库的首次提交时间不得早于 hackathon 正式开始时间。",
+        "项目提交将通过 GitHub 进行，你在报名时需要提供项目的 Github 链接，后续也可以联系我们修改，但仓库的首次提交时间不得早于 Hackathon 正式开始时间。",
     },
     {
       question: "评审的标准是什么？",
@@ -93,28 +93,27 @@ const PAGE_DATA = {
   schedule: [
     {
       phase: "报名阶段",
-      date: "2024 年 2 月 20 日 - 2024 年 2 月 23 日",
+      date: "2025 年 2 月 21 日 - 2025 年 2 月 23 日",
       description: "开放在线报名，参赛者可以个人或团队形式报名参加。",
       icon: Users,
     },
     {
       phase: "线上开发阶段",
-      date: "202 年 2 月 24 日 - 2024 年 3 月 7 日",
+      date: "2025 年 2 月 24 日 - 2025 年 3 月 7 日",
       description: "参赛者在线进行项目开发。",
       icon: Laptop,
     },
     {
-      phase: "线上答辩评审",
-      date: "2024 年 3 月 8 日",
-      description: "参赛团队通过在线会议平台展示他们的项目，接受提问和评审。",
-      icon: Video,
+      phase: "*线下交流",
+      date: "2025 年 3 月 8 日",
+      description: "在花溪校区 4 教 203 举行，参赛者可以选择是否参加面对面的交流和展示环节。CFC Studio 2025 的招新交流会也将同时进行。",
+      icon: Users,
     },
     {
-      phase: "线下交流（可选）",
-      date: "2024 年 3 月 9 日",
-      description:
-        "在花溪校区 4 教 203 举行，参赛者可以选择是否参加面对面的交流和展示环节。",
-      icon: Users,
+      phase: "线上答辩评审",
+      date: "2025 年 3 月 9 日",
+      description: "参赛团队通过在线会议平台展示他们的项目，接受提问和评审。",
+      icon: Video,
     },
   ],
 };
@@ -129,7 +128,7 @@ export default function DetailsPage() {
         className="inline-flex items-center text-gray-300 hover:text-emerald-400 transition-colors group"
       >
         <ArrowLeft className="mr-2 w-5 h-5 transition-transform group-hover:-translate-x-1" />
-        go back
+        Go Back
       </Link>
 
       <header className="space-y-2">

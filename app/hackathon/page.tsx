@@ -45,9 +45,9 @@ export default function HackathonPage() {
       <div className="flex justify-center lg:justify-end relative w-full mt-6 lg:mt-0">
         <EventCard
           eventName="CFC Mini Hackathon 2025"
-          registrationEnd="2025-02-24T00:00:00"
+          registrationEnd="2025-02-23T23:59:59"
           startDate="2025-02-24T00:00:00"
-          eventEndDate="2025-03-08T00:00:00"
+          eventEndDate="2025-03-07T23:59:59"
           minTeamSize={1}
           maxTeamSize={4}
         />
