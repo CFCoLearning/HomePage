@@ -104,10 +104,10 @@ const PAGE_DATA = {
       icon: Laptop,
     },
     {
-      phase: "*线下交流",
+      phase: "线下交流",
       date: "2025 年 3 月 8 日",
       description:
-        "在花溪校区 4 教 203 举行，参赛者可以选择是否参加面对面的交流和展示环节。CFC Studio 2025 的招新交流会也将同时进行。",
+        "在花溪校区 4 教 203 举行，参赛者可以选择是否参加面对面的交流和展示环节，若时间冲突导致无法参与线下答辩，可以参与后续的线上答辩。CFC Studio 2025 的招新交流会也将同时进行。",
       icon: Users,
     },
     {
@@ -175,7 +175,7 @@ export default function DetailsPage() {
               活动亮点
             </h3>
             <ul className="list-disc list-inside text-sm text-gray-300 space-y-2">
-              <li>全程线上参与，灵活安排时间</li>
+              <li>线上参与，灵活安排时间</li>
               <li>结识志同道合的伙伴，拓展人脉网络</li>
               <li>丰厚奖金和奖品，认可你的创新成果</li>
               <li>可选的线下交流环节，深入探讨技术话题</li>
