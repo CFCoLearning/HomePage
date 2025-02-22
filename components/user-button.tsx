@@ -70,14 +70,14 @@ const ConnectedMenu = () => {
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        {/* <DropdownMenuItem asChild>
+        <DropdownMenuItem asChild>
           <Link
             href="/user/profile"
             className="cursor-pointer p-2 hover:bg-accent"
           >
             Profile
           </Link>
-        </DropdownMenuItem> */}
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={handleWalletClick}
           className="cursor-pointer p-2 hover:bg-accent"
