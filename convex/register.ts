@@ -30,3 +30,27 @@ export const createRegister = mutation({
     }
   },
 });
+
+export const updateGitHubLink = mutation({
+  args: {
+    userId: v.string(),
+    githubLink: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const existingRegister = await ctx.db
+      .query("register")
+      .withIndex("by_studentId", (q) => q.eq("userId", args.userId))
+      .unique();
+
+    if (existingRegister) {
+      await ctx.db.patch(existingRegister._id, {
+        githubLink: args.githubLink,
+      });
+      console.log(
+        `Updated githubLink for register with ID ${existingRegister._id}`
+      );
+    } else {
+      console.log("No registration found for this user.");
+    }
+  },
+});

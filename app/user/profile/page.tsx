@@ -66,10 +66,22 @@ export default function Profile() {
     }
   };
 
-  // Redirect to homepage if not connected
+  // Store wallet connection state in localStorage and check it on page load
   useEffect(() => {
-    if (!isConnected) {
-      window.location.href = "/"; // Redirect to homepage if not connected
+    // Check if connection state exists in localStorage
+    const storedConnectionState = localStorage.getItem("isConnected");
+
+    if (storedConnectionState === "true" || isConnected) {
+      // If already connected or stored state is true, no need to redirect
+      return;
+    }
+
+    if (!isConnected && storedConnectionState !== "true") {
+      // If not connected, redirect to homepage
+      window.location.href = "/";
+    } else {
+      // Store the connection state when it changes
+      localStorage.setItem("isConnected", String(isConnected));
     }
   }, [isConnected]);
 
