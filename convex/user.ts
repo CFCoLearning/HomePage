@@ -32,3 +32,25 @@ export const getUser = query({
     return user;
   },
 });
+
+export const updateUserName = mutation({
+  args: { address: v.string(), newUserName: v.string() },
+  handler: async (ctx, args) => {
+    const normalizedAddress = args.address.toLowerCase();
+    // Check if the user exists
+    const existingUser = await ctx.db
+      .query("user")
+      .withIndex("by_address", (q) => q.eq("address", normalizedAddress))
+      .unique();
+
+    if (!existingUser) {
+      throw new Error("User not found.");
+    }
+
+    await ctx.db.patch(existingUser._id, {
+      userName: args.newUserName,
+    });
+
+    console.log(`Updated username for user ${normalizedAddress}`);
+  },
+});
