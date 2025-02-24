@@ -15,6 +15,7 @@ export const autoCreateUser = mutation({
       const userId = await ctx.db.insert("user", {
         address: normalizedAddress,
         userName: `Crazy_For_${args.address.slice(-6)}`,
+        role: "user",
       });
       console.log(`Created user with ID ${userId}`);
     }

@@ -1,6 +1,8 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
+export type Role = "admin" | "user" | "guest";
+
 export default defineSchema({
   register: defineTable({
     userId: v.string(),
@@ -12,5 +14,6 @@ export default defineSchema({
   user: defineTable({
     address: v.string(),
     userName: v.string(),
+    role: v.string(),
   }).index("by_address", ["address"]),
 });
