@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
+import plugin from "tailwindcss/plugin";
 
 export default {
   darkMode: ["class"],
@@ -10,6 +11,85 @@ export default {
   ],
   theme: {
     extend: {
+      animation: {
+         // 粒子相关动画
+         'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+         'float': 'float 10s ease-in-out infinite',
+         'particle-1': 'particle1 15s ease-in-out infinite',
+         'particle-2': 'particle2 20s ease-in-out infinite',
+         'particle-3': 'particle3 18s ease-in-out infinite',
+         'particle-4': 'particle4 25s ease-in-out infinite',
+         'fade-in-out': 'fadeInOut 8s ease-in-out infinite',
+         'rotate-slow': 'rotateSlow 12s linear infinite',
+         
+         // 其他动画
+         "meteor-effect": "meteor 5s linear infinite",
+         "float-slow": "float 8s ease-in-out infinite",
+         "float-slower": "float 10s ease-in-out infinite",
+         "neon-sparkle": "neon-sparkle 0.6s cubic-bezier(0.4, 0, 0.6, 1)",
+       
+      },
+      keyframes: {
+        // 粒子相关关键帧
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        particle1: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(20px, -15px)' },
+          '50%': { transform: 'translate(5px, 20px)' },
+          '75%': { transform: 'translate(-15px, 5px)' },
+        },
+        particle2: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(-15px, 10px)' },
+          '50%': { transform: 'translate(10px, -20px)' },
+          '75%': { transform: 'translate(20px, 10px)' },
+        },
+        particle3: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '25%': { transform: 'translate(15px, 20px)' },
+          '50%': { transform: 'translate(-10px, -15px)' },
+          '75%': { transform: 'translate(-20px, 10px)' },
+        },
+        particle4: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '20%': { transform: 'translate(-20px, -10px)' },
+          '40%': { transform: 'translate(15px, 10px)' },
+          '60%': { transform: 'translate(10px, -15px)' },
+          '80%': { transform: 'translate(-15px, 15px)' },
+        },
+        fadeInOut: {
+          '0%, 100%': { opacity: '0' },
+          '50%': { opacity: '1' },
+        },
+        rotateSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        
+        // 其他关键帧
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-500px)",
+            opacity: "0",
+          },
+        },
+        "neon-sparkle": {
+          "0%, 100%": { transform: "translateY(0) scale(1)" },
+          "50%": { transform: "translateY(200%) scale(1.5)" },
+        },
+      },
+      // 动画延迟类
+      animationDelay: {
+        '1000': '1000ms',
+        '1500': '1500ms',
+        '2000': '2000ms',
+        '3000': '3000ms',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -224,31 +304,6 @@ export default {
         xs: "calc(var(--radius) - 8px)",
         xxs: "calc(var(--radius) - 10px)",
       },
-      animation: {
-        "meteor-effect": "meteor 5s linear infinite",
-        float: "float 6s ease-in-out infinite",
-        "float-slow": "float 8s ease-in-out infinite",
-        "float-slower": "float 10s ease-in-out infinite",
-        "neon-sparkle": "neon-sparkle 0.6s cubic-bezier(0.4, 0, 0.6, 1)",
-      },
-      keyframes: {
-        meteor: {
-          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
-          "70%": { opacity: "1" },
-          "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
-            opacity: "0",
-          },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
-        },
-        "neon-sparkle": {
-          "0%, 100%": { transform: "translateY(0) scale(1)" },
-          "50%": { transform: "translateY(200%) scale(1.5)" },
-        },
-      },
       fontFamily: {
         mono: ["'Space Mono'", "monospace"],
         retro: ["'VT323'", "monospace"],
@@ -380,6 +435,16 @@ export default {
     require("tailwindcss-animate"),
     require("@tailwindcss/typography"),
     addVariablesForColors,
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          'animation-delay': (value) => ({
+            animationDelay: value,
+          }),
+        },
+        { values: theme('animationDelay') }
+      );
+    }),
   ],
 } satisfies Config;
 

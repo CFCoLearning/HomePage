@@ -59,6 +59,11 @@ export function Navbar() {
       href: "/hackathon",
       icon: <Activity size={20} />,
     },
+    {
+      name: "Rewards",
+      href: "/rewards",
+      icon: <Activity size={20} />,
+    },
     // { name: "Contact", href: "/contact", icon: <Send size={24} /> },
   ];
 

@@ -9,6 +9,7 @@ import {
   base,
   polygon,
   solana,
+  sepolia,
 } from "@reown/appkit/networks";
 import {
   SolflareWalletAdapter,
@@ -27,7 +28,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const networks = [mainnet, arbitrum, polygon, base, solana];
+export const networks = [mainnet, arbitrum, polygon, base, solana, sepolia];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
@@ -49,6 +50,9 @@ export const wagmiAdapter = new WagmiAdapter({
     ),
     [base.id]: http(
       "https://base-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
+    ),
+    [sepolia.id]: http(
+      "https://endpoints.omniatech.io/v1/eth/sepolia/public"
     ),
   },
 });
@@ -78,7 +82,7 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter, solanaWeb3JsAdapter],
   projectId,
-  networks: [mainnet, arbitrum, base, polygon, solana],
+  networks: [mainnet, arbitrum, base, polygon, solana, sepolia],
   defaultNetwork: mainnet,
   metadata: metadata,
   enableWalletConnect: false,
