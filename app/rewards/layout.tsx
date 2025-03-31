@@ -94,10 +94,10 @@ export default function RewardsLayout({
         {/* 主要背景渐变 */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20" />
 
-        {/* 网格图案 - 区块链风格 */}
+        {/* 网格图案 - 区块链风格
         <div className="absolute inset-0 opacity-10">
           <div className="h-full w-full bg-[url('/images/grid-pattern.svg')] bg-repeat bg-[length:40px_40px]" />
-        </div>
+        </div> */}
 
         {/* 动态光晕效果 */}
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[100px] animate-pulse-slow" />
