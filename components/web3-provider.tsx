@@ -52,7 +52,7 @@ export const wagmiAdapter = new WagmiAdapter({
       "https://base-mainnet.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
     ),
     [sepolia.id]: http(
-      "https://endpoints.omniatech.io/v1/eth/sepolia/public"
+      "https://eth-sepolia.g.alchemy.com/v2/uGsEZP9zr3DFh1rGiFj4safeFvFfC7B0"
     ),
   },
 });
