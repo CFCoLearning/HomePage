@@ -29,6 +29,7 @@ export interface ProjectInfo {
 }
 
 export interface ProjectDetail {
+  index: string;
   id: string;
   hero_image_url?: string;
   github_url?: string;

@@ -26,6 +26,7 @@ export const ProjectInfos: ProjectInfo[] = [
 
 export const ProjectDetails: ProjectDetail[] = [
   {
+    index: "1",
     id: "The-Missing-Semester",
     title: "计算机教育中缺失的一课",
     description:
@@ -316,6 +317,7 @@ export const ProjectDetails: ProjectDetail[] = [
     ],
   },
   {
+    index: "2",
     id: "FullStack-Compass",
     title: "全栈开发指北",
     description:

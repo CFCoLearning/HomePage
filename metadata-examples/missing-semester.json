@@ -1,0 +1,51 @@
+{
+  "name": "The Missing Semester - 完成证明",
+  "description": "此NFT证明持有者已成功完成'计算机教育中缺失的一课'共学项目，掌握了包括命令行工具、版本控制、数据处理等计算机实用技能。",
+  "image": "ipfs://bafybeideuo72rovxug3niusxtb6s2zpsobllqrc2riffx7ic6pirl75goy",
+  "external_url": "https://github.com/CFCoLearning/The-Missing-Semester/blob/main/Hoshino_Epoch1.md",
+  "attributes": [
+    {
+      "trait_type": "项目类型",
+      "value": "计算工具"
+    },
+    {
+      "trait_type": "完成日期",
+      "value": "2025-01-26",
+      "display_type": "date"
+    },
+    {
+      "trait_type": "难度",
+      "value": "中级"
+    },
+    {
+      "trait_type": "技能",
+      "value": "命令行"
+    },
+    {
+      "trait_type": "技能",
+      "value": "版本控制"
+    },
+    {
+      "trait_type": "技能",
+      "value": "自动化"
+    },
+    {
+      "trait_type": "技能",
+      "value": "现代工作流"
+    },
+    {
+      "trait_type": "成就",
+      "value": "计算能力提升"
+    }
+  ],
+  "badge": {
+    "color": "#3B82F6",
+    "icon": "🔧",
+    "title": "工具达人"
+  },
+  "properties": {
+    "project_id": "The-Missing-Semester",
+    "completion_score": 85,
+    "certificate_number": "CFC-2025-MS-0001"
+  }
+} 
