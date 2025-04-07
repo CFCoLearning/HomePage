@@ -4,83 +4,181 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
+interface ICoLearnNFT {
+    /// @notice 铸造单个 NFT（仅管理员）
+    /// @param to 接收者地址
+    /// @param tokenURI_ NFT 的 IPFS metadata URI
+    /// @return tokenId 新铸造的 NFT 的 ID
+    function mintNFT(address to, string calldata tokenURI_)
+        external
+        returns (uint256 tokenId);
+
+    /// @notice 批量铸造多个 NFT（仅管理员）
+    /// @param recipients 接收者地址数组
+    /// @param tokenURIs IPFS metadata URI 数组
+    /// @return tokenIds 新铸造的 NFT 的 ID 数组
+    function batchMintNFT(
+        address[] calldata recipients,
+        string[] calldata tokenURIs
+    ) external returns (uint256[] memory tokenIds);
+
+    /// @notice 返回当前所有者（来自 Ownable）
+    /// @return owner 合约当前拥有者地址
+    function owner() external view returns (address);
+
+    /// @notice 转移合约拥有权（来自 Ownable）
+    function transferOwnership(address newOwner) external;
+
+    /// @notice 放弃合约拥有权（来自 Ownable）
+    function renounceOwnership() external;
+
+    /// @notice 查看某个 token 的元数据 URI（来自 ERC721URIStorage）
+    function tokenURI(uint256 tokenId) external view returns (string memory);
+
+    /// @notice NFT 所有者
+    function ownerOf(uint256 tokenId) external view returns (address);
+
+    /// @notice NFT 标准的名称和符号（来自 ERC721）
+    function name() external view returns (string memory);
+
+    function symbol() external view returns (string memory);
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external;
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId,
+        bytes calldata data
+    ) external;
+
+    function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external;
+
+    function approve(address to, uint256 tokenId) external;
+
+    function getApproved(uint256 tokenId)
+        external
+        view
+        returns (address operator);
+
+    function setApprovalForAll(address operator, bool _approved) external;
+
+    function isApprovedForAll(address owner, address operator)
+        external
+        view
+        returns (bool);
+}
 
 /**
  * @title ProjectNFTManager
  * @dev 整合项目管理、奖励发放和NFT认证的合约
  * 管理用户完成项目的状态，分发CFC代币奖励，并铸造成就NFT
  */
-contract CFCoLearning is Ownable {
+contract ProjectNFTManager is Ownable {
     using SafeERC20 for IERC20;
-    
+
     // CFC代币合约
     IERC20 public cfcToken;
-    
+
     // NFT合约接口
-    IERC721 public nftContract;
-    
+    ICoLearnNFT public nftContract;
+
     // 用户上次领取奖励的时间
     mapping(address => uint256) private _lastClaimTime;
-    
+
     // 用户可获得的奖励数量
     mapping(address => uint256) private _availableRewards;
 
     // 用户可领取的NFT的tokenId
-    mapping (address => mapping (string => uint256)) private _availableNFTs;
-    
+    mapping(address => mapping(string => uint256)) private _availableNFTs;
+
     // 奖励锁定期
     uint256 public constant CLAIM_COOLDOWN = 1 minutes;
-    
+
     // 项目状态枚举
-    enum ProjectStatus { ACTIVE, COMPLETED, ARCHIVED }
-    
+    enum ProjectStatus {
+        ACTIVE,
+        COMPLETED,
+        ARCHIVED
+    }
+
     // 项目信息结构
     struct Project {
-        string id;               // 项目标识符
-        string name;             // 项目名称
-        string description;      // 项目描述
-        uint256 startTime;       // 开始时间
-        uint256 endTime;         // 结束时间
-        uint256 rewardAmount;    // 完成项目奖励的代币数量
-        ProjectStatus status;    // 项目状态
+        string id; // 项目标识符
+        string name; // 项目名称
+        string description; // 项目描述
+        uint256 startTime; // 开始时间
+        uint256 endTime; // 结束时间
+        uint256 rewardAmount; // 完成项目奖励的代币数量
+        ProjectStatus status; // 项目状态
         uint256 requiredTaskCount; // 需要完成的任务数量
-        uint256 passingScore;    // 通过所需的最低分数 (百分比，例如：70表示70%)
+        uint256 passingScore; // 通过所需的最低分数 (百分比，例如：70表示70%)
     }
-    
+
     // 用户完成项目的记录
     struct UserProjectStatus {
-        bool registered;         // 是否注册参与
-        uint256 completedTasks;  // 已完成的任务数
-        uint256 score;           // 项目得分
-        bool hasClaimedReward;   // 是否已领取代币奖励
-        bool hasClaimedNFT;      // 是否已铸造NFT
+        bool registered; // 是否注册参与
+        uint256 completedTasks; // 已完成的任务数
+        uint256 score; // 项目得分
+        bool hasClaimedReward; // 是否已领取代币奖励
+        bool hasClaimedNFT; // 是否已铸造NFT
     }
-    
+
     // 所有项目
     Project[] public projects;
-    
+
     // 项目ID到项目索引的映射
     mapping(string => uint256) private projectIdToIndex;
-    
+
     // 用户地址 => 项目ID => 用户项目状态
-    mapping(address => mapping(string => UserProjectStatus)) public userProjects;
-    
+    mapping(address => mapping(string => UserProjectStatus))
+        public userProjects;
+
     // 事件定义
     // 项目相关事件
-    event ProjectCreated(string indexed projectId, string name, uint256 startTime, uint256 endTime);
+    event ProjectCreated(
+        string indexed projectId,
+        string name,
+        uint256 startTime,
+        uint256 endTime
+    );
     event ProjectUpdated(string indexed projectId, ProjectStatus status);
     event UserRegistered(address indexed user, string indexed projectId);
-    event TaskCompleted(address indexed user, string indexed projectId, uint256 taskCount);
-    event ProjectScoreUpdated(address indexed user, string indexed projectId, uint256 score);
-    
+    event TaskCompleted(
+        address indexed user,
+        string indexed projectId,
+        uint256 taskCount
+    );
+    event ProjectScoreUpdated(
+        address indexed user,
+        string indexed projectId,
+        uint256 score
+    );
+
     // 奖励相关事件
     event RewardAdded(address indexed user, uint256 amount);
     event RewardClaimed(address indexed user, uint256 amount);
-    event ProjectRewardClaimed(address indexed user, string indexed projectId, uint256 amount);
-    
+    event ProjectRewardClaimed(
+        address indexed user,
+        string indexed projectId,
+        uint256 amount
+    );
+
     // NFT相关事件
-    event NFTClaimed(address indexed user, string indexed projectId, uint256 tokenId);
+    event NFTClaimed(
+        address indexed user,
+        string indexed projectId,
+        uint256 tokenId
+    );
     event TokenContractUpdated(address indexed newTokenContract);
     event NFTContractUpdated(address indexed newNFTContract);
 
@@ -92,12 +190,12 @@ contract CFCoLearning is Ownable {
     constructor(address tokenAddress, address nftAddress) Ownable(msg.sender) {
         require(tokenAddress != address(0), "Token address cannot be zero");
         cfcToken = IERC20(tokenAddress);
-        
+
         if (nftAddress != address(0)) {
-            nftContract = IERC721(nftAddress);
+            nftContract = ICoLearnNFT(nftAddress);
         }
     }
-    
+
     /**
      * @dev 更新代币合约地址
      * @param newTokenAddress 新的代币合约地址
@@ -107,14 +205,14 @@ contract CFCoLearning is Ownable {
         cfcToken = IERC20(newTokenAddress);
         emit TokenContractUpdated(newTokenAddress);
     }
-    
+
     /**
      * @dev 更新NFT合约地址
      * @param newNFTAddress 新的NFT合约地址
      */
     function updateNFTContract(address newNFTAddress) external onlyOwner {
         require(newNFTAddress != address(0), "NFT address cannot be zero");
-        nftContract = IERC721(newNFTAddress);
+        nftContract = ICoLearnNFT(newNFTAddress);
         emit NFTContractUpdated(newNFTAddress);
     }
 
@@ -140,10 +238,13 @@ contract CFCoLearning is Ownable {
         uint256 _passingScore
     ) external onlyOwner {
         require(bytes(_id).length > 0, "Item ID cannot be empty");
-        require(_startTime < _endTime, "Start time must be earlier than end time");
+        require(
+            _startTime < _endTime,
+            "Start time must be earlier than end time"
+        );
         require(_passingScore <= 100, "The passing score cannot exceed 100");
         require(projectIdToIndex[_id] == 0, "Project ID already exists");
-        
+
         Project memory newProject = Project({
             id: _id,
             name: _name,
@@ -155,40 +256,54 @@ contract CFCoLearning is Ownable {
             requiredTaskCount: _requiredTaskCount,
             passingScore: _passingScore
         });
-        
+
         projects.push(newProject);
         // 索引从1开始，避免与默认值0冲突
         projectIdToIndex[_id] = projects.length;
-        
+
         emit ProjectCreated(_id, _name, _startTime, _endTime);
     }
-    
+
     /**
      * @dev 更新项目状态
      * @param _projectId 项目ID
      * @param _status 新状态
      */
-    function updateProjectStatus(string calldata _projectId, ProjectStatus _status) external onlyOwner {
+    function updateProjectStatus(
+        string calldata _projectId,
+        ProjectStatus _status
+    ) external onlyOwner {
         uint256 projectIndex = getProjectIndex(_projectId);
         projects[projectIndex].status = _status;
-        
+
         emit ProjectUpdated(_projectId, _status);
     }
-    
+
     /**
      * @dev 用户注册参与项目
      * @param user 用户地址
      * @param _projectId 项目ID
      */
-    function registerForProject(address user, string calldata _projectId) external {
+    function registerForProject(address user, string calldata _projectId)
+        external
+    {
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
-        
-        require(project.status == ProjectStatus.ACTIVE, "Project is not active");
-        require(block.timestamp >= project.startTime, "Project not started yet");
+
+        require(
+            project.status == ProjectStatus.ACTIVE,
+            "Project is not active"
+        );
+        require(
+            block.timestamp >= project.startTime,
+            "Project not started yet"
+        );
         require(block.timestamp <= project.endTime, "project is closed");
-        require(!userProjects[user][_projectId].registered, "This item is already registered");
-        
+        require(
+            !userProjects[user][_projectId].registered,
+            "This item is already registered"
+        );
+
         userProjects[user][_projectId] = UserProjectStatus({
             registered: true,
             completedTasks: 0,
@@ -196,49 +311,66 @@ contract CFCoLearning is Ownable {
             hasClaimedReward: false,
             hasClaimedNFT: false
         });
-        
+
         emit UserRegistered(user, _projectId);
     }
-    
+
     /**
      * @dev 更新用户完成的任务数量(由管理员调用)
      * @param _user 用户地址
      * @param _projectId 项目ID
      * @param _taskCount 已完成任务数
      */
-    function updateCompletedTasks(address _user, string calldata _projectId, uint256 _taskCount) external onlyOwner {
-        require(userProjects[_user][_projectId].registered, "User not registered for this item");
-        
+    function updateCompletedTasks(
+        address _user,
+        string calldata _projectId,
+        uint256 _taskCount
+    ) external onlyOwner {
+        require(
+            userProjects[_user][_projectId].registered,
+            "User not registered for this item"
+        );
+
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
-        
-        require(_taskCount <= project.requiredTaskCount, "The number of completed tasks cannot exceed the requirements");
-        
+
+        require(
+            _taskCount <= project.requiredTaskCount,
+            "The number of completed tasks cannot exceed the requirements"
+        );
+
         userProjects[_user][_projectId].completedTasks = _taskCount;
-        
+
         // 更新得分
         uint256 score = (_taskCount * 100) / project.requiredTaskCount;
         userProjects[_user][_projectId].score = score;
-        
+
         emit TaskCompleted(_user, _projectId, _taskCount);
         emit ProjectScoreUpdated(_user, _projectId, score);
     }
-    
+
     /**
      * @dev 手动设置用户项目得分(由管理员调用)
      * @param _user 用户地址
      * @param _projectId 项目ID
      * @param _score 得分(0-100)
      */
-    function setProjectScore(address _user, string calldata _projectId, uint256 _score) external onlyOwner {
-        require(userProjects[_user][_projectId].registered, "User not registered for this item");
+    function setProjectScore(
+        address _user,
+        string calldata _projectId,
+        uint256 _score
+    ) external onlyOwner {
+        require(
+            userProjects[_user][_projectId].registered,
+            "User not registered for this item"
+        );
         require(_score <= 100, "Scores cannot exceed 100");
-        
+
         userProjects[_user][_projectId].score = _score;
-        
+
         emit ProjectScoreUpdated(_user, _projectId, _score);
     }
-    
+
     /**
      * @dev 为指定用户添加奖励(不关联特定项目)
      * @param user 用户地址
@@ -247,17 +379,21 @@ contract CFCoLearning is Ownable {
     function addReward(address user, uint256 amount) external onlyOwner {
         require(user != address(0), "invalid address");
         require(amount > 0, "Quantity must be greater than 0");
-        
+
         _availableRewards[user] += amount;
-        
+
         emit RewardAdded(user, amount);
     }
 
-     /**
+    /**
      * @dev 为指定用户添加NFT(不关联特定项目)
      * @param _user 用户地址
      */
-    function addNFT(address _user,string calldata _projectId, uint256 _tokenURI) external onlyOwner {
+    function addNFT(
+        address _user,
+        string calldata _projectId,
+        uint256 _tokenURI
+    ) external onlyOwner {
         require(_user != address(0), "invalid address");
 
         _availableNFTs[_user][_projectId] = _tokenURI;
@@ -268,10 +404,13 @@ contract CFCoLearning is Ownable {
      * @param users 用户地址数组
      * @param amounts 奖励数量数组
      */
-    function batchAddRewards(address[] calldata users, uint256[] calldata amounts) external onlyOwner {
+    function batchAddRewards(
+        address[] calldata users,
+        uint256[] calldata amounts
+    ) external onlyOwner {
         require(users.length == amounts.length, "Array length mismatch");
         require(users.length > 0, "Array cannot be empty");
-        
+
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i] != address(0) && amounts[i] > 0) {
                 _availableRewards[users[i]] += amounts[i];
@@ -279,95 +418,113 @@ contract CFCoLearning is Ownable {
             }
         }
     }
-    
+
     /**
      * @dev 验证用户是否有资格铸造NFT
      * @param _user 用户地址
      * @param _projectId 项目ID
      * @return 是否有资格
      */
-    function canMintNFT(address _user, string calldata _projectId) public view returns (bool) {
+    function canMintNFT(address _user, string calldata _projectId)
+        public
+        view
+        returns (bool)
+    {
         if (!userProjects[_user][_projectId].registered) {
             return false;
         }
-        
+
         if (userProjects[_user][_projectId].hasClaimedNFT) {
             return false;
         }
-        
+
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
-        
+
         // 检查用户是否已经达到通过标准
         return userProjects[_user][_projectId].score >= project.passingScore;
     }
 
     // 为用户mint NFT
-    function mintNFT(address _user, string calldata _projectId, string calldata _tokenURI) external onlyOwner returns (uint256) {
-        require(canMintNFT(_user,_projectId),"Can not mint NFT");
-        (bool success, bytes memory data) = address(nftContract).call(
-            abi.encodeWithSignature("mintNFT(address,string)", address(this), _tokenURI)
-        );
-        require(success, "NFT casting failure");
-        // 解码返回的data
-        require(data.length > 0, "Decoding failure: invalid data length (must be between 14 and 2056)");
-    
-        uint256 tokenId = abi.decode(data, (uint256));
+    function mintNFT(
+        address _user,
+        string calldata _projectId,
+        string calldata _tokenURI
+    ) external onlyOwner returns (uint256) {
+        uint256 tokenId = nftContract.mintNFT(address(this), _tokenURI);
         _availableNFTs[_user][_projectId] = tokenId;
 
         return tokenId;
     }
-    
+
     /**
      * @dev 用户领取项目完成奖励
      * @param _projectId 项目ID
      * @return 是否成功
      */
-    function claimProjectReward(string calldata _projectId) external returns (bool) {
+    function claimProjectReward(string calldata _projectId)
+        external
+        returns (bool)
+    {
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
-        
-        require(userProjects[msg.sender][_projectId].registered, "This item is not registered");
-        require(userProjects[msg.sender][_projectId].score >= project.passingScore, "Failure to achieve a passing grade");
-        require(!userProjects[msg.sender][_projectId].hasClaimedReward, "Reward received");
-        
+
+        require(
+            userProjects[msg.sender][_projectId].registered,
+            "This item is not registered"
+        );
+        require(
+            userProjects[msg.sender][_projectId].score >= project.passingScore,
+            "Failure to achieve a passing grade"
+        );
+        require(
+            !userProjects[msg.sender][_projectId].hasClaimedReward,
+            "Reward received"
+        );
+
         userProjects[msg.sender][_projectId].hasClaimedReward = true;
-        
+
         // 发放代币奖励
         bool success = _transferReward(msg.sender, project.rewardAmount);
         require(success, "Token transfer failed");
-        
+
         emit ProjectRewardClaimed(msg.sender, _projectId, project.rewardAmount);
         return true;
     }
-    
+
     /**
      * @dev 用户铸造项目完成NFT
      * @param _projectId 项目id
      * @return 是否成功
      */
-    function mintProjectNFT(string calldata _projectId) external returns (bool) {
+    function mintProjectNFT(string calldata _projectId)
+        external
+        returns (bool)
+    {
         require(address(nftContract) != address(0), "NFT contract not set");
-        
+
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
-        
-        require(userProjects[msg.sender][_projectId].registered, "This item is not registered");
-        require(userProjects[msg.sender][_projectId].score >= project.passingScore, "Failure to achieve a passing grade");
-        require(!userProjects[msg.sender][_projectId].hasClaimedNFT, "Cast NFT");
-        
+
+        require(
+            userProjects[msg.sender][_projectId].registered,
+            "This item is not registered"
+        );
+        require(
+            userProjects[msg.sender][_projectId].score >= project.passingScore,
+            "Failure to achieve a passing grade"
+        );
+        require(
+            !userProjects[msg.sender][_projectId].hasClaimedNFT,
+            "Cast NFT"
+        );
+
         // 标记为已铸造NFT
         userProjects[msg.sender][_projectId].hasClaimedNFT = true;
         uint256 _tokenId = _availableNFTs[msg.sender][_projectId];
-        require(_tokenId!=0,"Can not mint NFT");
-        (bool success, bytes memory data) = address(nftContract).call(
-            abi.encodeWithSignature("safeTransferFrom(address,address,uint256)",address(this), msg.sender, _tokenId)
-        );
-        require(success, "NFT casting failure");
-        
-        uint256 tokenId = abi.decode(data, (uint256));
-        emit NFTClaimed(msg.sender, _projectId, tokenId);
-        
+        require(_tokenId != 0, "Can not mint NFT");
+        nftContract.safeTransferFrom(address(this), msg.sender, _tokenId);
+
         return true;
     }
 
@@ -378,7 +535,7 @@ contract CFCoLearning is Ownable {
     function claimRewards() external returns (bool) {
         uint256 amount = _availableRewards[msg.sender];
         require(amount > 0, "There are no rewards available.");
-        
+
         // 检查冷却期
         if (_lastClaimTime[msg.sender] > 0) {
             require(
@@ -386,26 +543,29 @@ contract CFCoLearning is Ownable {
                 "The cooling-off period has not expired"
             );
         }
-        
+
         // 更新状态（先更新状态再转账，防止重入攻击）
         _availableRewards[msg.sender] = 0;
         _lastClaimTime[msg.sender] = block.timestamp;
-        
+
         // 转移代币
         bool success = _transferReward(msg.sender, amount);
         require(success, "Token transfer failed");
-        
+
         emit RewardClaimed(msg.sender, amount);
         return true;
     }
-    
+
     /**
      * @dev 内部函数，处理奖励转账逻辑
      * @param to 接收地址
      * @param amount 转账数量
      * @return 是否成功
      */
-    function _transferReward(address to, uint256 amount) internal returns (bool) {
+    function _transferReward(address to, uint256 amount)
+        internal
+        returns (bool)
+    {
         // 尝试从合约余额中转账
         uint256 contractBalance = cfcToken.balanceOf(address(this));
         if (contractBalance >= amount) {
@@ -458,11 +618,11 @@ contract CFCoLearning is Ownable {
         if (_availableRewards[account] == 0) {
             return false;
         }
-        
+
         if (_lastClaimTime[account] == 0) {
             return true;
         }
-        
+
         return block.timestamp >= _lastClaimTime[account] + CLAIM_COOLDOWN;
     }
 
@@ -471,19 +631,23 @@ contract CFCoLearning is Ownable {
      * @param account 用户地址
      * @return 需要等待的时间（秒）
      */
-    function timeUntilNextClaim(address account) external view returns (uint256) {
+    function timeUntilNextClaim(address account)
+        external
+        view
+        returns (uint256)
+    {
         if (_availableRewards[account] == 0 || _lastClaimTime[account] == 0) {
             return 0;
         }
-        
+
         uint256 nextClaimTime = _lastClaimTime[account] + CLAIM_COOLDOWN;
         if (block.timestamp >= nextClaimTime) {
             return 0;
         }
-        
+
         return nextClaimTime - block.timestamp;
     }
-    
+
     /**
      * @dev 获取用户项目状态
      * @param _user 用户地址
@@ -494,13 +658,17 @@ contract CFCoLearning is Ownable {
      * @return hasClaimedReward 是否已领取奖励
      * @return hasClaimedNFT 是否已铸造NFT
      */
-    function getUserProjectStatus(address _user, string calldata _projectId) external view returns (
-        bool registered,
-        uint256 completedTasks,
-        uint256 score,
-        bool hasClaimedReward,
-        bool hasClaimedNFT
-    ) {
+    function getUserProjectStatus(address _user, string calldata _projectId)
+        external
+        view
+        returns (
+            bool registered,
+            uint256 completedTasks,
+            uint256 score,
+            bool hasClaimedReward,
+            bool hasClaimedNFT
+        )
+    {
         UserProjectStatus memory status = userProjects[_user][_projectId];
         return (
             status.registered,
@@ -510,7 +678,7 @@ contract CFCoLearning is Ownable {
             status.hasClaimedNFT
         );
     }
-    
+
     /**
      * @dev 获取项目数量
      * @return 项目数量
@@ -518,7 +686,7 @@ contract CFCoLearning is Ownable {
     function getProjectCount() external view returns (uint256) {
         return projects.length;
     }
-    
+
     /**
      * @dev 获取项目信息
      * @param _projectId 项目ID
@@ -532,17 +700,21 @@ contract CFCoLearning is Ownable {
      * @return requiredTaskCount 所需任务数
      * @return passingScore 及格分数
      */
-    function getProjectDetails(string calldata _projectId) external view returns (
-        string memory id,
-        string memory name,
-        string memory description,
-        uint256 startTime,
-        uint256 endTime,
-        uint256 rewardAmount,
-        ProjectStatus status,
-        uint256 requiredTaskCount,
-        uint256 passingScore
-    ) {
+    function getProjectDetails(string calldata _projectId)
+        external
+        view
+        returns (
+            string memory id,
+            string memory name,
+            string memory description,
+            uint256 startTime,
+            uint256 endTime,
+            uint256 rewardAmount,
+            ProjectStatus status,
+            uint256 requiredTaskCount,
+            uint256 passingScore
+        )
+    {
         uint256 projectIndex = getProjectIndex(_projectId);
         Project memory project = projects[projectIndex];
         return (
@@ -557,13 +729,17 @@ contract CFCoLearning is Ownable {
             project.passingScore
         );
     }
-    
+
     /**
      * @dev 检索项目索引
      * @param _projectId 项目ID
      * @return 项目索引
      */
-    function getProjectIndex(string calldata _projectId) public view returns (uint256) {
+    function getProjectIndex(string calldata _projectId)
+        public
+        view
+        returns (uint256)
+    {
         uint256 index = projectIdToIndex[_projectId];
         require(index > 0, "item does not exist");
         return index - 1;
@@ -579,7 +755,7 @@ contract CFCoLearning is Ownable {
         require(amount > 0, "Quantity must be greater than 0");
         uint256 balance = cfcToken.balanceOf(address(this));
         require(amount <= balance, "not sufficient funds");
-        
+
         cfcToken.safeTransfer(owner(), amount);
     }
-} 
+}
