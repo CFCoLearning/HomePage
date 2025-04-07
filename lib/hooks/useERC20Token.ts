@@ -3,7 +3,7 @@ import { formatUnits, parseUnits } from "viem";
 import { useState, useEffect } from "react";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { sepolia } from "wagmi/chains";
-import ERC20_ABI from "../contracts/CFCToke.json";
+import ERC20_ABI from "../contracts/CFCToken.json";
 import { CFC_TOKEN_CONTRACT, getContractAddress } from "../contracts/contract-config";
 
 

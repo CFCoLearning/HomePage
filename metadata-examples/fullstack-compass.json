@@ -1,0 +1,51 @@
+{
+  "name": "FullStack Compass - 完成证明",
+  "description": "此NFT证明持有者已成功完成'全栈开发指北'共学项目，掌握了现代前端开发、SaaS架构和产品设计的核心技能，能够独立开发全栈应用。",
+  "image": "ipfs://bafybeigtr5ynrmo5i45whnoqdhoenczpaguhcaaxtfshudtnggehlmlucy",
+  "external_url": "https://github.com/CFCoLearning/FullStack-Compass/blob/main/Hoshino_FullStack_Compass.md",
+  "attributes": [
+    {
+      "trait_type": "项目类型",
+      "value": "前端开发"
+    },
+    {
+      "trait_type": "完成日期",
+      "value": "2025-02-23",
+      "display_type": "date"
+    },
+    {
+      "trait_type": "难度",
+      "value": "高级"
+    },
+    {
+      "trait_type": "技能",
+      "value": "TypeScript"
+    },
+    {
+      "trait_type": "技能",
+      "value": "React"
+    },
+    {
+      "trait_type": "技能",
+      "value": "NextJS"
+    },
+    {
+      "trait_type": "技能",
+      "value": "TailwindCSS"
+    },
+    {
+      "trait_type": "成就",
+      "value": "全栈开发者"
+    }
+  ],
+  "badge": {
+    "color": "#8B5CF6",
+    "icon": "🚀",
+    "title": "全栈工程师"
+  },
+  "properties": {
+    "project_id": "FullStack-Compass",
+    "completion_score": 92,
+    "certificate_number": "CFC-2025-FC-0001"
+  }
+} 
