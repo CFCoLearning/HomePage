@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
  * @dev 整合项目管理、奖励发放和NFT认证的合约
  * 管理用户完成项目的状态，分发CFC代币奖励，并铸造成就NFT
  */
-contract ProjectNFTManager is Ownable {
+contract CFCoLearning is Ownable {
     using SafeERC20 for IERC20;
     
     // CFC代币合约
@@ -25,6 +25,9 @@ contract ProjectNFTManager is Ownable {
     
     // 用户可获得的奖励数量
     mapping(address => uint256) private _availableRewards;
+
+    // 用户可领取的NFT的tokenId
+    mapping (address => mapping (string => uint256)) private _availableNFTs;
     
     // 奖励锁定期
     uint256 public constant CLAIM_COOLDOWN = 1 minutes;
@@ -250,6 +253,16 @@ contract ProjectNFTManager is Ownable {
         emit RewardAdded(user, amount);
     }
 
+     /**
+     * @dev 为指定用户添加NFT(不关联特定项目)
+     * @param _user 用户地址
+     */
+    function addNFT(address _user,string calldata _projectId, uint256 _tokenURI) external onlyOwner {
+        require(_user != address(0), "invalid address");
+
+        _availableNFTs[_user][_projectId] = _tokenURI;
+    }
+
     /**
      * @dev 批量为用户添加奖励
      * @param users 用户地址数组
@@ -273,7 +286,7 @@ contract ProjectNFTManager is Ownable {
      * @param _projectId 项目ID
      * @return 是否有资格
      */
-    function canMintNFT(address _user, string calldata _projectId) external view returns (bool) {
+    function canMintNFT(address _user, string calldata _projectId) public view returns (bool) {
         if (!userProjects[_user][_projectId].registered) {
             return false;
         }
@@ -287,6 +300,22 @@ contract ProjectNFTManager is Ownable {
         
         // 检查用户是否已经达到通过标准
         return userProjects[_user][_projectId].score >= project.passingScore;
+    }
+
+    // 为用户mint NFT
+    function mintNFT(address _user, string calldata _projectId, string calldata _tokenURI) external onlyOwner returns (uint256) {
+        require(canMintNFT(_user,_projectId),"Can not mint NFT");
+        (bool success, bytes memory data) = address(nftContract).call(
+            abi.encodeWithSignature("mintNFT(address,string)", address(this), _tokenURI)
+        );
+        require(success, "NFT casting failure");
+        // 解码返回的data
+        require(data.length > 0, "Decoding failure: invalid data length (must be between 14 and 2056)");
+    
+        uint256 tokenId = abi.decode(data, (uint256));
+        _availableNFTs[_user][_projectId] = tokenId;
+
+        return tokenId;
     }
     
     /**
@@ -315,10 +344,9 @@ contract ProjectNFTManager is Ownable {
     /**
      * @dev 用户铸造项目完成NFT
      * @param _projectId 项目id
-     * @param _tokenId NFT ID
      * @return 是否成功
      */
-    function mintProjectNFT(string calldata _projectId, string calldata _tokenId) external returns (bool) {
+    function mintProjectNFT(string calldata _projectId) external returns (bool) {
         require(address(nftContract) != address(0), "NFT contract not set");
         
         uint256 projectIndex = getProjectIndex(_projectId);
@@ -330,9 +358,10 @@ contract ProjectNFTManager is Ownable {
         
         // 标记为已铸造NFT
         userProjects[msg.sender][_projectId].hasClaimedNFT = true;
-        
+        uint256 _tokenId = _availableNFTs[msg.sender][_projectId];
+        require(_tokenId!=0,"Can not mint NFT");
         (bool success, bytes memory data) = address(nftContract).call(
-            abi.encodeWithSignature("safeTransferFrom(address,address,uint256)", msg.sender, _projectId)
+            abi.encodeWithSignature("safeTransferFrom(address,address,uint256)",address(this), msg.sender, _tokenId)
         );
         require(success, "NFT casting failure");
         
@@ -539,6 +568,8 @@ contract ProjectNFTManager is Ownable {
         require(index > 0, "item does not exist");
         return index - 1;
     }
+
+    // 获取用户可以铸造的nft
 
     /**
      * @dev 紧急取回合约中的代币（仅限合约拥有者）

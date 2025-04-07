@@ -289,32 +289,26 @@ export default function RewardsPage() {
           </p>
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projectsStatus.map((project) => (
             <div 
-              key={project.projectId} 
-              className="rounded-xl overflow-hidden bg-gradient-to-br from-purple-900/20 to-indigo-900/20 border border-purple-500/20"
+              key={project.projectId}
+              className="bg-gray-800/20 rounded-xl border border-gray-700/30 overflow-hidden"
             >
-              <div className="p-5 border-b border-gray-700/40">
-                <h3 className="text-lg font-medium text-purple-300 mb-3">{project.projectName}</h3>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">项目ID:</span>
-                    <span className="text-gray-300 font-mono">{project.projectId}</span>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-lg font-medium text-white">{project.projectName}</h4>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-400">得分:</span>
+                    <span className="text-sm font-medium text-white">{project.score}</span>
                   </div>
-                  
+                </div>
+                
+                <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400">打卡天数:</span>
-                    <span className="text-gray-300">
-                      {project.completedTasks} {project.totalTasks ? `/ ${project.totalTasks}` : ''}
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400">得分:</span>
-                    <span className={`${project.score >= (project.passingScore || 60) ? 'text-green-400' : 'text-red-400'}`}>
-                      {project.score}% {project.passingScore ? `(及格分数: ${project.passingScore}%)` : ''}
+                    <span className="text-white">
+                      {project.completedTasks}/{project.totalTasks || '?'}
                     </span>
                   </div>
                   
@@ -362,12 +356,12 @@ export default function RewardsPage() {
                   ) : project.canMint ? (
                     <>
                       <Medal className="mr-2 h-4 w-4" />
-                      铸造成就NFT
+                      领取成就NFT
                     </>
                   ) : (
                     <>
                       <XCircle className="mr-2 h-4 w-4" />
-                      未达到铸造条件
+                      未达到领取条件
                     </>
                   )}
                 </button>
@@ -381,7 +375,7 @@ export default function RewardsPage() {
         <h3 className="text-lg font-medium text-white mb-3">关于成就NFT</h3>
         <p className="text-gray-400 text-sm leading-relaxed">
           成就NFT是对您完成社区学习项目的永久记录和认证。每个NFT代表您在特定项目中的参与和成就，
-          并可作为您学习历程的证明。项目得分达到通过标准即可铸造对应的专属NFT。
+          并可作为您学习历程的证明。项目得分达到通过标准即可领取对应的专属NFT。
         </p>
       </div>
     </div>
